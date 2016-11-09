@@ -10,7 +10,7 @@ Team Name: The Rejects
 
 Project (Risk, Pokemon, Settlement Management, or MUD): Pokemon
 
-Project Manager: Lanre Akomolafe
+Project Manager: Miranda
 
 
 All four team members make a commit that modifies this file with your name added below this line (leave this line here)
