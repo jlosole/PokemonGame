@@ -17,7 +17,7 @@ All four team members make a commit that modifies this file with your name added
 
 1) Lanre Akomolafe
 
-2) 
+2) Cullen Bottock
 
 3)
 
