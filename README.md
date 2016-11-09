@@ -19,6 +19,6 @@ All four team members make a commit that modifies this file with your name added
 
 2) Cullen Bottock
 
-3)
+3) James Losole 
 
 4)
