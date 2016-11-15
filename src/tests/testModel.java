@@ -1,9 +1,10 @@
 package tests;
-import static org.junit.Assert.*;
 import model.Item;
 import model.Potion;
 import model.SafariBall;
 import model.SuperPotion;
+
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 
