@@ -1,4 +1,8 @@
 package model.Map;
+
+import model.Items.ItemType;
+import model.ObstacleType.ObstacleType;
+
 /*
  * @Lanre: TODO: We should probably ask Miranda if we're supposed to generate random
  * pokemon locations whenever the trainer moves, or if we just place the pokemon once
@@ -8,83 +12,166 @@ package model.Map;
  */
 
 public class Map {
-	/*
-	 * @Lanre - what I'm thinking is the map will be a 2D Spot array, each
-	 * element being either Safe, a Trainer, a Pokemon, an Item, or an Obstacle.
-	 */
-	private enum Spot {
-		Safe, Trainer, Pokemon, Item, Obstacle;
-		
-		//In case we need a char representation of a spot
-		public char getValue() {
-			switch(this) {
-			case Safe: return 'S';
-			case Trainer: return 'T';
-			case Pokemon: return 'P';
-			case Obstacle: return 'O';
-			default: return 'S';
-			}
-		}
+
+	private Object[][] map;
+	private char[][] textMap;
+	private final int SIZE = 23;
+	private ObstacleType obstacleType = null;
+	private char lastPosition;
+	
+	public static void main(String[] args) {
+		Map mp = new Map();
 	}
-	private Spot[][]	map;
-	
-	/*
-	 * @Lanre - When the trainer moves to a spot, we need to save which char that spot was,
-	 * so when the trainer moves again we can restore it. So if the trainer walks on 
-	 * an space, the element in the char[][] changes from 'S' to 'T'. When the trainer
-	 * keeps moving, that element needs to change back to an 'S'.
-	 */
-	private char		lastPosition;
-	
-	private int			trainerX,
-						trainerY;
 	
 	public Map() {
-		//Initialize the char array
-		map = new Spot[500][500];
-		//Set every spot to 'S'
+		textMap = new char[SIZE][SIZE];
+		map = new Object[SIZE][SIZE];
 		initializeGrid();
-		//Set the trainer positon (TODO: Maybe change, but assuming he starts bottom left)
-		trainerX = 1000;
-		trainerY = 0;
-		map[trainerX][trainerY] = Spot.Trainer;
-		//Randomly set obstacles, items, and pokemon
-		setItems();
-		setPokemon();
+		setTreesAndExits();
+		setWater();
+		setBushes();
+		setShortGrass();
+		setDeepGrass();
+		printMap();
 	}
 	
 	private void initializeGrid() {
-		for (int x = 0; x < 500; x++) {
-			for (int y = 0; y < 500; y++) {
-				map[x][y] = Spot.Safe;
+		for (int x = 0; x < SIZE; x++) {
+			for (int y = 0; y < SIZE; y++) {
+				map[x][y] = null;
+				textMap[x][y] = 'O';
 			}
 		}
 	}
 	
-	private void setObstacles() {
-		//TODO: May need to change, but rn there are between 50 and 100 obstacles
-		int num = 50 + (int)(Math.random()*((100-50)+1));
-		while (num > 0) {
-			int x =  (int)(Math.random()*499+1);
-			int y =  (int)(Math.random()*499+1);
-			//Only add obstacles to safe spots
-			if (isSafe(x,y)) {
-				map[x][y] = Spot.Obstacle;
-				num--;
+	private void setShortGrass() {
+		for(int i = 1; i < SIZE; i++) {
+			for(int j = 1; j < SIZE; j++) {
+				if(textMap[i][j] == 'O') {
+					textMap[i][j] = 'g';
+				}
+			}
+		}
+	}
+	
+	private void setDeepGrass() {
+		//northwest patch
+		for(int i = 2; i < 6; i++) {
+			for(int j = 2; j < 5; j++) {
+				map[i][j] = ObstacleType.DeepGrass;
+				textMap[i][j] = 'G';
+			}
+		}
+		//southwest patch
+		for(int i = 17; i < SIZE-2; i++) {
+			for(int j = 1; j < 5; j++) {
+				map[i][j] = ObstacleType.DeepGrass;
+				textMap[i][j] = 'G';
+			}
+		}
+		//southeast patch
+		for(int i = 18; i < SIZE-2; i++) {
+			for(int j = 16; j < SIZE-2; j++) {
+				map[i][j] = ObstacleType.DeepGrass;
+				textMap[i][j] = 'G';
+			}
+		}
+		
+		//northeast patch
+		for(int i = 1; i < 8; i++) {
+			for(int j = 16; j < SIZE-2; j++) {
+				map[i][j] = ObstacleType.DeepGrass;
+				textMap[i][j] = 'G';
+			}
+		}
+	}
+	
+	private void setWater() {
+		for(int i = 8; i < 14; i++) {
+			for(int j = 6; j < 16; j++) {
+				map[i][j] = ObstacleType.Water;
+				textMap[i][j] = 'W';
+			}
+		}
+	}
+	
+	private void setBushes() {
+		for(int i = 1; i < 8; i++) {
+			map[i][8] = ObstacleType.Bush;
+			textMap[i][8] = 'B';
+		}
+		
+		for(int j = 1; j < 7; j++) {
+			map[16][j] = ObstacleType.Bush;
+			textMap[16][j] = 'B';
+		}
+		map[14][6] = ObstacleType.Bush;
+		map[15][6] = ObstacleType.Bush;
+		textMap[14][6] = 'B';
+		textMap[15][6] = 'B';
+		
+		for(int i = 7; i > 0; i--) {
+			map[i][15] = ObstacleType.Bush;
+			textMap[i][15] = 'B';
+		}
+	}
+	
+	private void setTreesAndExits() {
+		for(int i = 0; i < SIZE; i++) {
+			//top row
+			if( i < 10 || i > 13) {
+				map[0][i] = ObstacleType.Tree;
+				textMap[0][i] = 'T';
+			} else {
+				map[0][i] = ObstacleType.Dirt;
+				textMap[0][i] = 'D';
+			}
+			//bottom row
+			if(i < 9 || i > 13) {
+				map[SIZE-1][i] = ObstacleType.Tree;
+				textMap[SIZE-1][i] = 'T';
+			} else {
+				map[SIZE-1][i] = ObstacleType.Dirt;
+				textMap[SIZE-1][i] = 'D';
+			}
+			//left column
+			if(i < 9 || i > 13) {
+				map[i][0] = ObstacleType.Tree;
+				textMap[i][0] = 'T';
+			} else {
+				map[i][0] = ObstacleType.Dirt;
+				textMap[i][0] = 'D';
+			}
+			//right column
+			if(i < 9 || i > 13) {
+				map[i][SIZE-1] = ObstacleType.Tree;
+				textMap[i][SIZE-1] = 'T';
+			} else {
+				map[i][SIZE-1] = ObstacleType.Dirt;
+				textMap[i][SIZE-1] = 'D';
 			}
 		}
 	}
 	
 	private void setItems() {
-		int num = 50 + (int)(Math.random()*((100-50)+1));
+		int num = (int)((Math.random()*(10)) + 1);
 		while (num > 0) {
-			int x =  (int)(Math.random()*499+1);
-			int y =  (int)(Math.random()*499+1);
+			int x =  (int)(Math.random()*SIZE);
+			int y =  (int)(Math.random()*SIZE);
 			//Only add obstacles to safe spots
 			if (isSafe(x,y)) {
-				map[x][y] = Spot.Item;
+				map[x][y] = ItemType.Potion;
 				num--;
 			}
+		}
+	}
+	
+	private void printMap() {
+		for(int i = 0; i < SIZE; i++) {
+			for(int j = 0; j < SIZE; j++) {
+				System.out.print("[ " + textMap[i][j] + " ]");
+			}
+			System.out.println();
 		}
 	}
 	
@@ -93,6 +180,6 @@ public class Map {
 	}
 	
 	private boolean isSafe(int x, int y) {
-		return map[x][y] == Spot.Safe;
+		return map[x][y] == null;
 	}
 }

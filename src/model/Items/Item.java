@@ -11,7 +11,7 @@ public abstract class Item implements Serializable {
 	//and will be damage done by bait or rock
 	public Item(boolean isUsed, int hp) {
 		this.isUsed = isUsed;
-		hp = hp;
+		this.hp = hp;
 	}
 	
 	public  boolean isUsed() {

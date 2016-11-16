@@ -71,7 +71,6 @@ public abstract class Pokemon implements Serializable {
 			numBallsThrown = 0;
 			return true;
 		}
-		
 		Random rand = new Random();
 		int num = rand.nextInt(runChance)+1;
 		if(num == 1) return true;
