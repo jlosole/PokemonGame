@@ -1,20 +1,29 @@
 package model.Pokemon;
 
+import java.io.Serializable;
 import java.util.Random;
 
-public abstract class Pokemon {
+import model.Items.Bait;
+import model.Items.Item;
+import model.Items.Rock;
+import model.Items.SafariBall;
+
+
+public abstract class Pokemon implements Serializable {
 	
 	private static int hp;				// Current hp
 	private static int maxHP;			// Max hp
 	private static int runChance;		// 1 out of runChance is the probability the pokemon runs
 	private static int catchChance;     // 1 out of catchChance is the probability the pokemon is caught
 	private static int numBallsThrown;  // Counts the number of balls thrown at this pokemon during this battle
+	private static model.Items.Item item;
 	
-	public Pokemon(int hp, int maxHP, int run, int capture){
+	public Pokemon(int hp, int maxHP, int run, int capture, Item item){
 		this.hp = hp;
 		this.maxHP = maxHP;
 		this.runChance = run;
 		this.catchChance = capture;
+		this.item = item;
 	}
 	
 	public int getHP(){
@@ -25,15 +34,20 @@ public abstract class Pokemon {
 		return this.maxHP;
 	}
 	
+	public Item getItem(){
+		return item;
+	}
+	
 	//When a player chooses to throw bait this method is called
 	public void ateBait(){
+		tookDamage(Bait.getDamage());
 		runChance++;
 		catchChance++;
 	}
 	
 	//When a player chooses to throw a rock this method is called
 	public void hitByRock(){
-		tookDamage(10);
+		tookDamage(Rock.getDamage());
 		runChance--;
 		catchChance--;
 	}
@@ -42,7 +56,7 @@ public abstract class Pokemon {
 	//the pokemon is caught
 	public Boolean didCatch(){
 		if(hp <= maxHP) {
-			tookDamage(3);
+			tookDamage(SafariBall.getDamage());
 			numBallsThrown++;
 			Random rand = new Random();
 			int num = rand.nextInt(catchChance)+1;
@@ -68,6 +82,7 @@ public abstract class Pokemon {
 	public void tookDamage(int damage){
 		hp -= damage;
 	}
+
 	
 	//Abstract method to get the pokemon type
 	public abstract PokemonType getPokemonType();
