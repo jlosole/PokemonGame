@@ -23,7 +23,7 @@ public class TextView extends JPanel implements Observer {
 		setLayout(new BorderLayout());
 		textArea = new JTextArea(10, 10);
 		textArea.setEditable(false);
-		textArea.setText(theMap.mapToString());
+		textArea.setText(theMap.toString());
 		add(textArea);
 	}
 

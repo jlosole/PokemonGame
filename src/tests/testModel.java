@@ -67,7 +67,7 @@ public class testModel {
 	@Test
 	public void testToString() {
 		MapOne map = new MapOne();
-		System.out.println(map.mapToString());
+		System.out.println(map.toString());
 	}
 	
 }
