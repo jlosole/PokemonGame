@@ -5,6 +5,7 @@ import java.util.Random;
 
 import model.Items.Bait;
 import model.Items.Item;
+import model.Items.ItemType;
 import model.Items.Rock;
 import model.Items.SafariBall;
 
@@ -40,23 +41,30 @@ public abstract class Pokemon implements Serializable {
 	
 	//When a player chooses to throw bait this method is called
 	public void ateBait(){
-		tookDamage(Bait.getDamage());
+		tookDamage(Bait.getHP());
 		runChance++;
 		catchChance++;
 	}
 	
 	//When a player chooses to throw a rock this method is called
 	public void hitByRock(){
-		tookDamage(Rock.getDamage());
+		tookDamage(Rock.getHP());
 		runChance--;
 		catchChance--;
+	}
+	
+	//When a player chooses to use a potion on this pokemon
+	public void consumeItem(Item item){
+		if(item.getItemType() == ItemType.Potion || item.getItemType() == ItemType.SuperPotion) {
+			hp += item.getHP();
+		}
 	}
 	
 	//When a Safari ball is thrown this will be called to see if 
 	//the pokemon is caught
 	public Boolean didCatch(){
 		if(hp <= maxHP) {
-			tookDamage(SafariBall.getDamage());
+			tookDamage(SafariBall.getHP());
 			numBallsThrown++;
 			Random rand = new Random();
 			int num = rand.nextInt(catchChance)+1;
