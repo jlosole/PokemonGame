@@ -1,11 +1,9 @@
 package tests;
 import static org.junit.Assert.*;
-
 import java.util.Iterator;
-import java.util.Map;
-
 import org.junit.Test;
-
+import model.Map.*;
+import java.util.Map;
 import model.Trainer;
 import model.Items.*;
 
@@ -80,4 +78,11 @@ public class testModel {
 			System.out.println(pair.getKey() + " " + pair.getValue());
 		}
 	}
+	
+	@Test
+	public void testToString() {
+		MapOne map = new MapOne();
+		System.out.println(map.toString());
+	}
+	
 }
