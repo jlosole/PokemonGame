@@ -1,7 +1,16 @@
 package model.Map;
 
+import java.util.Random;
+
+import model.Items.Bait;
 import model.Items.ItemType;
+import model.Items.Potion;
+import model.Items.Rock;
+import model.Items.SafariBall;
 import model.ObstacleType.ObstacleType;
+import model.Pokemon.Charmander;
+import model.Pokemon.MewTwo;
+import model.Pokemon.Pikachu;
 
 /*
  * @Lanre: TODO: We should probably ask Miranda if we're supposed to generate random
@@ -11,27 +20,31 @@ import model.ObstacleType.ObstacleType;
  * it's randomly generated whenever the trainer moves. I'll just do it like that for now
  */
 
-public class Map {
+public class MapOne {
 
 	private Object[][] map;
 	private char[][] textMap;
 	private final int SIZE = 23;
 	private ObstacleType obstacleType = null;
 	private char lastPosition;
+	private Random random;
 	
 	public static void main(String[] args) {
-		Map mp = new Map();
+		MapOne mp = new MapOne();
 	}
 	
-	public Map() {
+	public MapOne() {
 		textMap = new char[SIZE][SIZE];
 		map = new Object[SIZE][SIZE];
+		random = new Random();
 		initializeGrid();
 		setTreesAndExits();
 		setWater();
 		setBushes();
 		setShortGrass();
 		setDeepGrass();
+		setPokemon();
+		setItems();
 		printMap();
 	}
 	
@@ -154,16 +167,25 @@ public class Map {
 	}
 	
 	private void setItems() {
-		int num = (int)((Math.random()*(10)) + 1);
-		while (num > 0) {
-			int x =  (int)(Math.random()*SIZE);
-			int y =  (int)(Math.random()*SIZE);
-			//Only add obstacles to safe spots
-			if (isSafe(x,y)) {
-				map[x][y] = ItemType.Potion;
-				num--;
-			}
-		}
+		map[10][4] = new Bait(false, 2);
+		textMap[10][4] = 'I';
+		map[17][9] = new Rock(false, 6);
+		textMap[17][9] = 'I';
+		map[9][18] = new Potion(false, 10);
+		textMap[9][18] = 'I';
+		map[4][10] = new SafariBall(false, 3);
+		textMap[4][10] = 'I';
+		map[15][19] = new SafariBall(false, 3);
+		textMap[15][19] = 'I';
+	}
+	
+	private void setPokemon() {
+		map[2][3] = new Charmander();
+		textMap[2][3] = 'P';
+		map[3][17] = new Pikachu();
+		textMap[3][17] = 'P';
+		map[19][17] = new MewTwo();
+		textMap[19][17] = 'P';
 	}
 	
 	private void printMap() {
@@ -175,8 +197,19 @@ public class Map {
 		}
 	}
 	
-	private void setPokemon() {
-		
+	public String mapToString() {
+		String result = "";
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
+				result += "[ " + textMap[i][j] + " ]";
+			}
+			result += "\n\n";
+		}
+		return result;
+	}
+	
+	public char[][] getTextMap() {
+		return textMap;
 	}
 	
 	private boolean isSafe(int x, int y) {

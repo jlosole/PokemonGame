@@ -22,11 +22,10 @@ public class MapGUI extends JFrame {
 	
 	public MapGUI() {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    this.setSize(900, 900);
+	    this.setSize(400, 400);
 	    this.setLocation(100, 40);
 	    this.setLayout(new BorderLayout());
 	    graphicView = new GraphicView();
-	    
 	    this.add(graphicView, BorderLayout.CENTER);
 	}
 }
