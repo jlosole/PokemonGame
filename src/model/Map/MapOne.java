@@ -197,7 +197,8 @@ public class MapOne {
 		}
 	}
 	
-	public String mapToString() {
+	@Override
+	public String toString() {
 		String result = "";
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
