@@ -1,5 +1,7 @@
 package tests;
 import static org.junit.Assert.*;
+
+import java.awt.Point;
 import java.util.Iterator;
 import org.junit.Test;
 import model.Map.*;
@@ -26,8 +28,7 @@ public class testModel {
 		Item superPotion = new SuperPotion(false, 20);
 		assertFalse(sBall.isUsed());
 		assertEquals(superPotion.getHP(), 20);
-		assertEquals(10, potion.getHP());
-		assertEquals(0, sBall.getHP());
+		
 	}
 	
 	@Test
@@ -65,6 +66,15 @@ public class testModel {
 		Pokemon eev = new Eevee();
 		Pokemon geo = new Geodude();
 		Pokemon krab = new Krabby();
+		drow.hitByRock();
+		drow.didCatch();
+		drow.didRun();
+		Item item = new Bait(false, 10);
+		drow.consumeItem(item);
+		drow.getHP();
+		drow.tookDamage(10);
+		drow.ateBait();
+		drow.getMaxHP();
 		
 		Trainer trainer = new Trainer();
 		trainer.caughtPokemon(pika);
@@ -90,6 +100,38 @@ public class testModel {
 	public void testToString() {
 		MapOne map = new MapOne();
 		System.out.println(map.toString());
+	}
+	
+	@Test 
+	public void testTrainer(){
+		Trainer newTrainer = new Trainer();
+		Point pt = new Point();
+
+		newTrainer.throwBait();
+		newTrainer.throwRock();
+		newTrainer.throwBall();
+		newTrainer.stepMade(pt);
+		newTrainer.usePotion();
+		newTrainer.useSuperPotion();
+		
+		Item pot = new Potion(false, 3);
+		Item suppot = new SuperPotion(false, 10);
+		Item rock = new Rock(false, 10);
+		Item bait = new Bait(false, 3);
+		Item sBall = new SafariBall(false, 0);
+		newTrainer.collectedItem(pot);
+		newTrainer.collectedItem(suppot);
+		newTrainer.collectedItem(rock);
+		newTrainer.collectedItem(bait);
+		newTrainer.collectedItem(sBall);
+
+		newTrainer.setCurrentPosition(pt);
+		newTrainer.throwBait();
+		newTrainer.throwRock();
+		newTrainer.throwBall();
+		newTrainer.stepMade(pt);
+		newTrainer.usePotion();
+		newTrainer.useSuperPotion();
 	}
 	
 }
