@@ -41,11 +41,7 @@ public class GraphicView extends JPanel implements Observer {
 		System.out.println("in paint");
 		for(int i = 0; i < 23; i++) {
 			for(int j = 0; j < 23; j++) {
-				trainerPos = trainer.getCurrentPos();
-				int x = trainerPos.x;
-				int y = trainerPos.y;
-				g.setColor(Color.cyan);
-				g.fillRect(y*30, x*30, 30, 30);
+
 				if(textBoard[i][j] == 'T') {
 					g.setColor(Color.DARK_GRAY);
 					g.fillRect(j*30, i*30, 30, 30);
@@ -78,6 +74,11 @@ public class GraphicView extends JPanel implements Observer {
 					g.setColor(Color.BLACK);
 					g.fillRect(j*30, i*30, 30, 30);
 				}
+				trainerPos = trainer.getCurrentPos();
+				int x = trainerPos.x;
+				int y = trainerPos.y;
+				g.setColor(Color.cyan);
+				g.fillRect(y*30, x*30, 30, 30);
 			}
 		}
 	}

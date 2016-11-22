@@ -1,5 +1,4 @@
 package controller;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Point;
@@ -51,14 +50,14 @@ public class PokemonGUI extends JFrame {
 	    theGame = new Game();
 	    trainer = theGame.getTrainer();
 	    gView = new GraphicView(theGame, WIDTH, HEIGHT);
-	    tView = new TextView(theGame);
+	    tView = new TextView(theGame, WIDTH, HEIGHT);
 	    
 	    this.addKeyListener(new MyArrowKeyListener());
 		this.setFocusable(true);
 		this.requestFocus();
 		addObservers();
 		addMenus();
-		setView(tView);
+		setView(gView);
 	}
 	
 	//Adds the menus to the frame so you can switch between views
@@ -79,7 +78,7 @@ public class PokemonGUI extends JFrame {
 	
 	public void addObservers(){
 		theGame.addObserver(gView);
-		//theGame.addObserver(tView);
+		theGame.addObserver(tView);
 	}
 	
 	public void setView(JPanel newView) {

@@ -40,10 +40,9 @@ public class Game extends Observable {
 	
 	public Pokemon move(int row, int col, String direction) {
 		int r = row, c = col;
-<<<<<<< HEAD
-=======
+
 		Pokemon pokemon = null;
->>>>>>> b92e63d2d607f1f2f3abe21a6502bfe4dc12ca89
+
 		//Moves in new direction
 		if(direction.equals("Up")) r -= 1;
 		else if(direction.equals("Down")) r += 1;
@@ -65,12 +64,11 @@ public class Game extends Observable {
 		else {
 			gameOver = true;
 		}
-<<<<<<< HEAD
+
 		setChanged();
 		notifyObservers();
-=======
+
 		return pokemon;
->>>>>>> b92e63d2d607f1f2f3abe21a6502bfe4dc12ca89
 	}
 	
 	
