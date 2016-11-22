@@ -7,6 +7,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -19,14 +27,38 @@ import views.GraphicView;
 import views.TextView;
 import model.Game;
 import model.Trainer;
-import model.Map.*;
 import model.Pokemon.*;
 
 public class PokemonGUI extends JFrame {
 		
+	private static FileInputStream fis;
+	private static ObjectInputStream oIStream;
+	
 	public static void main(String [] args) {
-		PokemonGUI gui = new PokemonGUI();
-		gui.setVisible(true);
+		int selection = JOptionPane.showConfirmDialog(null, "Start from previous saved game?",
+				"Pokemon", JOptionPane.YES_NO_CANCEL_OPTION);
+		if(selection == JOptionPane.NO_OPTION){
+			PokemonGUI gui = new PokemonGUI(new Game());
+			gui.setVisible(true);
+		}
+		else if(selection == JOptionPane.YES_OPTION){
+			//read from data.txt
+			try {
+				fis = new FileInputStream("data.txt");
+				oIStream = new ObjectInputStream(fis);
+				try {
+					Game game = (Game) oIStream.readObject();
+					PokemonGUI gui = new PokemonGUI(game);
+					gui.setVisible(true);
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				}
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	private final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -36,22 +68,23 @@ public class PokemonGUI extends JFrame {
 	private GraphicView gView;
 	private TextView tView;
 	private JPanel currentView;
-	private Point trainerPos;
 	private String winCondition;
 	
 	
-	public PokemonGUI() {
+	public PokemonGUI(Game game) {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    this.setSize(screenSize);
 	    this.setLocation(100, 40);
 	    this.setTitle("Pokemon");
 	    this.setLayout(new BorderLayout());
 	    
-	    theGame = new Game();
+	    theGame = game;
+
 	    gView = new GraphicView(theGame, WIDTH, HEIGHT);
 	    tView = new TextView(theGame, WIDTH, HEIGHT);
 	    
 	    this.addKeyListener(new MyArrowKeyListener());
+	    this.addWindowListener(new MyWindowListener());
 		this.setFocusable(true);
 		this.requestFocus();
 		addObservers();
@@ -108,10 +141,8 @@ public class PokemonGUI extends JFrame {
 		@Override
 		public void keyPressed(KeyEvent e) {
 			Point trainerPos = theGame.getTrainerPos();
-			
 			int row = (int) trainerPos.getX();
 			int col = (int) trainerPos.getY();
-			
 			Pokemon pokemonFound;
 			
 			int keyCode = e.getKeyCode();
@@ -139,5 +170,45 @@ public class PokemonGUI extends JFrame {
 		public void keyReleased(KeyEvent e){}
 		@Override
 		public void keyTyped(KeyEvent e){}
+	}
+	private class MyWindowListener implements WindowListener {
+		@Override
+		public void windowClosing(WindowEvent e) {
+			int selection = JOptionPane.showConfirmDialog(null, "Would you like to save the " + 
+							"the current state of the game?", "Pokemon", JOptionPane.YES_NO_CANCEL_OPTION);
+			if(selection == JOptionPane.NO_OPTION){
+				//Do nothing let program exit as normal
+			}
+			else if(selection == JOptionPane.YES_OPTION){
+				try {
+					FileOutputStream fos = new FileOutputStream("data.txt");
+					ObjectOutputStream oos = new ObjectOutputStream(fos);
+					oos.writeObject(theGame);
+				}
+				catch (FileNotFoundException c) {
+					c.printStackTrace();
+				} catch (IOException b) {
+					b.printStackTrace();
+				} 
+			}
+		}
+		@Override
+		public void windowClosed(WindowEvent e) {
+		}
+		@Override
+		public void windowIconified(WindowEvent e) {
+		}
+		@Override
+		public void windowDeiconified(WindowEvent e) {
+		}
+		@Override
+		public void windowActivated(WindowEvent e) {
+		}
+		@Override
+		public void windowDeactivated(WindowEvent e) {
+		}
+		@Override
+		public void windowOpened(WindowEvent e) {
+		}
 	}
 }

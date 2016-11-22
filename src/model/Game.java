@@ -15,6 +15,7 @@ public class Game extends Observable implements Serializable{
 	private Trainer trainer;
 	private _Map theMap;
 	private Object [][] objBoard;
+	private Point trainerPos;
 	private boolean gameOver;
 	private int size;
 	
@@ -24,6 +25,7 @@ public class Game extends Observable implements Serializable{
 		size = theMap.getSize();
 		Point pt = new Point(size-1, size/2);
 		trainer.setCurrentPosition(pt);
+		trainerPos = trainer.getCurrentPos();
 		objBoard = theMap.getObjMap();
 		gameOver = false;
 	}
@@ -52,6 +54,7 @@ public class Game extends Observable implements Serializable{
 		if(canMoveHere(r, c)) {
 			if(trainer.stepMade(newPoint)){
 				trainer.setCurrentPosition(newPoint);
+				trainerPos = trainer.getCurrentPos();
 				if(didStepOnItem()) {
 					removeItem(r, c);
 				}
@@ -119,7 +122,7 @@ public class Game extends Observable implements Serializable{
 	}
 	
 	public Point getTrainerPos(){
-		return trainer.getCurrentPos();
+		return trainerPos;
 	}
 	
 	public int getSize(){

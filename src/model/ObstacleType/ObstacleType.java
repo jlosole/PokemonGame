@@ -1,6 +1,8 @@
 package model.ObstacleType;
 
-public enum ObstacleType {
+import java.io.Serializable;
+
+public enum ObstacleType implements Serializable {
 	Tree,
 	Bush,
 	DeepGrass,

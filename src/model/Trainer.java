@@ -24,7 +24,7 @@ public class Trainer implements Serializable {
 		currentPosition = null;								// Players current position
 	}
 	
-	public static void setCurrentPosition(Point point){
+	public void setCurrentPosition(Point point){
 		currentPosition = point;
 	}
 	
@@ -124,7 +124,7 @@ public class Trainer implements Serializable {
 		return myPokemon;
 	}
 	
-	public static Point getCurrentPos(){
+	public Point getCurrentPos(){
 		return currentPosition;
 	}
 }

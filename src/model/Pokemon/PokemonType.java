@@ -1,6 +1,8 @@
 package model.Pokemon;
 
-public enum PokemonType {
+import java.io.Serializable;
+
+public enum PokemonType implements Serializable {
 	Pikachu, Charmander, MewTwo, Magmar, Caterpie, Geodude, Eevee, Doduo,
 	Krabby, Drowzee
 }

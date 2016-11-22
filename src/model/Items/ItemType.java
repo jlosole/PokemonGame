@@ -1,5 +1,7 @@
 package model.Items;
 
-public enum ItemType {
+import java.io.Serializable;
+
+public enum ItemType implements Serializable {
 	Potion, SuperPotion, Rock, Bait, SafariBall
 }

@@ -19,24 +19,22 @@ public class GraphicView extends JPanel implements Observer {
 	private int width, height, size, wSpacing, hSpacing;
 	private _Map theMap;
 	private Object [][] objBoard;
-	private Trainer trainer;
 	private Point trainerPos;
 	
 	public GraphicView(Game theGame, int width, int height){
 		this.theGame = theGame;
 		this.width = width;
 		this.height = height;
-		theMap = theGame.getMap();
-		objBoard = theMap.getObjMap();
+		objBoard = theGame.getObjBoard();
 		size = theGame.getSize();
-		trainerPos = trainer.getCurrentPos();
-		
+		trainerPos = theGame.getTrainerPos();
 		wSpacing = width/size;
 		hSpacing = height/size;
 	}
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		objBoard = theGame.getObjBoard();
 		for(int i = 0; i < 23; i++) {
 			for(int j = 0; j < 23; j++) {
 				if(objBoard[i][j].equals(ObstacleType.Tree)) {
@@ -83,7 +81,7 @@ public class GraphicView extends JPanel implements Observer {
 					g.setColor(Color.BLACK);
 					g.fillRect(j*30, i*30, 30, 30);
 				}
-				trainerPos = trainer.getCurrentPos();
+				trainerPos = theGame.getTrainerPos();
 				int x = trainerPos.x;
 				int y = trainerPos.y;
 				g.setColor(Color.cyan);

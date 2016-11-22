@@ -16,7 +16,6 @@ public class TextView extends JPanel implements Observer {
 //	private static final long serialVersionUID = 1L;
 	
 	private JTextArea textArea;
-	private _Map theMap;
 	private char [][] textBoard;
 	private Object [][] objBoard;
 	private Game theGame;
@@ -24,12 +23,11 @@ public class TextView extends JPanel implements Observer {
 	
 	public TextView(Game theGame, int width, int height) {
 		this.theGame = theGame;
-		this.theMap = theGame.getMap();
 		this.width = width;
 		this.height = height;
 		size = theGame.getSize();
 		textBoard = new char[size][size];
-		objBoard = theMap.getObjMap();
+		objBoard = theGame.getObjBoard();
 		initializeView();
 		updateTextBoard();
 	}
@@ -39,7 +37,7 @@ public class TextView extends JPanel implements Observer {
 		textArea = new JTextArea(width, height);
 		textArea.setEditable(false);
 		textArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
-		textArea.setText(theMap.toString());
+		textArea.setText(toString());
 		add(textArea);
 	}
 	
@@ -62,6 +60,7 @@ public class TextView extends JPanel implements Observer {
 				else if(objBoard[i][j] instanceof Item)
 					textBoard[i][j] = 'I';
 				Point pt = theGame.getTrainerPos();
+				//System.out.println(pt.x + " " + pt.y);
 				textBoard[pt.x][pt.y] = 'X';
 			}
 		}
