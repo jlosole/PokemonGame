@@ -6,10 +6,16 @@ import java.awt.Point;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 import model.*;
+import model.Items.Bait;
 import model.Items.ItemType;
+import model.Items.Potion;
+import model.Items.Rock;
+import model.Items.SafariBall;
+import model.Items.SuperPotion;
 import model.Map.*;
 import model.ObstacleType.ObstacleType;
 
@@ -35,57 +41,54 @@ public class GraphicView extends JPanel implements Observer {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		objBoard = theGame.getObjBoard();
+		
+		ImageIcon shortGrass = new ImageIcon("cut_sprites/grass.png");
+		ImageIcon tallGrass = new ImageIcon("cut_sprites/tall_grass.png");
+		ImageIcon bush = new ImageIcon("cut_sprites/bush.png");
+		ImageIcon water = new ImageIcon("cut_sprites/water_middle.png");
+		ImageIcon pokeball = new ImageIcon("cut_sprites/pokeball.png");
+		ImageIcon dirt = new ImageIcon("landscape/dirt.png");
+		ImageIcon trainer = new ImageIcon("landscape/trainer.png");
+
 		for(int i = 0; i < 23; i++) {
 			for(int j = 0; j < 23; j++) {
 				if(objBoard[i][j].equals(ObstacleType.Tree)) {
-					g.setColor(Color.DARK_GRAY);
-					g.fillRect(j*30, i*30, 30, 30);
+					bush.paintIcon(this, g, j*16, i*16);
 				}
 				else if(objBoard[i][j].equals(ObstacleType.DeepGrass)) {
-					g.setColor(Color.GREEN);
-					g.fillRect(j*30, i*30, 30, 30);
+					tallGrass.paintIcon(this, g, j*16, i*16);
 				}
 				else if(objBoard[i][j].equals(ObstacleType.Water)) {
-					g.setColor(Color.BLUE);
-					g.fillRect(j*30, i*30, 30, 30);
+					water.paintIcon(this, g, j*16, i*16);
 				}
 				else if(objBoard[i][j].equals(ObstacleType.Bush)) {
-					g.setColor(Color.YELLOW);
-					g.fillRect(j*30, i*30, 30, 30);
+					bush.paintIcon(this, g, j*16, i*16);
 				}
 				else if(objBoard[i][j].equals(ObstacleType.Dirt)) {
-					g.setColor(Color.ORANGE);
-					g.fillRect(j*30, i*30, 30, 30);
+					dirt.paintIcon(this, g, j*16, i*16);
 				}
 				else if(objBoard[i][j].equals(ObstacleType.ShortGrass)) {
-					g.setColor(Color.RED);
-					g.fillRect(j*30, i*30, 30, 30);
+					shortGrass.paintIcon(this, g, j*16, i*16);
 				}
-				else if(objBoard[i][j].equals(ItemType.Bait)) {
-					g.setColor(Color.BLACK);
-					g.fillRect(j*30, i*30, 30, 30);
+				else if(objBoard[i][j] instanceof Bait) {
+					pokeball.paintIcon(this, g, j*16, i*16);
 				}
-				else if(objBoard[i][j].equals(ItemType.Rock)) {
-					g.setColor(Color.BLACK);
-					g.fillRect(j*30, i*30, 30, 30);
+				else if(objBoard[i][j] instanceof Rock) {
+					pokeball.paintIcon(this, g, j*16, i*16);
 				}
-				else if(objBoard[i][j].equals(ItemType.Potion)) {
-					g.setColor(Color.BLACK);
-					g.fillRect(j*30, i*30, 30, 30);
+				else if(objBoard[i][j] instanceof Potion) {
+					pokeball.paintIcon(this, g, j*16, i*16);
 				}
-				else if(objBoard[i][j].equals(ItemType.SuperPotion)) {
-					g.setColor(Color.BLACK);
-					g.fillRect(j*30, i*30, 30, 30);
+				else if(objBoard[i][j] instanceof SuperPotion) {
+					pokeball.paintIcon(this, g, j*16, i*16);
 				}
-				else if(objBoard[i][j].equals(ItemType.SafariBall)) {
-					g.setColor(Color.BLACK);
-					g.fillRect(j*30, i*30, 30, 30);
+				else if(objBoard[i][j] instanceof SafariBall) {
+					pokeball.paintIcon(this, g, j*16, i*16);
 				}
 				trainerPos = theGame.getTrainerPos();
 				int x = trainerPos.x;
 				int y = trainerPos.y;
-				g.setColor(Color.cyan);
-				g.fillRect(y*30, x*30, 30, 30);
+				trainer.paintIcon(this, g, y*16, x*16);
 			}
 		}
 	}
