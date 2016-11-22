@@ -2,9 +2,11 @@ package model;
 
 import java.awt.Point;
 import java.util.Observable;
+import java.util.Random;
 
 import model.Items.Item;
 import model.Map.*;
+import model.Pokemon.*;
 
 public class Game extends Observable {
 	
@@ -19,8 +21,9 @@ public class Game extends Observable {
 		trainer = new Trainer();
 		theMap = new MapOne();      //Initialize game to start on MapOne
 		size = theMap.getSize();
-		trainerPos = new Point(size-1, size/2);
-		trainer.setCurrentPosition(trainerPos);
+		Point pt = new Point(size-1, size/2);
+		trainer.setCurrentPosition(pt);
+		trainerPos = trainer.getCurrentPos();
 		textBoard = theMap.getTextMap();
 		objBoard = theMap.getObjMap();
 	}
@@ -61,11 +64,42 @@ public class Game extends Observable {
 	
 	public Boolean isInDeepGrass(){
 		if(textBoard[trainerPos.x][trainerPos.y] == 'G'){
-			//Generate random Pokemon
+			getRandomPokemon();
 			return true;
 		}
 		return false;
 		
+	}
+	
+	public Pokemon getRandomPokemon(){
+		Random rand = new Random();
+		int num = rand.nextInt(18);
+		if(num == 0 || num == 1 || num == 2)
+			return randomCommonPokemon();
+		else if(num == 3 || num == 4) 
+			return randomUncommonPokemon();
+		else if(num == 5) 
+			return new MewTwo();
+		else return null;
+	}
+	
+	public Pokemon randomCommonPokemon(){
+		Random rand = new Random();
+		int num = rand.nextInt(6);
+		if(num == 0) return new Caterpie();
+		else if(num == 1) return new Doduo();
+		else if(num == 2) return new Drowzee();
+		else if(num == 3) return new Eevee();
+		else if(num == 4) return new Geodude();
+		else return new Krabby();
+	}
+	
+	public Pokemon randomUncommonPokemon(){
+		Random rand = new Random();
+		int num = rand.nextInt(3);
+		if(num == 0) return new Charmander();
+		else if(num == 1) return new Magmar();
+		else return new Pikachu();
 	}
 	
 	public Trainer getTrainer(){

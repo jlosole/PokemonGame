@@ -14,7 +14,7 @@ import model.Map.*;
 public class GraphicView extends JPanel implements Observer {
 	
 	private Game theGame;
-	private int width, height, size;
+	private int width, height, size, wSpacing, hSpacing;
 	private _Map theMap;
 	private char [][] textBoard;
 	private Object [][] objBoard;
@@ -31,6 +31,9 @@ public class GraphicView extends JPanel implements Observer {
 		size = theGame.getSize();
 		trainer = theGame.getTrainer();
 		trainerPos = trainer.getCurrentPos();
+		
+		wSpacing = width/size;
+		hSpacing = height/size;
 	}
 	
 	public void paintComponent(Graphics g) {
@@ -40,7 +43,7 @@ public class GraphicView extends JPanel implements Observer {
 			for(int j = 0; j < 23; j++) {
 				if(textBoard[i][j] == 'T') {
 					g.setColor(Color.DARK_GRAY);
-					g.fillRect(j*50, i*50, 10, 10);
+					g.fillRect(j*10, i*10, 10, 10);
 				}
 				else if(textBoard[i][j] == 'G') {
 					g.setColor(Color.GREEN);

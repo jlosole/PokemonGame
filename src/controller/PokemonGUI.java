@@ -33,7 +33,6 @@ public class PokemonGUI extends JFrame {
 	private final int WIDTH = (int) screenSize.getWidth();
 	private final int HEIGHT = (int) screenSize.getHeight();
 	private Game theGame;
-	private _Map theMap;
 	private Trainer trainer;
 	private GraphicView gView;
 	private TextView tView;
@@ -79,7 +78,7 @@ public class PokemonGUI extends JFrame {
 	
 	public void addObservers(){
 		theGame.addObserver(gView);
-		theGame.addObserver(tView);
+		//theGame.addObserver(tView);
 	}
 	
 	public void setView(JPanel newView) {
@@ -106,7 +105,7 @@ public class PokemonGUI extends JFrame {
 	}
 	
 	//Class that has listeners for moving the player with arrow keys
-	private class ArrowKeyListener implements KeyListener {
+	private class MyArrowKeyListener implements KeyListener {
 		@Override
 		public void keyPressed(KeyEvent e) {
 			trainerPos = trainer.getCurrentPos();

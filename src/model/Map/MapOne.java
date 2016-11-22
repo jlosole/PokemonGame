@@ -226,8 +226,14 @@ public class MapOne implements _Map {
 	}
 	
 	public boolean canMoveHere(int row, int col) {
-		if(textMap[row][col] == 'g' || textMap[row][col] == 'G' || 
-				textMap[row][col] == 'D')
+		boolean rowValid = true;
+		boolean colValid = true;
+		
+		if(row < 0 || row >= SIZE) rowValid = false;
+		if(col < 0 || col >= SIZE) colValid = false;
+		
+		if(rowValid && colValid && (textMap[row][col] == 'g' || textMap[row][col] == 'G' || 
+				textMap[row][col] == 'D'))
 			return true;
 		return false;
 	}
