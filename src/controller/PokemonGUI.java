@@ -58,7 +58,7 @@ public class PokemonGUI extends JFrame {
 		this.requestFocus();
 		addObservers();
 		addMenus();
-		setView(gView);
+		setView(tView);
 	}
 	
 	//Adds the menus to the frame so you can switch between views

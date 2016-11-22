@@ -1,6 +1,7 @@
 package views;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -27,6 +28,7 @@ public class TextView extends JPanel implements Observer {
 		setLayout(new BorderLayout());
 		textArea = new JTextArea(10, 10);
 		textArea.setEditable(false);
+		textArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
 		textArea.setText(theMap.toString());
 		add(textArea);
 	}
