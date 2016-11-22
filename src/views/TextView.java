@@ -6,16 +6,20 @@ import java.util.Observer;
 
 import javax.swing.*;
 
+import model.Game;
 import model.Map.MapOne;
+import model.Map._Map;
 
 public class TextView extends JPanel implements Observer {
 	private static final long serialVersionUID = 1L;
 	
-	private MapOne 			theMap;
+	private _Map 			theMap;
+	private Game 			theGame;
 	private JTextArea 		textArea;
 	
-	public TextView(MapOne map) {
-		theMap = map;
+	public TextView(Game theGame) {
+		this.theGame = theGame;
+		this.theMap = theGame.getMap();
 		initializeView();
 	}
 	
@@ -30,7 +34,7 @@ public class TextView extends JPanel implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
-		
+		textArea.setText(theMap.toString());
 	}
 
 }

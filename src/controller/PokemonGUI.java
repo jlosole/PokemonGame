@@ -50,7 +50,7 @@ public class PokemonGUI extends JFrame {
 	    theGame = new Game();
 	    trainer = theGame.getTrainer();
 	    gView = new GraphicView(theGame, WIDTH, HEIGHT);
-	    //tView = new TextView();
+	    tView = new TextView(theGame);
 	    
 	    this.addKeyListener(new MyArrowKeyListener());
 		this.setFocusable(true);
