@@ -20,7 +20,7 @@ import model.Pokemon.Pikachu;
  * it's randomly generated whenever the trainer moves. I'll just do it like that for now
  */
 
-public class MapOne {
+public class MapOne implements _Map {
 
 	private Object[][] map;
 	private char[][] textMap;
@@ -29,10 +29,10 @@ public class MapOne {
 	private char lastPosition;
 	private Random random;
 	
-	public static void main(String[] args) {
-		MapOne mp = new MapOne();
-	}
-	
+//	public static void main(String[] args) {
+//		MapOne mp = new MapOne();
+//	}
+//	
 	public MapOne() {
 		textMap = new char[SIZE][SIZE];
 		map = new Object[SIZE][SIZE];
@@ -48,7 +48,7 @@ public class MapOne {
 		printMap();
 	}
 	
-	private void initializeGrid() {
+	public void initializeGrid() {
 		for (int x = 0; x < SIZE; x++) {
 			for (int y = 0; y < SIZE; y++) {
 				map[x][y] = null;
@@ -57,7 +57,7 @@ public class MapOne {
 		}
 	}
 	
-	private void setShortGrass() {
+	public void setShortGrass() {
 		for(int i = 1; i < SIZE; i++) {
 			for(int j = 1; j < SIZE; j++) {
 				if(textMap[i][j] == 'O') {
@@ -67,7 +67,7 @@ public class MapOne {
 		}
 	}
 	
-	private void setDeepGrass() {
+	public void setDeepGrass() {
 		//northwest patch
 		for(int i = 2; i < 6; i++) {
 			for(int j = 2; j < 5; j++) {
@@ -99,7 +99,7 @@ public class MapOne {
 		}
 	}
 	
-	private void setWater() {
+	public void setWater() {
 		for(int i = 8; i < 14; i++) {
 			for(int j = 6; j < 16; j++) {
 				map[i][j] = ObstacleType.Water;
@@ -108,7 +108,7 @@ public class MapOne {
 		}
 	}
 	
-	private void setBushes() {
+	public void setBushes() {
 		for(int i = 1; i < 8; i++) {
 			map[i][8] = ObstacleType.Bush;
 			textMap[i][8] = 'B';
@@ -129,7 +129,7 @@ public class MapOne {
 		}
 	}
 	
-	private void setTreesAndExits() {
+	public void setTreesAndExits() {
 		for(int i = 0; i < SIZE; i++) {
 			//top row
 			if( i < 10 || i > 13) {
@@ -166,7 +166,7 @@ public class MapOne {
 		}
 	}
 	
-	private void setItems() {
+	public void setItems() {
 		map[10][4] = new Bait(false, 2);
 		textMap[10][4] = 'I';
 		map[17][9] = new Rock(false, 6);
@@ -179,7 +179,7 @@ public class MapOne {
 		textMap[15][19] = 'I';
 	}
 	
-	private void setPokemon() {
+	public void setPokemon() {
 		map[2][3] = new Charmander();
 		textMap[2][3] = 'P';
 		map[3][17] = new Pikachu();
@@ -188,7 +188,7 @@ public class MapOne {
 		textMap[19][17] = 'P';
 	}
 	
-	private void printMap() {
+	public void printMap() {
 		for(int i = 0; i < SIZE; i++) {
 			for(int j = 0; j < SIZE; j++) {
 				System.out.print("[ " + textMap[i][j] + " ]");
@@ -213,7 +213,22 @@ public class MapOne {
 		return textMap;
 	}
 	
-	private boolean isSafe(int x, int y) {
+	public Object [][] getObjMap(){
+		return map;
+	}
+	
+	public int getSize(){
+		return SIZE;
+	}
+	
+	public boolean isSafe(int x, int y) {
 		return map[x][y] == null;
+	}
+	
+	public boolean canMoveHere(int row, int col) {
+		if(textMap[row][col] == 'g' || textMap[row][col] == 'G' || 
+				textMap[row][col] == 'D')
+			return true;
+		return false;
 	}
 }
