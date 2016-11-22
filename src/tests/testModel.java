@@ -5,12 +5,10 @@ import org.junit.Test;
 import model.Map.*;
 import java.util.Map;
 import model.Trainer;
-<<<<<<< HEAD
 import model.Items.*;
 
 import model.Pokemon.*;
 
-=======
 import model.Items.Item;
 import model.Items.Potion;
 import model.Items.SafariBall;
@@ -19,7 +17,6 @@ import model.Pokemon.Charmander;
 import model.Pokemon.Magmar;
 import model.Pokemon.Pikachu;
 import model.Pokemon.Pokemon;
->>>>>>> c066537d4dfdff5c923f67fa91c87faded3776d6
 
 public class testModel {
 	
