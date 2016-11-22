@@ -15,6 +15,7 @@ public class Game extends Observable {
 	private Point trainerPos;
 	private char [][] textBoard;
 	private Object [][] objBoard;
+	private boolean gameOver;
 	private int size;
 	
 	public Game(){
@@ -26,6 +27,7 @@ public class Game extends Observable {
 		trainerPos = trainer.getCurrentPos();
 		textBoard = theMap.getTextMap();
 		objBoard = theMap.getObjMap();
+		gameOver = false;
 	}
 	
 	public void setMap(_Map newMap){
@@ -36,23 +38,33 @@ public class Game extends Observable {
 		return theMap;
 	}
 	
-	public void move(int row, int col, String direction) {
+	public Pokemon move(int row, int col, String direction) {
 		int r = row, c = col;
-		System.out.println(direction);
+		Pokemon pokemon = null;
 		//Moves in new direction
 		if(direction.equals("Up")) r -= 1;
 		else if(direction.equals("Down")) r += 1;
 		else if(direction.equals("Left")) c -= 1;
 		else if(direction.equals("Right")) c += 1;
 		
-		if(theMap.canMoveHere(r, c)){
-			Point newPoint = new Point(r, c);
-			trainer.setCurrentPosition(newPoint);
-			trainerPos = trainer.getCurrentPos();
-			didStepOnItem();
-			isInDeepGrass();
+		Point newPoint = new Point(r, c);
+
+		if(trainer.stepMade(newPoint)) {
+			if(theMap.canMoveHere(r, c)){
+				trainer.setCurrentPosition(newPoint);
+				trainerPos = trainer.getCurrentPos();
+				didStepOnItem();
+				if(isInDeepGrass()){
+					pokemon = getRandomPokemon();
+				}
+			}
 		}
+		else {
+			gameOver = true;
+		}
+		return pokemon;
 	}
+	
 	
 	public Boolean didStepOnItem(){
 		if(textBoard[trainerPos.x][trainerPos.y] == 'I'){
@@ -64,7 +76,6 @@ public class Game extends Observable {
 	
 	public Boolean isInDeepGrass(){
 		if(textBoard[trainerPos.x][trainerPos.y] == 'G'){
-			getRandomPokemon();
 			return true;
 		}
 		return false;
@@ -108,5 +119,9 @@ public class Game extends Observable {
 	
 	public int getSize(){
 		return size;
+	}
+	
+	public Boolean gameOver(){
+		return gameOver;
 	}
 }
