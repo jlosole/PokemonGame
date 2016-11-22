@@ -38,7 +38,6 @@ public class Game extends Observable {
 	
 	public void move(int row, int col, String direction) {
 		int r = row, c = col;
-		System.out.println(direction);
 		//Moves in new direction
 		if(direction.equals("Up")) r -= 1;
 		else if(direction.equals("Down")) r += 1;
@@ -52,6 +51,8 @@ public class Game extends Observable {
 			didStepOnItem();
 			isInDeepGrass();
 		}
+		setChanged();
+		notifyObservers();
 	}
 	
 	public Boolean didStepOnItem(){

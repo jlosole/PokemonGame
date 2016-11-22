@@ -11,8 +11,8 @@ import model.Map.MapOne;
 public class TextView extends JPanel implements Observer {
 	private static final long serialVersionUID = 1L;
 	
-	private MapOne 			theMap;
-	private JTextArea 		textArea;
+	private MapOne theMap;
+	private JTextArea textArea;
 	
 	public TextView(MapOne map) {
 		theMap = map;

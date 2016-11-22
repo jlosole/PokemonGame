@@ -38,40 +38,45 @@ public class GraphicView extends JPanel implements Observer {
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		
+		System.out.println("in paint");
 		for(int i = 0; i < 23; i++) {
 			for(int j = 0; j < 23; j++) {
+				trainerPos = trainer.getCurrentPos();
+				int x = trainerPos.x;
+				int y = trainerPos.y;
+				g.setColor(Color.cyan);
+				g.fillRect(y*30, x*30, 30, 30);
 				if(textBoard[i][j] == 'T') {
 					g.setColor(Color.DARK_GRAY);
-					g.fillRect(j*10, i*10, 10, 10);
+					g.fillRect(j*30, i*30, 30, 30);
 				}
 				else if(textBoard[i][j] == 'G') {
 					g.setColor(Color.GREEN);
-					g.fillRect(j*10, i*10, 10, 10);
+					g.fillRect(j*30, i*30, 30, 30);
 				}
 				else if(textBoard[i][j] == 'W') {
 					g.setColor(Color.BLUE);
-					g.fillRect(j*10, i*10, 10, 10);
+					g.fillRect(j*30, i*30, 30, 30);
 				}
 				else if(textBoard[i][j] == 'B') {
 					g.setColor(Color.YELLOW);
-					g.fillRect(j*10, i*10, 10, 10);
+					g.fillRect(j*30, i*30, 30, 30);
 				}
 				else if(textBoard[i][j] == 'D') {
 					g.setColor(Color.ORANGE);
-					g.fillRect(j*10, i*10, 10, 10);
+					g.fillRect(j*30, i*30, 30, 30);
 				}
 				else if(textBoard[i][j] == 'g') {
 					g.setColor(Color.RED);
-					g.fillRect(j*10, i*10, 10, 10);
+					g.fillRect(j*30, i*30, 30, 30);
 				}
 				else if(textBoard[i][j] == 'P') {
 					g.setColor(Color.WHITE);
-					g.fillRect(j*10, i*10, 10, 10);
+					g.fillRect(j*30, i*30, 30, 30);
 				}
 				else if(textBoard[i][j] == 'I') {
 					g.setColor(Color.BLACK);
-					g.fillRect(j*10, i*10, 10, 10);
+					g.fillRect(j*30, i*30, 30, 30);
 				}
 			}
 		}
