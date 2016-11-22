@@ -1,5 +1,4 @@
 package controller;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Point;
@@ -13,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import views.GraphicView;
@@ -33,7 +33,6 @@ public class PokemonGUI extends JFrame {
 	private final int WIDTH = (int) screenSize.getWidth();
 	private final int HEIGHT = (int) screenSize.getHeight();
 	private Game theGame;
-	private Trainer trainer;
 	private GraphicView gView;
 	private TextView tView;
 	private JPanel currentView;
@@ -49,16 +48,15 @@ public class PokemonGUI extends JFrame {
 	    this.setLayout(new BorderLayout());
 	    
 	    theGame = new Game();
-	    trainer = theGame.getTrainer();
 	    gView = new GraphicView(theGame, WIDTH, HEIGHT);
-	    tView = new TextView(theGame);
+	    tView = new TextView(theGame, WIDTH, HEIGHT);
 	    
 	    this.addKeyListener(new MyArrowKeyListener());
 		this.setFocusable(true);
 		this.requestFocus();
 		addObservers();
 		addMenus();
-		setView(tView);
+		setView(gView);
 	}
 	
 	//Adds the menus to the frame so you can switch between views
@@ -79,7 +77,7 @@ public class PokemonGUI extends JFrame {
 	
 	public void addObservers(){
 		theGame.addObserver(gView);
-		//theGame.addObserver(tView);
+		theGame.addObserver(tView);
 	}
 	
 	public void setView(JPanel newView) {
@@ -88,7 +86,7 @@ public class PokemonGUI extends JFrame {
 		}
 		currentView = newView;
 		add(currentView, BorderLayout.CENTER);
-		currentView.repaint();
+		theGame.doNotify();
 		validate();		
 	}
 
@@ -109,7 +107,7 @@ public class PokemonGUI extends JFrame {
 	private class MyArrowKeyListener implements KeyListener {
 		@Override
 		public void keyPressed(KeyEvent e) {
-			trainerPos = trainer.getCurrentPos();
+			Point trainerPos = theGame.getTrainerPos();
 			
 			int row = (int) trainerPos.getX();
 			int col = (int) trainerPos.getY();
@@ -132,6 +130,9 @@ public class PokemonGUI extends JFrame {
 				}
 				//if(pokemonFound != null) 
 				//theGame.startBattle(pokemonFound)
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "Game Over! You're out of steps!");
 			}
 		}
 		@Override

@@ -31,8 +31,8 @@ public class Trainer implements Serializable {
 	//Checks to make sure we have steps to use and if we do we sub one from our number of steps
 	public Boolean stepMade(Point point) {
 		if(numSteps > 0){
-			currentPosition = point;
 			numSteps--;
+			System.out.println(numSteps);
 			return true;
 		}
 		return false;
