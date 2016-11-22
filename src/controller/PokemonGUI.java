@@ -38,6 +38,7 @@ public class PokemonGUI extends JFrame {
 	private TextView tView;
 	private JPanel currentView;
 	private Point trainerPos;
+	private String winCondition;
 	
 	
 	public PokemonGUI() {
@@ -113,18 +114,24 @@ public class PokemonGUI extends JFrame {
 			int row = (int) trainerPos.getX();
 			int col = (int) trainerPos.getY();
 			
+			Pokemon pokemonFound;
+			
 			int keyCode = e.getKeyCode();
-			if(keyCode == KeyEvent.VK_UP) {
-				theGame.move(row, col, "Up");
-			}
-			else if(keyCode == KeyEvent.VK_DOWN){
-				theGame.move(row, col, "Down");
-			}
-			else if(keyCode == KeyEvent.VK_LEFT){
-				theGame.move(row, col, "Left");
-			}
-			else if(keyCode == KeyEvent.VK_RIGHT){
-				theGame.move(row, col, "Right");
+			if(!theGame.gameOver()){
+				if(keyCode == KeyEvent.VK_UP) {
+					pokemonFound = theGame.move(row, col, "Up");
+				}
+				else if(keyCode == KeyEvent.VK_DOWN){
+					pokemonFound = theGame.move(row, col, "Down");
+				}
+				else if(keyCode == KeyEvent.VK_LEFT){
+					pokemonFound = theGame.move(row, col, "Left");
+				}
+				else if(keyCode == KeyEvent.VK_RIGHT){
+					pokemonFound = theGame.move(row, col, "Right");
+				}
+				//if(pokemonFound != null) 
+				//theGame.startBattle(pokemonFound)
 			}
 		}
 		@Override
