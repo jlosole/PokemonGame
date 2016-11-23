@@ -40,13 +40,14 @@ public class GraphicView extends JPanel implements Observer {
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		
 		objBoard = theGame.getObjBoard();
 		
 		ImageIcon shortGrass = new ImageIcon("cut_sprites/grass.png");
 		ImageIcon tallGrass = new ImageIcon("cut_sprites/tall_grass.png");
 		ImageIcon bush = new ImageIcon("cut_sprites/bush.png");
 		ImageIcon water = new ImageIcon("cut_sprites/water_middle.png");
-		ImageIcon pokeball = new ImageIcon("cut_sprites/pokeball.png");
+		ImageIcon safariball = new ImageIcon("landscape/safari-ball.png");
 		ImageIcon dirt = new ImageIcon("landscape/dirt.png");
 		ImageIcon trainer = new ImageIcon("landscape/trainer.png");
 
@@ -71,19 +72,24 @@ public class GraphicView extends JPanel implements Observer {
 					shortGrass.paintIcon(this, g, j*16, i*16);
 				}
 				else if(objBoard[i][j] instanceof Bait) {
-					pokeball.paintIcon(this, g, j*16, i*16);
+					shortGrass.paintIcon(this, g, j*16, i*16);
+					safariball.paintIcon(this, g, j*16, i*16);
 				}
 				else if(objBoard[i][j] instanceof Rock) {
-					pokeball.paintIcon(this, g, j*16, i*16);
+					shortGrass.paintIcon(this, g, j*16, i*16);
+					safariball.paintIcon(this, g, j*16, i*16);
 				}
 				else if(objBoard[i][j] instanceof Potion) {
-					pokeball.paintIcon(this, g, j*16, i*16);
+					shortGrass.paintIcon(this, g, j*16, i*16);
+					safariball.paintIcon(this, g, j*16, i*16);
 				}
 				else if(objBoard[i][j] instanceof SuperPotion) {
-					pokeball.paintIcon(this, g, j*16, i*16);
+					shortGrass.paintIcon(this, g, j*16, i*16);
+					safariball.paintIcon(this, g, j*16, i*16);
 				}
 				else if(objBoard[i][j] instanceof SafariBall) {
-					pokeball.paintIcon(this, g, j*16, i*16);
+					shortGrass.paintIcon(this, g, j*16, i*16);
+					safariball.paintIcon(this, g, j*16, i*16);
 				}
 				trainerPos = theGame.getTrainerPos();
 				int x = trainerPos.x;

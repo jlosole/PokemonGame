@@ -3,26 +3,21 @@ package model.Map;
 import java.io.Serializable;
 import java.util.Random;
 import model.Items.Bait;
-import model.Items.Item;
-import model.Items.ItemType;
 import model.Items.Potion;
 import model.Items.Rock;
 import model.Items.SafariBall;
 import model.ObstacleType.ObstacleType;
-import model.Pokemon.Charmander;
-import model.Pokemon.MewTwo;
-import model.Pokemon.Pikachu;
 
-public class MapOne implements _Map, Serializable {
-
+public class MapTwo implements _Map, Serializable {
+	
 	private Object[][] map;
 	private final int SIZE = 23;
 	private ObstacleType obstacleType = null;
 	private char lastPosition;
 	private Random random;
-	public static MapOne mapOne;
+	public static MapTwo mapTwo;
 	
-	private MapOne() {
+	private MapTwo() {
 		map = new Object[SIZE][SIZE];
 		random = new Random();
 		initializeGrid();
@@ -34,12 +29,12 @@ public class MapOne implements _Map, Serializable {
 		setItems();
 	}
 	
-	public static MapOne getInstanceOf() {
-		if(mapOne == null) {
-			mapOne = new MapOne();
-			return mapOne;
+	public static MapTwo getInstanceOf() {
+		if(mapTwo == null) {
+			mapTwo = new MapTwo();
+			return mapTwo;
 		} else {
-			return mapOne;
+			return mapTwo;
 		}
 	}
 	
@@ -62,92 +57,92 @@ public class MapOne implements _Map, Serializable {
 	}
 	
 	public void setDeepGrass() {
-		//northwest patch
-		for(int i = 2; i < 6; i++) {
-			for(int j = 2; j < 5; j++) {
-				map[i][j] = ObstacleType.DeepGrass;
-			}
-		}
+
 		//southwest patch
-		for(int i = 17; i < SIZE-2; i++) {
+		for(int i = 17; i < SIZE-3; i++) {
 			for(int j = 1; j < 5; j++) {
 				map[i][j] = ObstacleType.DeepGrass;
 			}
 		}
-		//southeast patch
-		for(int i = 18; i < SIZE-2; i++) {
+		//northeast patch
+		for(int i = 1; i < 4; i++) {
 			for(int j = 16; j < SIZE-2; j++) {
 				map[i][j] = ObstacleType.DeepGrass;
 			}
 		}
-		
-		//northeast patch
-		for(int i = 1; i < 8; i++) {
-			for(int j = 16; j < SIZE-2; j++) {
+		//northeast patch extended
+		for(int i = 4; i < 7; i++) {
+			for(int j = 19; j < SIZE-2; j++) {
+				map[i][j] = ObstacleType.DeepGrass;
+			}
+		}
+		//entrance deep grass
+		for(int i = 9; i < 13; i++) {
+			for(int j = 5; j < 8; j++) {
 				map[i][j] = ObstacleType.DeepGrass;
 			}
 		}
 	}
 	
 	public void setWater() {
-		for(int i = 8; i < 14; i++) {
-			for(int j = 6; j < 16; j++) {
+		for(int i = 12; i < SIZE-3; i++) {
+			for(int j = 16; j < SIZE-3; j++) {
 				map[i][j] = ObstacleType.Water;
 			}
 		}
+		for(int i = 16; i < SIZE-3; i++) {
+			for(int j = 10; j < 16; j++) {
+				map[i][j] = ObstacleType.Water;
+			}
+		}	
 	}
 	
 	public void setBushes() {
-		for(int i = 1; i < 8; i++) {
-			map[i][8] = ObstacleType.Bush;
-		}
-		
-		for(int j = 1; j < 7; j++) {
+		//bushes surrounding southwest deep grass
+		for(int j = 1; j < 6; j++) {
 			map[16][j] = ObstacleType.Bush;
 		}
-		map[14][6] = ObstacleType.Bush;
-		map[15][6] = ObstacleType.Bush;
+		for(int i = 16; i < SIZE-3; i++) {
+			map[i][5] = ObstacleType.Bush;
+		}
 		
-		for(int i = 7; i > 0; i--) {
-			map[i][15] = ObstacleType.Bush;
+		//north middle bushes
+		for(int i = 1; i < 10; i++) {
+			map[i][14] = ObstacleType.Bush;
+		}
+		
+		//bushes leading from entrance
+		for(int j = 1; j < 8; j++) {
+			map[8][j] = ObstacleType.Bush;
+		}
+		for(int i = 8; i < 16; i++) {
+			map[i][8] = ObstacleType.Bush;
 		}
 	}
 	
 	public void setTreesAndExits() {
 		for(int i = 0; i < SIZE; i++) {
 			//top row
-			if( i < 10 || i > 13) {
-				map[0][i] = ObstacleType.Tree;
-			} else {
-				map[0][i] = ObstacleType.Dirt;
-			}
+			map[0][i] = ObstacleType.Tree;
 			//bottom row
-			if(i < 9 || i > 13) {
-				map[SIZE-1][i] = ObstacleType.Tree;
-			} else {
-				map[SIZE-1][i] = ObstacleType.Dirt;
-			}
+			map[SIZE-1][i] = ObstacleType.Tree;
+			//right column
+			map[i][SIZE-1] = ObstacleType.Tree;
 			//left column
-			if(i < 9 || i > 13) {
+			map[i][0] = ObstacleType.Tree;
+			//left column
+			if((i < 2) || (i > 5 && i < 9) || (i > 13 && i < SIZE)) {
 				map[i][0] = ObstacleType.Tree;
 			} else {
 				map[i][0] = ObstacleType.Dirt;
-			}
-			//right column
-			if(i < 9 || i > 13) {
-				map[i][SIZE-1] = ObstacleType.Tree;
-			} else {
-				map[i][SIZE-1] = ObstacleType.Dirt;
 			}
 		}
 	}
 	
 	public void setItems() {
-		map[10][4] = new Bait(false, 2);
-		map[17][9] = new Rock(false, 6);
+		map[3][8] = new Bait(false, 2);
+		map[SIZE-2][SIZE-2] = new Rock(false, 6);
 		map[9][18] = new Potion(false, 10);
-		map[4][10] = new SafariBall(false, 3);
-		map[15][19] = new SafariBall(false, 3);
 	}
 	
 	public Object [][] getObjMap(){
@@ -161,4 +156,5 @@ public class MapOne implements _Map, Serializable {
 	public boolean isSafe(int x, int y) {
 		return map[x][y] == null;
 	}
+
 }

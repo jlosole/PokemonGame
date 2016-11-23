@@ -13,7 +13,9 @@ import model.Pokemon.*;
 public class Game extends Observable implements Serializable{
 	
 	private Trainer trainer;
-	private _Map theMap;
+	private _Map currentMap;
+	private _Map mapOne = MapOne.getInstanceOf();
+	private _Map mapTwo = MapTwo.getInstanceOf();
 	private Object [][] objBoard;
 	private Point trainerPos;
 	private boolean gameOver;
@@ -21,28 +23,29 @@ public class Game extends Observable implements Serializable{
 	
 	public Game(){
 		trainer = new Trainer();
-		theMap = new MapOne();      //Initialize game to start on MapOne
-		size = theMap.getSize();
+		currentMap = mapOne;      //Initialize game to start on MapOne
+		size = currentMap.getSize();
 		Point pt = new Point(size-1, size/2);
 		trainer.setCurrentPosition(pt);
 		trainerPos = trainer.getCurrentPos();
-		objBoard = theMap.getObjMap();
+		objBoard = currentMap.getObjMap();
 		gameOver = false;
 	}
 	
 	public void setMap(_Map newMap){
-		theMap = newMap;
+		currentMap = newMap;
+		objBoard = currentMap.getObjMap();
 	}
 	
 	public _Map getMap(){
-		return theMap;
+		return currentMap;
 	}
 	
 	public Pokemon move(int row, int col, String direction) {
 		int r = row, c = col;
 
 		Pokemon pokemon = null;
-
+		
 		//Moves in new direction
 		if(direction.equals("Up")) r -= 1;
 		else if(direction.equals("Down")) r += 1;
@@ -50,6 +53,56 @@ public class Game extends Observable implements Serializable{
 		else if(direction.equals("Right")) c += 1;
 		
 		Point newPoint = new Point(r, c);
+		
+		//if trainer walks to east exit on MapOne
+		if(((r > 9 || r < 13) && (c == size-1)
+				&& currentMap.equals(mapOne))) {
+			setMap(mapTwo);
+			Point point = new Point(r, 0);
+			if(trainer.stepMade(point)) {
+				trainer.setCurrentPosition(point);
+				trainerPos = trainer.getCurrentPos();
+				setChanged();
+				notifyObservers();
+			}
+			return null;
+		}
+		//if trainer walks to north exit on MapOne
+		if(currentMap.equals(mapOne) && (c >= 10 && c <= 13) && (r == 0)) {
+			setMap(mapTwo);
+			Point point = new Point(3, 0);
+			if(trainer.stepMade(point)) {
+				trainer.setCurrentPosition(point);
+				trainerPos = trainer.getCurrentPos();
+				setChanged();
+				notifyObservers();
+			}
+			return null;
+		}
+		//if trainer walks to west exit on MapTwo
+		if(currentMap.equals(mapTwo) && (r >= 9 && r <= 13) && (c == 0)) {
+			setMap(mapOne);
+			Point point = new Point(10, size-1);
+			if(trainer.stepMade(point)) {
+				trainer.setCurrentPosition(point);
+				trainerPos = trainer.getCurrentPos();
+				setChanged();
+				notifyObservers();
+			}
+			return null;
+		}
+		//if trainer walks to northwest exit on MapTwo
+		if(currentMap.equals(mapTwo) && (r >= 2 && r <= 5) && (c == 0)) {
+			setMap(mapOne);
+			Point point = new Point(0, 11);
+			if(trainer.stepMade(point)) {
+				trainer.setCurrentPosition(point);
+				trainerPos = trainer.getCurrentPos();
+				setChanged();
+				notifyObservers();
+			}
+			return null;
+		}
 
 		if(canMoveHere(r, c)) {
 			if(trainer.stepMade(newPoint)){
@@ -140,6 +193,7 @@ public class Game extends Observable implements Serializable{
 	public void removeItem(int x, int y){
 		objBoard[x][y] = ObstacleType.ShortGrass;
 	}
+	
 	public boolean canMoveHere(int row, int col) {
 		boolean rowValid = true;
 		boolean colValid = true;
