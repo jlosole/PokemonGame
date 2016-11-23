@@ -3,6 +3,8 @@ package model.Pokemon;
 import java.io.Serializable;
 import java.util.Random;
 
+import javax.swing.ImageIcon;
+
 import model.Items.Bait;
 import model.Items.Item;
 import model.Items.ItemType;
@@ -93,4 +95,7 @@ public abstract class Pokemon implements Serializable {
 	
 	//Abstract method to get the pokemon type
 	public abstract PokemonType getPokemonType();
+	
+	//Abstract methof to get the path to the Pokemon's image
+	public abstract ImageIcon getImage();
 }

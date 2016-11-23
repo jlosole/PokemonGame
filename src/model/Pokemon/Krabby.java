@@ -2,6 +2,8 @@ package model.Pokemon;
 
 import java.util.Random;
 
+import javax.swing.ImageIcon;
+
 import model.Items.Bait;
 import model.Items.Item;
 import model.Items.Rock;
@@ -31,5 +33,9 @@ public class Krabby extends Pokemon {
 		else return new Bait(false, 3);
 	}
 	
+	@Override
+	public ImageIcon getImage() {
+		return new ImageIcon("cut_sprites/krabby.png");
+	}
 	
 }

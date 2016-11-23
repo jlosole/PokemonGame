@@ -1,5 +1,7 @@
 package model.Pokemon;
 
+import javax.swing.ImageIcon;
+
 import model.Items.Bait;
 import model.Items.Item;
 import model.Items.SuperPotion;
@@ -19,5 +21,10 @@ public class Pikachu extends Pokemon {
 	@Override
 	public PokemonType getPokemonType() {
 		return PokemonType.Pikachu;
+	}
+	
+	@Override
+	public ImageIcon getImage() {
+		return new ImageIcon("cut_sprites/pikachu.png");
 	}
 }

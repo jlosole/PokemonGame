@@ -2,6 +2,8 @@ package model.Pokemon;
 
 import java.util.Random;
 
+import javax.swing.ImageIcon;
+
 import model.Items.*;
 
 //COMMON
@@ -27,6 +29,11 @@ public class Doduo extends Pokemon {
 		int num = rand.nextInt(3);
 		if(num == 0 || num == 1) return null;
 		else return new Potion(false, 15);
+	}
+	
+	@Override
+	public ImageIcon getImage() {
+		return new ImageIcon("cut_sprites/doduo.png");
 	}
 	
 }

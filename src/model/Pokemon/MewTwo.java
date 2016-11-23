@@ -1,5 +1,7 @@
 package model.Pokemon;
 
+import javax.swing.ImageIcon;
+
 import model.Items.Bait;
 import model.Items.Item;
 import model.Items.SuperPotion;
@@ -20,5 +22,10 @@ public class MewTwo extends Pokemon {
 	@Override
 	public PokemonType getPokemonType() {
 		return PokemonType.MewTwo;
+	}
+	
+	@Override
+	public ImageIcon getImage() {
+		return new ImageIcon("cut_sprites/mewtwo.png");
 	}
 }

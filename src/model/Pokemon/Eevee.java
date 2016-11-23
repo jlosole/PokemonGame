@@ -2,6 +2,8 @@ package model.Pokemon;
 
 import java.util.Random;
 
+import javax.swing.ImageIcon;
+
 import model.Items.*;
 
 //COMMON
@@ -26,5 +28,10 @@ public class Eevee extends Pokemon {
 		int num = rand.nextInt(3);
 		if(num == 0) return null;
 		else if(num == 1) return new Bait(false, 2);
-		else return new Potion(false, 15);	}
+		else return new Potion(false, 15);	
+	}
+	@Override
+	public ImageIcon getImage() {
+		return new ImageIcon("cut_sprites/eevee.png");
+	}
 }

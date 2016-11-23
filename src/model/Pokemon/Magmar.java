@@ -1,5 +1,7 @@
 package model.Pokemon;
 
+import javax.swing.ImageIcon;
+
 import model.Items.Item;
 import model.Items.SafariBall;
 
@@ -19,6 +21,11 @@ public class Magmar extends Pokemon {
 	@Override
 	public PokemonType getPokemonType(){
 		return PokemonType.Magmar;
+	}
+	
+	@Override
+	public ImageIcon getImage() {
+		return new ImageIcon("cut_sprites/magmar.png");
 	}
 	
 }

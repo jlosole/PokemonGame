@@ -2,6 +2,8 @@ package model.Pokemon;
 
 import java.util.Random;
 
+import javax.swing.ImageIcon;
+
 import model.Items.*;
 
 //COMMON
@@ -28,5 +30,10 @@ public class Drowzee extends Pokemon {
 		if(num == 0) return null;
 		else if(num == 1) return new Rock(false, 10);
 		else return new Potion(false, 15);
+	}
+	
+	@Override
+	public ImageIcon getImage() {
+		return new ImageIcon("cut_sprites/drowzee.png");
 	}
 }

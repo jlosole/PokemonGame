@@ -1,5 +1,7 @@
 package model.Pokemon;
 
+import javax.swing.ImageIcon;
+
 import model.Items.Item;
 import model.Items.Potion;
 
@@ -20,5 +22,9 @@ public class Charmander extends Pokemon {
 	public PokemonType getPokemonType() {
 		return PokemonType.Charmander;
 	}
-
+	
+	@Override
+	public ImageIcon getImage() {
+		return new ImageIcon("cut_sprites/charmander.png");
+	}
 }

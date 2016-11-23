@@ -2,6 +2,8 @@ package model.Pokemon;
 
 import java.util.Random;
 
+import javax.swing.ImageIcon;
+
 import model.Items.Bait;
 import model.Items.Item;
 import model.Items.Rock;
@@ -30,6 +32,11 @@ public class Caterpie extends Pokemon {
 		if(num == 0) return null;
 		else if(num == 1) return new Rock(false, 10);
 		else return new Bait(false, 3);
+	}
+	
+	@Override
+	public ImageIcon getImage() {
+		return new ImageIcon("cut_sprites/caterpie.png");
 	}
 	
 }
