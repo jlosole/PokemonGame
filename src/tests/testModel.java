@@ -98,7 +98,7 @@ public class testModel {
 	
 	@Test
 	public void testToString() {
-		MapOne map = new MapOne();
+		MapOne map = MapOne.getInstanceOf();
 		System.out.println(map.toString());
 	}
 	

@@ -143,7 +143,7 @@ public class PokemonGUI extends JFrame {
 			Point trainerPos = theGame.getTrainerPos();
 			int row = (int) trainerPos.getX();
 			int col = (int) trainerPos.getY();
-			Pokemon pokemonFound;
+			Pokemon pokemonFound = null;
 			
 			int keyCode = e.getKeyCode();
 			if(!theGame.gameOver()){
