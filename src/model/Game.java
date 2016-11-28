@@ -53,9 +53,10 @@ public class Game extends Observable implements Serializable{
 		else if(direction.equals("Right")) c += 1;
 		
 		Point newPoint = new Point(r, c);
-		
+		System.out.println(c);
+		System.out.println(size-1);
 		//if trainer walks to east exit on MapOne
-		if(((r > 9 || r < 13) && (c == size-1)
+		if(((r > 9 || r < 13) && (c == size)
 				&& currentMap.equals(mapOne))) {
 			setMap(mapTwo);
 			Point point = new Point(r, 0);
@@ -68,7 +69,7 @@ public class Game extends Observable implements Serializable{
 			return null;
 		}
 		//if trainer walks to north exit on MapOne
-		if(currentMap.equals(mapOne) && (c >= 10 && c <= 13) && (r == 0)) {
+		if(currentMap.equals(mapOne) && (c >= 10 && c <= 13) && (r == -1)) {
 			setMap(mapTwo);
 			Point point = new Point(3, 0);
 			if(trainer.stepMade(point)) {
@@ -80,7 +81,7 @@ public class Game extends Observable implements Serializable{
 			return null;
 		}
 		//if trainer walks to west exit on MapTwo
-		if(currentMap.equals(mapTwo) && (r >= 9 && r <= 13) && (c == 0)) {
+		if(currentMap.equals(mapTwo) && (r >= 9 && r <= 13) && (c == -1)) {
 			setMap(mapOne);
 			Point point = new Point(10, size-1);
 			if(trainer.stepMade(point)) {
@@ -92,7 +93,7 @@ public class Game extends Observable implements Serializable{
 			return null;
 		}
 		//if trainer walks to northwest exit on MapTwo
-		if(currentMap.equals(mapTwo) && (r >= 2 && r <= 5) && (c == 0)) {
+		if(currentMap.equals(mapTwo) && (r >= 2 && r <= 5) && (c == -1)) {
 			setMap(mapOne);
 			Point point = new Point(0, 11);
 			if(trainer.stepMade(point)) {
