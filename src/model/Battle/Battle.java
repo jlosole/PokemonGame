@@ -63,6 +63,10 @@ public class Battle {
 		} else return Outcome.NoBait;
 	}
 	
+	public void trainerRan(){
+		over = true;
+	}
+	
 	public Pokemon getPokemon(){
 		return pokemon;
 	}

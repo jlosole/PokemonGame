@@ -72,5 +72,9 @@ public class BattleView extends JPanel implements Observer {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		g.drawString("Bait: Left Arrow", 30, 50);
+		g.drawString("Rock: Right Arrow", 30, 75);
+		g.drawString("Run: Up Arrow", 30, 100);
+		g.drawString("Ball: Down Arrow", 30, 125);
 	}
 }

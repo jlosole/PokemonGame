@@ -28,6 +28,7 @@ import views.GraphicView;
 import views.TextView;
 import model.Game;
 import model.Trainer;
+import model.Battle.Battle;
 import model.Pokemon.*;
 
 public class PokemonGUI extends JFrame {
@@ -62,9 +63,10 @@ public class PokemonGUI extends JFrame {
 		}
 	}
 	
-	private final int WIDTH = 684;
-	private final int HEIGHT = 684;
+	private final int WIDTH = 675;
+	private final int HEIGHT = 675;
 	private Game theGame;
+	private Battle battle;
 	private GraphicView gView;
 	private TextView tView;
 	private BattleView bView;
@@ -80,6 +82,7 @@ public class PokemonGUI extends JFrame {
 	    this.setLayout(new BorderLayout());
 	    
 	    theGame = game;
+	    battle = theGame.getBattle();
 
 	    gView = new GraphicView(theGame, WIDTH, HEIGHT);
 	    tView = new TextView(theGame, WIDTH, HEIGHT); 
@@ -146,14 +149,15 @@ public class PokemonGUI extends JFrame {
 		}
 		@Override
 		public void keyPressed(KeyEvent e) {
-	
+			
+			int keyCode = e.getKeyCode();
+
 			if(!currentView.equals(bView)){
 				Point trainerPos = theGame.getTrainerPos();
 				int row = (int) trainerPos.getX();
 				int col = (int) trainerPos.getY();
 				Pokemon pokemonFound = null;
 				
-				int keyCode = e.getKeyCode();
 				if(!theGame.gameOver()){
 					if(keyCode == KeyEvent.VK_UP) {
 						pokemonFound = theGame.move(row, col, "Up");
@@ -177,15 +181,24 @@ public class PokemonGUI extends JFrame {
 					JOptionPane.showMessageDialog(null, "Game Over! You're out of steps!");
 				}
 			}
+			else {
+				if(keyCode == KeyEvent.VK_UP) {
+					battle.trainerRan();
+					//set currentView = oldView
+				}
+				else if(keyCode == KeyEvent.VK_DOWN){
+				
+				}
+				else if(keyCode == KeyEvent.VK_LEFT){
+				}
+				else if(keyCode == KeyEvent.VK_RIGHT){
+				}
+			}
 		}
 		@Override
 		public void keyReleased(KeyEvent e){}
 		@Override
 		public void keyTyped(KeyEvent e){}
-	}
-	
-	private class BattleActionListener {
-		
 	}
 	
 	public class MyWindowListener implements WindowListener {
