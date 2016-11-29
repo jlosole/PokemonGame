@@ -148,7 +148,7 @@ public class Game extends Observable implements Serializable{
 	
 	public Pokemon getRandomPokemon(){
 		Random rand = new Random();
-		int num = rand.nextInt(18);
+		int num = rand.nextInt(32);
 		if(num == 0 || num == 1 || num == 2)
 			return randomCommonPokemon();
 		else if(num == 3 || num == 4) 

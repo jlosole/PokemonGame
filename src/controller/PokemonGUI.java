@@ -1,8 +1,6 @@
 package controller;
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.Point;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -16,6 +14,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import javax.swing.Timer;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -27,7 +26,6 @@ import views.BattleView;
 import views.GraphicView;
 import views.TextView;
 import model.Game;
-import model.Trainer;
 import model.Battle.Battle;
 import model.Pokemon.*;
 
@@ -35,6 +33,7 @@ public class PokemonGUI extends JFrame {
 		
 	private static FileInputStream fis;
 	private static ObjectInputStream oIStream;
+	private static int DELAY_IN_MILLS = 1000;
 	
 	public static void main(String [] args) {
 		int selection = JOptionPane.showConfirmDialog(null, "Start from previous saved game?",
@@ -72,7 +71,7 @@ public class PokemonGUI extends JFrame {
 	private BattleView bView;
 	private JPanel currentView;
 	private String winCondition;
-	
+	private Timer timer;
 	
 	public PokemonGUI(Game game) {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -87,6 +86,9 @@ public class PokemonGUI extends JFrame {
 	    gView = new GraphicView(theGame, WIDTH, HEIGHT);
 	    tView = new TextView(theGame, WIDTH, HEIGHT); 
 	    bView = new BattleView(theGame, WIDTH, HEIGHT);
+	    
+	    timer = new Timer(DELAY_IN_MILLS, new MoveListener());
+	    timer.start();
 	    
 	    this.addKeyListener(new MyArrowKeyListener(theGame));
 	    this.addWindowListener(new MyWindowListener());
@@ -138,6 +140,14 @@ public class PokemonGUI extends JFrame {
 				setView(gView);
 			else if(entered.equals("Text View"))
 				setView(tView);
+		}
+	}
+	
+	private class MoveListener implements ActionListener {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			gView.repaint();
 		}
 	}
 	

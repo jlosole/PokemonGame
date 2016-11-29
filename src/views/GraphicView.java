@@ -47,47 +47,47 @@ public class GraphicView extends JPanel implements Observer {
 		for(int i = 0; i < 23; i++) {
 			for(int j = 0; j < 23; j++) {
 				if(objBoard[i][j].equals(ObstacleType.Tree)) {
-					bush.paintIcon(this, g, j*16, i*16);
+					bush.paintIcon(this, g, j*32, i*32);
 				}
 				else if(objBoard[i][j].equals(ObstacleType.DeepGrass)) {
-					tallGrass.paintIcon(this, g, j*16, i*16);
+					tallGrass.paintIcon(this, g, j*32, i*32);
 				}
 				else if(objBoard[i][j].equals(ObstacleType.Water)) {
-					water.paintIcon(this, g, j*16, i*16);
+					water.paintIcon(this, g, j*32, i*32);
 				}
 				else if(objBoard[i][j].equals(ObstacleType.Bush)) {
-					bush.paintIcon(this, g, j*16, i*16);
+					bush.paintIcon(this, g, j*32, i*32);
 				}
 				else if(objBoard[i][j].equals(ObstacleType.Dirt)) {
-					dirt.paintIcon(this, g, j*16, i*16);
+					dirt.paintIcon(this, g, j*32, i*32);
 				}
 				else if(objBoard[i][j].equals(ObstacleType.ShortGrass)) {
-					shortGrass.paintIcon(this, g, j*16, i*16);
+					shortGrass.paintIcon(this, g, j*32, i*32);
 				}
 				else if(objBoard[i][j] instanceof Bait) {
-					shortGrass.paintIcon(this, g, j*16, i*16);
-					safariball.paintIcon(this, g, j*16, i*16);
+					shortGrass.paintIcon(this, g, j*32, i*32);
+					safariball.paintIcon(this, g, j*32, i*32);
 				}
 				else if(objBoard[i][j] instanceof Rock) {
-					shortGrass.paintIcon(this, g, j*16, i*16);
-					safariball.paintIcon(this, g, j*16, i*16);
+					shortGrass.paintIcon(this, g, j*32, i*32);
+					safariball.paintIcon(this, g, j*32, i*32);
 				}
 				else if(objBoard[i][j] instanceof Potion) {
-					shortGrass.paintIcon(this, g, j*16, i*16);
-					safariball.paintIcon(this, g, j*16, i*16);
+					shortGrass.paintIcon(this, g, j*32, i*32);
+					safariball.paintIcon(this, g, j*32, i*32);
 				}
 				else if(objBoard[i][j] instanceof SuperPotion) {
-					shortGrass.paintIcon(this, g, j*16, i*16);
-					safariball.paintIcon(this, g, j*16, i*16);
+					shortGrass.paintIcon(this, g, j*32, i*32);
+					safariball.paintIcon(this, g, j*32, i*32);
 				}
 				else if(objBoard[i][j] instanceof SafariBall) {
-					shortGrass.paintIcon(this, g, j*16, i*16);
-					safariball.paintIcon(this, g, j*16, i*16);
+					shortGrass.paintIcon(this, g, j*32, i*32);
+					safariball.paintIcon(this, g, j*32, i*32);
 				}
 				trainerPos = theGame.getTrainerPos();
 				int x = trainerPos.x;
 				int y = trainerPos.y;
-				trainer.paintIcon(this, g, y*16, x*16);
+				trainer.paintIcon(this, g, y*32, x*32);
 			}
 		}
 	}

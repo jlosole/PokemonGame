@@ -1,5 +1,7 @@
 package views;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -72,9 +74,13 @@ public class BattleView extends JPanel implements Observer {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		g.drawString("Bait: Left Arrow", 30, 50);
-		g.drawString("Rock: Right Arrow", 30, 75);
-		g.drawString("Run: Up Arrow", 30, 100);
-		g.drawString("Ball: Down Arrow", 30, 125);
+		
+    	Font myFont = new Font("Courier", Font.BOLD, 22);
+    	g.setFont(myFont);
+    	g.setColor(Color.BLACK);
+		g.drawString("Throw Bait: Left Arrow", 30, 50);
+		g.drawString("Throw Rock: Right Arrow", 30, 75);
+		g.drawString("Throw Ball: Down Arrow", 30, 100);
+		g.drawString("Run: Up Arrow", 30, 125);
 	}
 }
