@@ -1,6 +1,5 @@
 package views;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.util.Observable;
@@ -11,34 +10,29 @@ import javax.swing.JPanel;
 
 import model.*;
 import model.Items.Bait;
-import model.Items.ItemType;
 import model.Items.Potion;
 import model.Items.Rock;
 import model.Items.SafariBall;
 import model.Items.SuperPotion;
-import model.Map.*;
 import model.ObstacleType.ObstacleType;
 
 public class GraphicView extends JPanel implements Observer {
 	
 	private Game theGame;
-	private int width, height, size;
-	private _Map theMap;
 	private Object [][] objBoard;
 	private Point trainerPos;
+	private int width, height;
 	
 	public GraphicView(Game theGame, int width, int height){
 		this.theGame = theGame;
+		objBoard = theGame.getObjBoard();
 		this.width = width;
 		this.height = height;
-		objBoard = theGame.getObjBoard();
-		size = theGame.getSize();
+		this.setSize(width, height);
 	}
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		
-		
 		
 		objBoard = theGame.getObjBoard();
 		

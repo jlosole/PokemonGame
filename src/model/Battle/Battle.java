@@ -22,23 +22,30 @@ public class Battle {
 		if (trainer.throwBall()) {
 			//Pokemon either caught or escaped
 			if (pokemon.didCatch()) {
+				trainer.caughtPokemon(pokemon);
+				over = true;
 				return Outcome.Caught;
-			} else {
+			} 
+			
+			else {
 				//If escaped, either stayed or ran
 				if (pokemon.didRun()) {
+					over = true;
 					return Outcome.EscapedAndRan;
-				} else return Outcome.EscapedAndStayed;
+				} 
+				else return Outcome.EscapedAndStayed;
 			}
-		} else return Outcome.NoBalls;
+		} 
+		else return Outcome.NoBalls;
 	}
 	
 	public Outcome throwRock() {
 		//Either does or doesn't have rocks
 		if (trainer.throwRock()) {
-			//Impact the Pokemon
-			pokemon.hitByRock();
+			pokemon.hitByRock();			//Impact the Pokemon
 			//Then check the Pokemon's reaction
 			if (pokemon.didRun()) {
+				over = true;
 				return Outcome.Ran;
 			} else return Outcome.Stayed;
 		} else return Outcome.NoRocks;
@@ -47,12 +54,20 @@ public class Battle {
 	public Outcome throwBait() {
 		//Either does or doesn't have bait
 		if (trainer.throwBait()) {
-			//Pokemon eats bait
-			pokemon.ateBait();
+			pokemon.ateBait();				//Pokemon eats bait
 			//Check pokemon's reaction
 			if (pokemon.didRun()) {
+				over = true;
 				return Outcome.Ran;
 			} else return Outcome.Stayed;
 		} else return Outcome.NoBait;
+	}
+	
+	public Pokemon getPokemon(){
+		return pokemon;
+	}
+	
+	public Boolean isOver(){
+		return over;
 	}
 }

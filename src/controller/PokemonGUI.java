@@ -23,6 +23,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import views.BattleView;
 import views.GraphicView;
 import views.TextView;
 import model.Game;
@@ -61,19 +62,19 @@ public class PokemonGUI extends JFrame {
 		}
 	}
 	
-	private final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-	private final int WIDTH = (int) screenSize.getWidth();
-	private final int HEIGHT = (int) screenSize.getHeight();
+	private final int WIDTH = 782;
+	private final int HEIGHT = 782;
 	private Game theGame;
 	private GraphicView gView;
 	private TextView tView;
+	private BattleView bView;
 	private JPanel currentView;
 	private String winCondition;
 	
 	
 	public PokemonGUI(Game game) {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    this.setSize(screenSize);
+	    this.setSize(WIDTH, HEIGHT);
 	    this.setLocation(100, 40);
 	    this.setTitle("Pokemon");
 	    this.setLayout(new BorderLayout());
@@ -81,9 +82,10 @@ public class PokemonGUI extends JFrame {
 	    theGame = game;
 
 	    gView = new GraphicView(theGame, WIDTH, HEIGHT);
-	    tView = new TextView(theGame, WIDTH, HEIGHT);
+	    tView = new TextView(theGame, WIDTH, HEIGHT); 
+	    bView = new BattleView(theGame, WIDTH, HEIGHT);
 	    
-	    this.addKeyListener(new MyArrowKeyListener());
+	    this.addKeyListener(new MyArrowKeyListener(theGame));
 	    this.addWindowListener(new MyWindowListener());
 		this.setFocusable(true);
 		this.requestFocus();
@@ -111,6 +113,7 @@ public class PokemonGUI extends JFrame {
 	public void addObservers(){
 		theGame.addObserver(gView);
 		theGame.addObserver(tView);
+		theGame.addObserver(bView);
 	}
 	
 	public void setView(JPanel newView) {
@@ -125,7 +128,6 @@ public class PokemonGUI extends JFrame {
 
 	//Class that has listeners for changing between views
 	private class MenuListener implements ActionListener {
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			String entered = ((JMenuItem) e.getSource()).getText();
@@ -136,34 +138,44 @@ public class PokemonGUI extends JFrame {
 		}
 	}
 	
-	//Class that has listeners for moving the player with arrow keys
 	private class MyArrowKeyListener implements KeyListener {
+		private Game theGame;
+		
+		public MyArrowKeyListener(Game game){
+			theGame = game;
+		}
 		@Override
 		public void keyPressed(KeyEvent e) {
-			Point trainerPos = theGame.getTrainerPos();
-			int row = (int) trainerPos.getX();
-			int col = (int) trainerPos.getY();
-			Pokemon pokemonFound = null;
-			
-			int keyCode = e.getKeyCode();
-			if(!theGame.gameOver()){
-				if(keyCode == KeyEvent.VK_UP) {
-					pokemonFound = theGame.move(row, col, "Up");
+	
+			if(!currentView.equals(bView)){
+				Point trainerPos = theGame.getTrainerPos();
+				int row = (int) trainerPos.getX();
+				int col = (int) trainerPos.getY();
+				Pokemon pokemonFound = null;
+				
+				int keyCode = e.getKeyCode();
+				if(!theGame.gameOver()){
+					if(keyCode == KeyEvent.VK_UP) {
+						pokemonFound = theGame.move(row, col, "Up");
+					}
+					else if(keyCode == KeyEvent.VK_DOWN){
+						pokemonFound = theGame.move(row, col, "Down");
+					}
+					else if(keyCode == KeyEvent.VK_LEFT){
+						pokemonFound = theGame.move(row, col, "Left");
+					}
+					else if(keyCode == KeyEvent.VK_RIGHT){
+						pokemonFound = theGame.move(row, col, "Right");
+					}
+					if(pokemonFound != null) {
+						theGame.startBattle(pokemonFound);
+						bView.setPokemon(pokemonFound);
+						setView(bView);
+					}
 				}
-				else if(keyCode == KeyEvent.VK_DOWN){
-					pokemonFound = theGame.move(row, col, "Down");
+				else {
+					JOptionPane.showMessageDialog(null, "Game Over! You're out of steps!");
 				}
-				else if(keyCode == KeyEvent.VK_LEFT){
-					pokemonFound = theGame.move(row, col, "Left");
-				}
-				else if(keyCode == KeyEvent.VK_RIGHT){
-					pokemonFound = theGame.move(row, col, "Right");
-				}
-				//if(pokemonFound != null) 
-				//theGame.startBattle(pokemonFound)
-			}
-			else {
-				JOptionPane.showMessageDialog(null, "Game Over! You're out of steps!");
 			}
 		}
 		@Override
@@ -171,7 +183,12 @@ public class PokemonGUI extends JFrame {
 		@Override
 		public void keyTyped(KeyEvent e){}
 	}
-	private class MyWindowListener implements WindowListener {
+	
+	private class BattleActionListener {
+		
+	}
+	
+	public class MyWindowListener implements WindowListener {
 		@Override
 		public void windowClosing(WindowEvent e) {
 			int selection = JOptionPane.showConfirmDialog(null, "Would you like to save the " + 

@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.Observable;
 import java.util.Random;
 
+import model.Battle.Battle;
 import model.Items.Item;
 import model.Map.*;
 import model.ObstacleType.ObstacleType;
@@ -20,6 +21,7 @@ public class Game extends Observable implements Serializable{
 	private Point trainerPos;
 	private boolean gameOver;
 	private int size;
+	private Battle battle;
 	
 	public Game(){
 		trainer = new Trainer();
@@ -36,7 +38,7 @@ public class Game extends Observable implements Serializable{
 		currentMap = newMap;
 		objBoard = currentMap.getObjMap();
 	}
-	
+		
 	public _Map getMap(){
 		return currentMap;
 	}
@@ -175,6 +177,13 @@ public class Game extends Observable implements Serializable{
 		else return new Pikachu();
 	}
 	
+	public void startBattle(Pokemon pokemon) {
+		battle = new Battle(trainer, pokemon);
+	}
+	
+	public Battle getBattle(){
+		return battle;
+	}
 	public Point getTrainerPos(){
 		return trainerPos;
 	}

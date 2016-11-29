@@ -26,6 +26,7 @@ public class TextView extends JPanel implements Observer {
 		this.width = width;
 		this.height = height;
 		size = theGame.getSize();
+		this.setSize(width, height);
 		textBoard = new char[size][size];
 		objBoard = theGame.getObjBoard();
 		initializeView();
