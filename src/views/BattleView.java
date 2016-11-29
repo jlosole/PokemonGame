@@ -1,9 +1,15 @@
 package views;
 
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -20,14 +26,13 @@ public class BattleView extends JPanel implements Observer {
 	private Pokemon pokemon;
 	private int width, height;
 	
-	
-	public BattleView(Game game, int width, int height){
+	public BattleView(Game game, int width, int height) {
 		theGame = game;
 		battle = theGame.getBattle();
 		pokemon = null;
 		this.width = width; 
 		this.height = height;
-		//this.setSize(width, height);
+		this.setSize(width, height);
 		//addLabels();
 	}
 	
@@ -60,7 +65,12 @@ public class BattleView extends JPanel implements Observer {
 	
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
-		ImageIcon battleBack = new ImageIcon("cut_sprites/battle_background.png");
-		battleBack.paintIcon(this, g, 0, 0);
+		BufferedImage background;
+		try {
+			background = ImageIO.read(new File("cut_sprites/battle_background.png"));
+			g.drawImage(background, 0, 0, null);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
