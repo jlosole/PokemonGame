@@ -22,7 +22,7 @@ import model.ObstacleType.ObstacleType;
 public class GraphicView extends JPanel implements Observer {
 	
 	private Game theGame;
-	private int width, height, size, wSpacing, hSpacing;
+	private int width, height, size;
 	private _Map theMap;
 	private Object [][] objBoard;
 	private Point trainerPos;
@@ -33,13 +33,12 @@ public class GraphicView extends JPanel implements Observer {
 		this.height = height;
 		objBoard = theGame.getObjBoard();
 		size = theGame.getSize();
-		trainerPos = theGame.getTrainerPos();
-		wSpacing = width/size;
-		hSpacing = height/size;
 	}
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		
+		
 		
 		objBoard = theGame.getObjBoard();
 		
