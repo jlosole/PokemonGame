@@ -10,4 +10,12 @@ public enum ObstacleType implements Serializable {
 	Rock,
 	Dirt,
 	Water,
+	WaterLeft,
+	WaterTopLeft,
+	WaterBottomLeft,
+	WaterRight,
+	WaterTopRight,
+	WaterBottomRight,
+	WaterBottom,
+	WaterTop,
 }
