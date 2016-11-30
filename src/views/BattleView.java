@@ -172,6 +172,7 @@ public class BattleView extends JPanel implements Observer {
 		super.paintComponent(g);
 		//Always draw the background
 		g.drawImage(background, 0, 0, null);
+
 		g.drawImage(trainer, trainerX, height-400, null);
 		moveTrainer();
 		

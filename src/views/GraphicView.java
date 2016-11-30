@@ -107,7 +107,25 @@ public class GraphicView extends JPanel implements Observer {
 		super.paintComponent(g);
 		
 		objBoard = theGame.getObjBoard();
+
+		ImageIcon shortGrass = new ImageIcon("cut_sprites/grass.png");
+		ImageIcon tallGrass = new ImageIcon("cut_sprites/tall_grass.png");
+		ImageIcon bush = new ImageIcon("cut_sprites/bush.png");
+		ImageIcon water = new ImageIcon("cut_sprites/water_middle.png");
+		ImageIcon safariball = new ImageIcon("landscape/safari-ball.png");
+		ImageIcon dirt = new ImageIcon("landscape/dirt.png");
+		ImageIcon trainer;
 		
+		//Trainer faces whichever direction we're walking
+		if (theGame.getDirection() == 0) {
+			trainer = new ImageIcon("cut_sprites/trainer_up_2.png");
+		} else if (theGame.getDirection() == 1) {
+			trainer= new ImageIcon("cut_sprites/trainer_down_2.png");
+		} else if (theGame.getDirection() == 2) {
+			trainer= new ImageIcon("cut_sprites/trainer_left_2.png");
+		} else {
+			trainer= new ImageIcon("cut_sprites/trainer_right_2.png");
+		}
 		for(int i = 0; i < 23; i++) {
 			for(int j = 0; j < 23; j++) {
 				shortGrass.paintIcon(this,g, j*32, i *32);
@@ -198,38 +216,12 @@ public class GraphicView extends JPanel implements Observer {
 				else if(objBoard[i][j] instanceof SafariBall) {
 					safariBall.paintIcon(this, g, j*32, i*32);
 				}
-				
-				trainerPos = theGame.getTrainerPos();
-				int x = trainerPos.x;
-				int y = trainerPos.y;
-				String dir = theGame.getDirection();
-//				ImageIcon tempTrainer = null;
-//				switch(dir) {
-//					case "Up": tempTrainer = trainerUp2;
-//					case "Down": tempTrainer = trainerDown2;
-//					case "Right": tempTrainer = trainerRight2;
-//					case "Left": tempTrainer = trainerLeft2;
-//				}
-//				ImageIcon trainerToPaint = adjustTrainerImage(tempTrainer, x, y);
-				if(starting) {				
-					trainerUp2.paintIcon(this, g, y*32, x*32);
-					starting = false;
-				}
-				else {
-					switch(dir) {
-						case "Up": trainerUp2.paintIcon(this, g, y*32, x*32);
-						break;
-						case "Left": trainerLeft2.paintIcon(this, g, y*32, x*32);
-						break;
-						case "Right": trainerRight2.paintIcon(this, g, y*32, x*32);
-						break;
-						case "Down": trainerDown2.paintIcon(this, g, y*32, x*32);
-							default: break;
-					}
-				}
-				timer.start();
 			}
 		}
+		trainerPos = theGame.getTrainerPos();
+		int x = trainerPos.x;
+		int y = trainerPos.y;
+		trainer.paintIcon(this, g, y*32, x*32);
 	}
 	
 	public void updateAnimations() {

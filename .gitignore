@@ -9,7 +9,6 @@ tmp/
 *.swp
 *~.nib
 *.jar
-*.mp3
 local.properties
 .classpath
 .project

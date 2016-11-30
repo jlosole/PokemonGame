@@ -13,7 +13,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-
 import javax.swing.JButton;
 import javax.swing.Timer;
 import javax.swing.JFrame;
@@ -65,6 +64,7 @@ public class PokemonGUI extends JFrame {
 	}
 	
 	private final int WIDTH = 735, HEIGHT = 735;
+
 	private Game theGame;
 	private Battle battle;
 	private GraphicView gView;
@@ -167,7 +167,7 @@ public class PokemonGUI extends JFrame {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			gView.repaint();
+			//gView.repaint();
 		}
 	}
 	
@@ -241,9 +241,9 @@ public class PokemonGUI extends JFrame {
 						JOptionPane.showMessageDialog(null, "You have no rocks!");
 					
 					//Pokemon ran, currentView now is map
-					else if(outcome.equals(Outcome.Ran))  
-						setView(oldView);
-					
+					else if(outcome.equals(Outcome.Ran)) { 
+						//animate running
+					}
 					 //Pokemon stayed do nothing
 					else {}								 
 				}
@@ -258,12 +258,11 @@ public class PokemonGUI extends JFrame {
 					if(outcome.equals(Outcome.NoBait))    
 						JOptionPane.showMessageDialog(null, "You have no bait!");
 					
-					//Pokemon ran currentView now is map
-					else if(outcome.equals(Outcome.Ran))  
-						setView(oldView);
-					
+					else if(outcome.equals(Outcome.Ran)) {
+						//Animate pokemon running
+					}
 					 //Pokemon stayed do nothing
-					else{}								 
+					else{}								 	
 				}
 				
 				//User clicked throw ball
@@ -274,12 +273,12 @@ public class PokemonGUI extends JFrame {
 					
 					//We threw a ball and caught the pokemon
 					if(outcome.equals(Outcome.Caught)) {
-						setView(oldView);
+						
 					}
 					
 					//We threw a ball and the pokemon escaped the ball and ran
 					else if(outcome.equals(Outcome.EscapedAndRan)){
-						setView(oldView);
+						
 					}
 					
 					//No balls to throw
@@ -293,6 +292,11 @@ public class PokemonGUI extends JFrame {
 				
 				//User clicked run
 				else if(buttonPressed.equals(runB)){
+					battle.trainerRan();
+				}
+				
+				//Now check if game is over
+				if (battle.isOver()) {
 					setView(oldView);
 				}
 				theGame.doNotify();
