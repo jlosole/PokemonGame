@@ -13,12 +13,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-
-<<<<<<< HEAD
 import javax.swing.JButton;
-=======
 import javax.swing.Timer;
->>>>>>> d393a7a37b4948a9975245b731a95c45a9434d83
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -76,16 +72,13 @@ public class PokemonGUI extends JFrame {
 	private BattleView bView;
 	private JPanel currentView, oldView = null;;
 	private String winCondition;
-<<<<<<< HEAD
 	
 	private JButton rockB;
 	private JButton baitB;
 	private JButton ballB;
 	private JButton runB; 
 	
-=======
 	private Timer timer;
->>>>>>> d393a7a37b4948a9975245b731a95c45a9434d83
 	
 	public PokemonGUI(Game game) {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -174,7 +167,7 @@ public class PokemonGUI extends JFrame {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			gView.repaint();
+			//gView.repaint();
 		}
 	}
 	

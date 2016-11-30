@@ -53,6 +53,11 @@ public class Game extends Observable implements Serializable{
 		return currentMap;
 	}
 	
+	public int getDirection() {
+		System.out.println("returning " + trainerFacing);
+		return trainerFacing;
+	}
+	
 	public Pokemon move(int row, int col, String direction) {
 		int r = row, c = col;
 
@@ -62,18 +67,22 @@ public class Game extends Observable implements Serializable{
 		if(direction.equals("Up")) {
 			r -= 1;
 			trainerFacing = 0;
+			System.out.println(trainerFacing);
 		}
 		else if(direction.equals("Down")) {
 			r += 1;
 			trainerFacing = 1;
+			System.out.println(trainerFacing);
 		}
 		else if(direction.equals("Left")) {
 			c -= 1;
 			trainerFacing = 2;
+			System.out.println(trainerFacing);
 		}
 		else if(direction.equals("Right")) {
 			c += 1;
 			trainerFacing = 3;
+			System.out.println(trainerFacing);
 		}
 		
 		Point newPoint = new Point(r, c);
