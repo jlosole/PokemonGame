@@ -1,6 +1,11 @@
 package views;
 
+<<<<<<< HEAD
 import java.awt.BorderLayout;
+=======
+import java.awt.Color;
+import java.awt.Font;
+>>>>>>> d393a7a37b4948a9975245b731a95c45a9434d83
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -113,9 +118,20 @@ public class BattleView extends JPanel implements Observer {
 		else if(actionMade == 1){
 			//Draw bait
 		}
+<<<<<<< HEAD
 		else if(actionMade == 2){
 			g.drawImage(ballI, width/2, height/2, null);
 		}
 		
+=======
+		
+    	Font myFont = new Font("Courier", Font.BOLD, 22);
+    	g.setFont(myFont);
+    	g.setColor(Color.BLACK);
+		g.drawString("Throw Bait: Left Arrow", 30, 50);
+		g.drawString("Throw Rock: Right Arrow", 30, 75);
+		g.drawString("Throw Ball: Down Arrow", 30, 100);
+		g.drawString("Run: Up Arrow", 30, 125);
+>>>>>>> d393a7a37b4948a9975245b731a95c45a9434d83
 	}
 }
