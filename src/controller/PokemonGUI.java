@@ -236,9 +236,11 @@ public class PokemonGUI extends JFrame {
 					outcome = battle.throwRock();
 					if(outcome.equals(Outcome.NoRocks))   //No rocks to throw 
 						JOptionPane.showMessageDialog(null, "You have no rocks!");
-					else if(outcome.equals(Outcome.Ran))  //Pokemon ran currentView now is map
-						setView(oldView);
-					else {}								  //Pokemon stayed do nothing
+					else if(outcome.equals(Outcome.Ran)){
+						//Pokemon ran currentView now is map
+					}
+						//setView(oldView);
+					//else {}								  //Pokemon stayed do nothing
 				}
 				else if(buttonPressed.equals(baitB)){
 					System.out.println("bait");
@@ -247,9 +249,11 @@ public class PokemonGUI extends JFrame {
 					outcome = battle.throwBait();
 					if(outcome.equals(Outcome.NoBait))    //No bait to throw
 						JOptionPane.showMessageDialog(null, "You have no bait!");
-					else if(outcome.equals(Outcome.Ran))  //Pokemon ran currentView now is map
-						setView(oldView);
-					else{}								  //Pokemon stayed do nothing
+					else if(outcome.equals(Outcome.Ran)) {
+						//Pokemon ran currentView now is map
+					}
+						//setView(oldView);
+					//else{}								  //Pokemon stayed do nothing
 				}
 				else if(buttonPressed.equals(ballB)){
 					System.out.println("ball");
@@ -258,11 +262,11 @@ public class PokemonGUI extends JFrame {
 					outcome = battle.throwBall();
 					if(outcome.equals(Outcome.Caught)) {
 						System.out.println("caught");
-						setView(oldView);
+						//setView(oldView);
 					}
 					else if(outcome.equals(Outcome.EscapedAndRan)){
 						System.out.println("run");
-						setView(oldView);
+						//setView(oldView);
 					}
 					else if(outcome.equals(Outcome.NoBalls)){
 						JOptionPane.showMessageDialog(null, "You have no Safari Balls!");
@@ -271,6 +275,11 @@ public class PokemonGUI extends JFrame {
 				}
 				else if(buttonPressed.equals(runB)){
 					System.out.println("run1");
+					battle.trainerRan();
+					//setView(oldView);
+				}
+				//Now check if game is over
+				if (battle.isOver()) {
 					setView(oldView);
 				}
 				theGame.doNotify();

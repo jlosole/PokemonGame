@@ -1,7 +1,17 @@
 package model.Battle;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+
 import model.Trainer;
 import model.Pokemon.Pokemon;
+import songplayer.BattleMusic;
+import songplayer.EndOfSongEvent;
+import songplayer.EndOfSongListener;
+import songplayer.MapMusic;
+import songplayer.SongPlayer;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
 
 //The logic behind a battle/encounter
 public class Battle {
@@ -11,10 +21,32 @@ public class Battle {
 	private 		Pokemon pokemon;
 	private 		Boolean over;
 	
+	//Music variables
+	AudioStream battleStream = null;
+	AudioStream caughtStream = null;
+	
 	public Battle (Trainer trainer, Pokemon pokemon) {
 		this.trainer = trainer;
 		this.pokemon = pokemon;
 		over = false;
+		//Start playing the music
+		//BattleMusic.play();
+	}
+	
+	private void playCaughtMusic() {
+		try {
+			FileInputStream is = new FileInputStream("music/battle.wav");
+			caughtStream = new AudioStream(is);
+			AudioPlayer.player.start(caughtStream);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void stopCaughtMusic() {
+		if (caughtStream != null) {
+			AudioPlayer.player.stop(caughtStream);
+		}
 	}
 	
 	public Outcome throwBall() {
@@ -72,6 +104,11 @@ public class Battle {
 	}
 	
 	public Boolean isOver(){
+		if (over) {
+			BattleMusic.stop();
+			MapMusic.play();
+			System.out.println("yahhh");
+		}
 		return over;
 	}
 }

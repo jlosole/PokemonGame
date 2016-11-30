@@ -10,8 +10,10 @@ import model.Items.Item;
 import model.Map.*;
 import model.ObstacleType.ObstacleType;
 import model.Pokemon.*;
+import songplayer.BattleMusic;
 import songplayer.EndOfSongEvent;
 import songplayer.EndOfSongListener;
+import songplayer.MapMusic;
 import songplayer.SongPlayer;
 
 public class Game extends Observable implements Serializable{
@@ -46,6 +48,8 @@ public class Game extends Observable implements Serializable{
 		trainerFacing = 0;
 		objBoard = currentMap.getObjMap();
 		gameOver = false;
+		//start music
+		MapMusic.play();
 	}
 	
 	public void setMap(_Map newMap){
@@ -150,6 +154,10 @@ public class Game extends Observable implements Serializable{
 				}
 				if(isInDeepGrass()){
 					pokemon = getRandomPokemon();
+					if (pokemon != null) {
+						MapMusic.stop();
+						BattleMusic.play();
+					}
 				}
 				setChanged();
 				notifyObservers();
