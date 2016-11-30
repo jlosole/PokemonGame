@@ -1,6 +1,9 @@
 package views;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2d4b87f49246b8059ef3ad4db59bcb27fd141af1
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -120,7 +123,10 @@ public class BattleView extends JPanel implements Observer {
 			g.drawImage(ballI, width/2, height/2, null);
 		}
 		
+<<<<<<< HEAD
 		
+=======
+>>>>>>> 2d4b87f49246b8059ef3ad4db59bcb27fd141af1
     	Font myFont = new Font("Courier", Font.BOLD, 22);
     	g.setFont(myFont);
     	g.setColor(Color.BLACK);

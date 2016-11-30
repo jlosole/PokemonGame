@@ -32,6 +32,7 @@ public class MapOne implements _Map, Serializable {
 		setShortGrass();
 		setDeepGrass();
 		setItems();
+		setStone();
 	}
 	
 	public static MapOne getInstanceOf() {
@@ -89,12 +90,47 @@ public class MapOne implements _Map, Serializable {
 		}
 	}
 	
+	public void setStone() {
+		//entrance walk way
+		for(int i = SIZE-1; i > 15; i--) {
+			map[i][11] = ObstacleType.StoneWalk;
+		}
+		//corner pieces at end of entrance walkway
+		map[16][10] = ObstacleType.StoneBotRight;
+		map[17][10] = ObstacleType.StoneTopRight;
+		map[16][12] = ObstacleType.StoneBotLeft;
+		map[17][12] = ObstacleType.StoneTopLeft;
+
+	}
+	
 	public void setWater() {
-		for(int i = 8; i < 14; i++) {
-			for(int j = 6; j < 16; j++) {
+		//inner water
+		for(int i = 9; i < 13; i++) {
+			for(int j = 5; j < 15; j++) {
 				map[i][j] = ObstacleType.Water;
 			}
 		}
+		//top border
+		for(int j = 6; j < 14; j++) {
+			map[8][j] = ObstacleType.WaterTop;
+		}
+		//left border
+		for(int i = 9; i < 13; i++) {
+			map[i][5] = ObstacleType.WaterLeft;
+		}
+		//right border
+		for(int i = 9; i < 13; i++) {
+			map[i][14] = ObstacleType.WaterRight;
+		}
+		//bottom border
+		for(int j = 6; j < 14; j++) {
+			map[13][j] = ObstacleType.WaterBottom;
+		}
+		//hard coded corner images
+		map[8][5] = ObstacleType.WaterTopLeft;
+		map[8][14] = ObstacleType.WaterTopRight;
+		map[13][5] = ObstacleType.WaterBottomLeft;
+		map[13][14] = ObstacleType.WaterBottomRight;
 	}
 	
 	public void setBushes() {
@@ -108,9 +144,6 @@ public class MapOne implements _Map, Serializable {
 		map[14][6] = ObstacleType.Bush;
 		map[15][6] = ObstacleType.Bush;
 		
-		for(int i = 7; i > 0; i--) {
-			map[i][15] = ObstacleType.Bush;
-		}
 	}
 	
 	public void setTreesAndExits() {
@@ -143,11 +176,11 @@ public class MapOne implements _Map, Serializable {
 	}
 	
 	public void setItems() {
-		map[10][4] = new Bait(false, 2);
-		map[17][9] = new Rock(false, 6);
+		map[10][2] = new Bait(false, 2);
+		map[17][5] = new Rock(false, 6);
 		map[9][18] = new Potion(false, 10);
-		map[4][10] = new SafariBall(false, 3);
-		map[15][19] = new SafariBall(false, 3);
+		map[5][12] = new SafariBall(false, 3);
+		map[17][14] = new SafariBall(false, 3);
 	}
 	
 	public Object [][] getObjMap(){

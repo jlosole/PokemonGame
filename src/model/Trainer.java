@@ -32,7 +32,6 @@ public class Trainer implements Serializable {
 	public Boolean stepMade(Point point) {
 		if(numSteps > 0){
 			numSteps--;
-			System.out.println(numSteps);
 			return true;
 		}
 		return false;

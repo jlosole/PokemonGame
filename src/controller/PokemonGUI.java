@@ -65,6 +65,7 @@ public class PokemonGUI extends JFrame {
 	}
 	
 	private final int WIDTH = 736, HEIGHT = 780;
+
 	private Game theGame;
 	private Battle battle;
 	private GraphicView gView;
@@ -77,7 +78,6 @@ public class PokemonGUI extends JFrame {
 	private JButton baitB;
 	private JButton ballB;
 	private JButton runB; 
-	
 	private Timer timer;
 	
 	public PokemonGUI(Game game) {
@@ -85,7 +85,7 @@ public class PokemonGUI extends JFrame {
 	    this.setSize(WIDTH, HEIGHT);
 	    this.setLocation(100, 40);
 	    this.setTitle("Pokemon");
-	    //this.setLayout(new BorderLayout());
+	    this.setLayout(new BorderLayout());
 	    
 	    theGame = game;
 	    battle = theGame.getBattle();
@@ -146,7 +146,8 @@ public class PokemonGUI extends JFrame {
 			oldView = currentView;
 		}
 		currentView = newView;
-		this.setContentPane(currentView);
+//		this.setContentPane(currentView);
+		this.add(currentView, BorderLayout.CENTER);
 		theGame.doNotify();
 		validate();		
 	}
