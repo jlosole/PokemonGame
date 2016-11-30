@@ -237,9 +237,11 @@ public class PokemonGUI extends JFrame {
 					//No rocks to throw 
 					if(outcome.equals(Outcome.NoRocks))  
 						JOptionPane.showMessageDialog(null, "You have no rocks!");
-					
+					else {
+						bView.startThrowTimer();
+					}
 					//Pokemon ran, currentView now is map
-					else if(outcome.equals(Outcome.Ran)) { 
+					if(outcome.equals(Outcome.Ran)) { 
 						//animate running
 					}
 					 //Pokemon stayed do nothing
@@ -255,8 +257,10 @@ public class PokemonGUI extends JFrame {
 					//No bait to throw
 					if(outcome.equals(Outcome.NoBait))    
 						JOptionPane.showMessageDialog(null, "You have no bait!");
+					else 
+						bView.startThrowTimer();
 					
-					else if(outcome.equals(Outcome.Ran)) {
+					if (outcome.equals(Outcome.Ran)) {
 						//Animate pokemon running
 					}
 					 //Pokemon stayed do nothing
@@ -269,6 +273,13 @@ public class PokemonGUI extends JFrame {
 
 					outcome = battle.throwBall();			//See what happens after throwing ball
 					
+					//No balls to throw
+					if(outcome.equals(Outcome.NoBalls)){
+						JOptionPane.showMessageDialog(null, "You have no Safari Balls!");
+					}
+					else 
+						bView.startThrowTimer();
+					
 					//We threw a ball and caught the pokemon
 					if(outcome.equals(Outcome.Caught)) {
 						
@@ -277,11 +288,6 @@ public class PokemonGUI extends JFrame {
 					//We threw a ball and the pokemon escaped the ball and ran
 					else if(outcome.equals(Outcome.EscapedAndRan)){
 						
-					}
-					
-					//No balls to throw
-					else if(outcome.equals(Outcome.NoBalls)){
-						JOptionPane.showMessageDialog(null, "You have no Safari Balls!");
 					}
 					
 					//Threw a ball and the pokemon escaped and stayed
