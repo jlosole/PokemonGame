@@ -32,15 +32,19 @@ public class BattleView extends JPanel implements Observer {
 	private Game theGame;
 	private Pokemon pokemon;
 	
-	private int width, height, actionMade = -1;
+	private int width, height;
+	private int actions = 1;  				 //Will be a counter to see which images to draw
+	private Boolean pokemonCaught = false;   //False is pokemon isnt caught true otherwise
 	
 	private JPanel buttonPanel;
-	private BufferedImage background, trainer, rockImage, 
-						  baitImage, ballImage, currentItemImage = null;
+	private BufferedImage background, rockImage, baitImage, ballImage, currentItemImage = null; 
+	private BufferedImage currentTrainer, trainer1, trainer2, trainer3, trainer4, trainer5;		  
 	private JButton bait, rock, run, ball;
 	
-	private final int DELAY_IN_MILLS = 20;
-	private Timer timer = new Timer(DELAY_IN_MILLS, new MyBattleAnimationListener());
+	private final int ENTER_DELAY_IN_MILLS = 20;
+	private final int THROW_DELAY_IN_MILLS = 10;
+	private Timer timer = new Timer(ENTER_DELAY_IN_MILLS, new MyBattleStartListener());
+	private Timer throwTimer = new Timer(THROW_DELAY_IN_MILLS, new MyBattleThrowingListener());
 	private final int MOVEMENT_PIXELS = 2;
 	
 	public BattleView(Game game, int width, int height) {
@@ -85,13 +89,21 @@ public class BattleView extends JPanel implements Observer {
 		this.add(buttonPanel, BorderLayout.SOUTH);
 	}
 	
+	//Creates all images that might be used in a battle
 	public void setupImages(){
 		try {
 			background = ImageIO.read(new File("cut_sprites/battle_background.png"));			
-			trainer = ImageIO.read(new File("cut_sprites/throw_1.png"));
 			ballImage = ImageIO.read(new File("cut_sprites/pokeball.png"));
 			rockImage = ImageIO.read(new File("cut_sprites/throwing_rock.png"));
 			baitImage = ImageIO.read(new File("cut_sprites/bait.png"));
+			
+			//Different trainer images for throwing motion
+			trainer1 = ImageIO.read(new File("cut_sprites/throw_1.png"));
+			trainer2 = ImageIO.read(new File("cut_sprites/throw_2.png"));
+			trainer3 = ImageIO.read(new File("cut_sprites/throw_3.png"));
+			trainer4 = ImageIO.read(new File("cut_sprites/throw_4.png"));
+			trainer5 = ImageIO.read(new File("cut_sprites/throw_5.png"));
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -114,8 +126,17 @@ public class BattleView extends JPanel implements Observer {
 		return ball;
 	}
 	
-	public void setActionMade(int action){
-		actionMade = action;
+	public void switchTrainerImage(){
+		if(actions == 1)
+			currentTrainer = trainer1;
+		else if(actions == 2)
+			currentTrainer = trainer2;
+		else if(actions == 3)
+			currentTrainer = trainer3;
+		else if(actions == 4) 
+			currentTrainer = trainer4;
+		else if(actions == 5) 
+			currentTrainer = trainer5;
 	}
 	
 	public void setPokemon(Pokemon pokemon){
@@ -136,7 +157,7 @@ public class BattleView extends JPanel implements Observer {
 		repaint();
 	}
 	
-	public void updateAnimations(){
+	public void updateStartAnimations(){
 		if(!trainerSet){
 			moveTrainer();
 		}
@@ -170,38 +191,38 @@ public class BattleView extends JPanel implements Observer {
 	
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
+		
 		//Always draw the background
 		g.drawImage(background, 0, 0, null);
-		g.drawImage(trainer, trainerX, height-400, null);
+		g.drawImage(currentTrainer, trainerX, height-400, null);
 		moveTrainer();
 		
-		Image poke = pokemon.getImage();
-		g.drawImage(poke, pokemonX, POKEMON_Y, null);
-		movePokemon();
+		//Always draw the trainer
+		switchTrainerImage(); //Switches trainer image 
+		g.drawImage(currentTrainer, trainerX, height-400, null);
+		moveTrainer();
 		
-//<<<<<<< HEAD
-//		if(actionMade == 0){
-//			//Draw rock
-//			g.drawImage(rockI, width/2, height/2, null);
-//		}
-//		else if(actionMade == 1){
-//			//Draw bait
-//			g.drawImage(baitI, width/2, height/2, null);
-//		}
-//		else if(actionMade == 2){
-//			g.drawImage(ballI, width/2, height/2, null);
-//		}
-//=======
-		
+		//If the pokemon is not caught draw it
+		if(!pokemonCaught){
+			Image poke = pokemon.getImage();
+			g.drawImage(poke, pokemonX, POKEMON_Y, null);
+			movePokemon();
+		}
 	}
 	
-	private class MyBattleAnimationListener implements ActionListener{
-
+	private class MyBattleStartListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			System.out.println("HIT");
-			updateAnimations();
+			updateStartAnimations();
 			repaint();
+		}
+
+	}
+	
+	private class MyBattleThrowingListener implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
 		}
 	}
 }
