@@ -10,6 +10,9 @@ import model.Items.Item;
 import model.Map.*;
 import model.ObstacleType.ObstacleType;
 import model.Pokemon.*;
+import songplayer.EndOfSongEvent;
+import songplayer.EndOfSongListener;
+import songplayer.SongPlayer;
 
 public class Game extends Observable implements Serializable{
 	
@@ -142,6 +145,7 @@ public class Game extends Observable implements Serializable{
 				trainer.setCurrentPosition(newPoint);
 				trainerPos = trainer.getCurrentPos();
 				if(didStepOnItem()) {
+					SongPlayer.playFile(new DefaultEndListener(), "music/item_obtained.wav");
 					removeItem(r, c);
 				}
 				if(isInDeepGrass()){
@@ -153,6 +157,12 @@ public class Game extends Observable implements Serializable{
 			else {
 				gameOver = true;
 			}
+		} else {
+			//hit a border
+			SongPlayer.playFile(new DefaultEndListener(), "music/border.wav");
+			//trainer still faces that way
+			setChanged();
+			notifyObservers();
 		}
 		return pokemon;
 	}
@@ -255,4 +265,16 @@ public class Game extends Observable implements Serializable{
 		setChanged();
 		notifyObservers();
 	}
+	
+	private class DefaultEndListener implements EndOfSongListener {
+
+		@Override
+		public void songFinishedPlaying(EndOfSongEvent eventWithFileNameAndDateFinished) {
+			// TODO Auto-generated method stub
+			//do nothing?
+		}
+		
+	}
+	
+	
 }
