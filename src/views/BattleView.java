@@ -90,7 +90,7 @@ public class BattleView extends JPanel implements Observer {
 			background = ImageIO.read(new File("cut_sprites/battle_background.png"));			
 			trainer = ImageIO.read(new File("cut_sprites/throw_1.png"));
 			ballImage = ImageIO.read(new File("cut_sprites/pokeball.png"));
-			rockImage = ImageIO.read(new File("cut-sprites/throwing_rock.png"));
+			rockImage = ImageIO.read(new File("cut_sprites/throwing_rock.png"));
 			baitImage = ImageIO.read(new File("cut_sprites/bait.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
