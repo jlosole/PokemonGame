@@ -96,12 +96,13 @@ public class GraphicView extends JPanel implements Observer {
 					shortGrass.paintIcon(this, g, j*32, i*32);
 					safariball.paintIcon(this, g, j*32, i*32);
 				}
-				trainerPos = theGame.getTrainerPos();
-				int x = trainerPos.x;
-				int y = trainerPos.y;
-				trainer.paintIcon(this, g, y*32, x*32);
+				
 			}
 		}
+		trainerPos = theGame.getTrainerPos();
+		int x = trainerPos.x;
+		int y = trainerPos.y;
+		trainer.paintIcon(this, g, y*32, x*32);
 	}
 
 	@Override
