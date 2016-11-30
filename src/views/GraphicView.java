@@ -43,6 +43,8 @@ public class GraphicView extends JPanel implements Observer {
 		ImageIcon safariball = new ImageIcon("landscape/safari-ball.png");
 		ImageIcon dirt = new ImageIcon("landscape/dirt.png");
 		ImageIcon trainer;
+		
+		//Trainer faces whichever direction we're walking
 		if (theGame.getDirection() == 0) {
 			trainer = new ImageIcon("cut_sprites/trainer_up_2.png");
 		} else if (theGame.getDirection() == 1) {
