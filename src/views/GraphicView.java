@@ -42,7 +42,7 @@ public class GraphicView extends JPanel implements Observer {
 		ImageIcon water = new ImageIcon("cut_sprites/water_middle.png");
 		ImageIcon safariball = new ImageIcon("landscape/safari-ball.png");
 		ImageIcon dirt = new ImageIcon("landscape/dirt.png");
-		ImageIcon trainer = new ImageIcon("landscape/trainer.png");
+		ImageIcon trainer = new ImageIcon("cut_sprites/trainer_down_2.png");
 
 		for(int i = 0; i < 23; i++) {
 			for(int j = 0; j < 23; j++) {

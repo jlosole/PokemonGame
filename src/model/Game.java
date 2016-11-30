@@ -19,6 +19,15 @@ public class Game extends Observable implements Serializable{
 	private _Map mapTwo = MapTwo.getInstanceOf();
 	private Object [][] objBoard;
 	private Point trainerPos;
+	/*
+	 * @Lanre: added this variable so that GraphicView knows which
+	 * direction-facing trainer to draw. 
+	 * 0 = up
+	 * 1 = down
+	 * 2 = left
+	 * 3 = right
+	 */
+	private int trainerFacing;
 	private boolean gameOver;
 	private int size;
 	private Battle battle;
@@ -30,6 +39,7 @@ public class Game extends Observable implements Serializable{
 		Point pt = new Point(size-1, size/2);
 		trainer.setCurrentPosition(pt);
 		trainerPos = trainer.getCurrentPos();
+		trainerFacing = 0;
 		objBoard = currentMap.getObjMap();
 		gameOver = false;
 	}
@@ -49,10 +59,22 @@ public class Game extends Observable implements Serializable{
 		Pokemon pokemon = null;
 		
 		//Moves in new direction
-		if(direction.equals("Up")) r -= 1;
-		else if(direction.equals("Down")) r += 1;
-		else if(direction.equals("Left")) c -= 1;
-		else if(direction.equals("Right")) c += 1;
+		if(direction.equals("Up")) {
+			r -= 1;
+			trainerFacing = 0;
+		}
+		else if(direction.equals("Down")) {
+			r += 1;
+			trainerFacing = 1;
+		}
+		else if(direction.equals("Left")) {
+			c -= 1;
+			trainerFacing = 2;
+		}
+		else if(direction.equals("Right")) {
+			c += 1;
+			trainerFacing = 3;
+		}
 		
 		Point newPoint = new Point(r, c);
 		System.out.println(c);
