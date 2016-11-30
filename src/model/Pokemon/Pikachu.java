@@ -1,11 +1,11 @@
 package model.Pokemon;
 
-import javax.swing.ImageIcon;
-
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import model.Items.Bait;
 import model.Items.Item;
-import model.Items.SuperPotion;
-
 //UNCOMMON 
 public class Pikachu extends Pokemon {
 	private static final int HP = 115;
@@ -24,7 +24,12 @@ public class Pikachu extends Pokemon {
 	}
 	
 	@Override
-	public ImageIcon getImage() {
-		return new ImageIcon("cut_sprites/pikachu.png");
+	public Image getImage() {
+		try {
+			return ImageIO.read(new File("cut_sprites/pikachu.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

@@ -1,9 +1,10 @@
 package model.Pokemon;
 
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
-
-import javax.swing.ImageIcon;
-
+import javax.imageio.ImageIO;
 import model.Items.*;
 
 //COMMON
@@ -32,8 +33,14 @@ public class Doduo extends Pokemon {
 	}
 	
 	@Override
-	public ImageIcon getImage() {
-		return new ImageIcon("cut_sprites/doduo.png");
+	public Image getImage() {
+		try {
+			return ImageIO.read(new File("cut_sprites/doduo.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 }

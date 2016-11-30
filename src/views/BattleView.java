@@ -1,8 +1,13 @@
 package views;
 
+<<<<<<< HEAD
+import java.awt.BorderLayout;
+=======
 import java.awt.Color;
 import java.awt.Font;
+>>>>>>> d393a7a37b4948a9975245b731a95c45a9434d83
 import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
@@ -26,7 +31,13 @@ public class BattleView extends JPanel implements Observer {
 	private Game theGame;
 	private Battle battle;
 	private Pokemon pokemon;
-	private int width, height;
+	private int width, height, actionMade = -1;
+	private JPanel buttonPanel;
+	private BufferedImage background, trainer, rockI, baitI, ballI;
+	private JButton bait;
+	private JButton rock;
+	private JButton run;
+	private JButton ball;
 	
 	public BattleView(Game game, int width, int height) {
 		theGame = game;
@@ -34,30 +45,58 @@ public class BattleView extends JPanel implements Observer {
 		pokemon = null;
 		this.width = width; 
 		this.height = height;
-		this.setSize(width, height);
-		//addLabels();
+		this.setSize(this.width, this.height);
+		this.setLayout(new BorderLayout());
+		initializeButtonPanel();
+		setupImages();
+	}
+
+	public void initializeButtonPanel(){
+		buttonPanel = new JPanel();
+		buttonPanel.setLayout(new GridLayout(2, 2));
+		
+		bait = new JButton("Throw Bait");
+		rock = new JButton("Throw Rock");
+		ball = new JButton("Throw Ball");
+		run = new JButton("Run Away"); 
+		
+		buttonPanel.add(bait);
+		buttonPanel.add(rock);
+		buttonPanel.add(ball);
+		buttonPanel.add(run);
+		buttonPanel.setSize(232, 232);
+		this.add(buttonPanel, BorderLayout.SOUTH);
 	}
 	
-	public void addLabels(){
-		JLabel bait = new JLabel("Bait: Right Arrow");
-		bait.setBounds(30, 30, 50, 25);
-
-		JLabel rock = new JLabel("Rock: Left Arrow");
-		rock.setBounds(30, 70, 50, 25);
-		
-		JLabel run = new JLabel("Run: Up Arrow");
-		run.setBounds(30, 110, 50, 25);
-		
-		JLabel ball = new JLabel("Ball: Down Arrow");
-		ball.setBounds(30, 150, 50, 25);
-		this.add(bait);
-		this.add(rock);
-		this.add(run);
-		this.add(ball);
+	public void setupImages(){
+		try {
+			background = ImageIO.read(new File("cut_sprites/battle_background.png"));			
+			trainer = ImageIO.read(new File("cut_sprites/throw_1.png"));
+			ballI = ImageIO.read(new File("cut_sprites/pokeball.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void setPokemon(Pokemon pokemon){
 		this.pokemon = pokemon;
+	}
+	
+	public JButton getRockButton(){
+		return rock;
+	}
+	public JButton getBaitButton(){
+		return bait;
+	}
+	public JButton getRunButton(){
+		return run;
+	}
+	public JButton getBallButton(){
+		return ball;
+	}
+	
+	public void setActionMade(int action){
+		actionMade = action;
 	}
 	
 	@Override
@@ -67,13 +106,24 @@ public class BattleView extends JPanel implements Observer {
 	
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
-		BufferedImage background;
-		try {
-			background = ImageIO.read(new File("cut_sprites/battle_background.png"));
-			g.drawImage(background, 0, 0, null);
-		} catch (IOException e) {
-			e.printStackTrace();
+		g.drawImage(background, 0, 0, null);
+		g.drawImage(trainer, 150, height-340, null);
+		
+		Image poke = pokemon.getImage();
+		g.drawImage(poke, width-200, 100, null);
+		
+		if(actionMade == 0){
+			//Draw rock
 		}
+		else if(actionMade == 1){
+			//Draw bait
+		}
+<<<<<<< HEAD
+		else if(actionMade == 2){
+			g.drawImage(ballI, width/2, height/2, null);
+		}
+		
+=======
 		
     	Font myFont = new Font("Courier", Font.BOLD, 22);
     	g.setFont(myFont);
@@ -82,5 +132,6 @@ public class BattleView extends JPanel implements Observer {
 		g.drawString("Throw Rock: Right Arrow", 30, 75);
 		g.drawString("Throw Ball: Down Arrow", 30, 100);
 		g.drawString("Run: Up Arrow", 30, 125);
+>>>>>>> d393a7a37b4948a9975245b731a95c45a9434d83
 	}
 }

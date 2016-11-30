@@ -1,7 +1,9 @@
 package model.Pokemon;
 
-import javax.swing.ImageIcon;
-
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import model.Items.Item;
 import model.Items.SafariBall;
 
@@ -24,8 +26,13 @@ public class Magmar extends Pokemon {
 	}
 	
 	@Override
-	public ImageIcon getImage() {
-		return new ImageIcon("cut_sprites/magmar.png");
+	public Image getImage() {
+		try {
+			return ImageIO.read(new File("cut_sprites/magmar.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 }

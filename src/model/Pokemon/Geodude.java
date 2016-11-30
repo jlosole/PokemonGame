@@ -1,9 +1,10 @@
 package model.Pokemon;
 
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
-
-import javax.swing.ImageIcon;
-
+import javax.imageio.ImageIO;
 import model.Items.*;
 
 //COMMON
@@ -33,7 +34,12 @@ public class Geodude extends Pokemon {
 	}
 	
 	@Override
-	public ImageIcon getImage() {
-		return new ImageIcon("cut_sprites/geodude.png");
+	public Image getImage() {
+		try {
+			return ImageIO.read(new File("cut_sprites/geodude.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

@@ -1,9 +1,10 @@
 package model.Pokemon;
 
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
-
-import javax.swing.ImageIcon;
-
+import javax.imageio.ImageIO;
 import model.Items.*;
 
 //COMMON
@@ -29,9 +30,15 @@ public class Eevee extends Pokemon {
 		if(num == 0) return null;
 		else if(num == 1) return new Bait(false, 2);
 		else return new Potion(false, 15);	
-	}
+	}	
+	
 	@Override
-	public ImageIcon getImage() {
-		return new ImageIcon("cut_sprites/eevee.png");
+	public Image getImage() {
+		try {
+			return ImageIO.read(new File("cut_sprites/eevee.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }
