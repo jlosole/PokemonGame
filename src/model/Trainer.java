@@ -21,6 +21,8 @@ public class Trainer implements Serializable {
 		myPokemon = new HashMap<PokemonType, Integer>();	// Initializes hash map of pokemon
 		myItems = new HashMap<ItemType, Integer>();			// Initializes hash map of items
 		myItems.put(ItemType.SafariBall, 30);				// Player starts with 30 Safari balls
+		myItems.put(ItemType.Rock, 15);						// player starts with 15 rocks
+		myItems.put(ItemType.Bait, 10);						// player starts with 10 bait
 		currentPosition = null;								// Players current position
 	}
 	

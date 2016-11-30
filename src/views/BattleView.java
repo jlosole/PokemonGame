@@ -70,6 +70,8 @@ public class BattleView extends JPanel implements Observer {
 			background = ImageIO.read(new File("cut_sprites/battle_background.png"));			
 			trainer = ImageIO.read(new File("cut_sprites/throw_1.png"));
 			ballI = ImageIO.read(new File("cut_sprites/pokeball.png"));
+			rockI = ImageIO.read(new File("cut_sprites/throwing_rock.png"));
+			baitI = ImageIO.read(new File("cut_sprites/bait.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -104,27 +106,21 @@ public class BattleView extends JPanel implements Observer {
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		g.drawImage(background, 0, 0, null);
-		g.drawImage(trainer, 150, height-340, null);
+		g.drawImage(trainer, 150, height-400, null);
 		
 		Image poke = pokemon.getImage();
 		g.drawImage(poke, width-200, 100, null);
 		
 		if(actionMade == 0){
 			//Draw rock
+			g.drawImage(rockI, width/2, height/2, null);
 		}
 		else if(actionMade == 1){
 			//Draw bait
+			g.drawImage(baitI, width/2, height/2, null);
 		}
 		else if(actionMade == 2){
 			g.drawImage(ballI, width/2, height/2, null);
 		}
-		
-    	Font myFont = new Font("Courier", Font.BOLD, 22);
-    	g.setFont(myFont);
-    	g.setColor(Color.BLACK);
-		g.drawString("Throw Bait: Left Arrow", 30, 50);
-		g.drawString("Throw Rock: Right Arrow", 30, 75);
-		g.drawString("Throw Ball: Down Arrow", 30, 100);
-		g.drawString("Run: Up Arrow", 30, 125);
 	}
 }

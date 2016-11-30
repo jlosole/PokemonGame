@@ -27,6 +27,7 @@ public class MapTwo implements _Map, Serializable {
 		setShortGrass();
 		setDeepGrass();
 		setItems();
+		setHouse();
 	}
 	
 	public static MapTwo getInstanceOf() {
@@ -44,6 +45,36 @@ public class MapTwo implements _Map, Serializable {
 				map[x][y] = null;
 			}
 		}
+	}
+	
+	public void setHouse() {
+		//top roof border
+		map[1][4] = ObstacleType.hRoofTopLeft;
+		map[1][5] = ObstacleType.hRoofTop;
+		map[1][6] = ObstacleType.hRoofTop;
+		map[1][7] = ObstacleType.hRoofTop;
+		map[1][8] = ObstacleType.hRoofTopRight;
+		//middle roof
+		map[2][4] = ObstacleType.hRoofMidLeft;
+		map[2][5] = ObstacleType.hRoofMid;
+		map[2][6] = ObstacleType.hRoofMid;
+		map[2][7] = ObstacleType.hRoofMid;
+		map[2][8] = ObstacleType.hRoofMidRight;
+		//bottom part of roof
+		map[3][4] = ObstacleType.hRoofBotLeft;
+		map[3][5] = ObstacleType.hRoofBot;
+		map[3][6] = ObstacleType.hRoofBot;
+		map[3][7] = ObstacleType.hRoofBot;
+		map[3][8] = ObstacleType.hRoofBotRight;
+		//font of house
+		map[4][4] = ObstacleType.hBotLeft;
+		map[4][5] = ObstacleType.hDoor;
+		map[4][6] = ObstacleType.hWindowLeft;
+		map[4][7] = ObstacleType.hWindowRight;
+		map[4][8] = ObstacleType.hBotRight;
+		//stone around door
+//		map[5][4] = ObstacleType.ScatteredStone;
+//		map[5][6] = ObstacleType.ScatteredStone;
 	}
 	
 	public void setShortGrass() {
@@ -85,16 +116,38 @@ public class MapTwo implements _Map, Serializable {
 	}
 	
 	public void setWater() {
-		for(int i = 12; i < SIZE-3; i++) {
-			for(int j = 16; j < SIZE-3; j++) {
+		
+		//right top border
+		map[12][16] = ObstacleType.WaterTopLeft;
+		map[12][17] = ObstacleType.WaterTop;
+		map[12][18] = ObstacleType.WaterTop;
+		map[12][19] = ObstacleType.WaterTopRight;
+		
+		//right right border
+		for(int i = 13; i < SIZE-3; i++) {
+			map[i][SIZE-4] = ObstacleType.WaterRight;
+		}
+		//bottom right corner
+		map[SIZE-3][SIZE-4] = ObstacleType.WaterBottomRight;
+		
+		//right middle part of water
+		for(int i = 13; i < SIZE-3; i++) {
+			for(int j = 17; j < SIZE-4; j++) {
 				map[i][j] = ObstacleType.Water;
 			}
 		}
-		for(int i = 16; i < SIZE-3; i++) {
-			for(int j = 10; j < 16; j++) {
+		//left middle part of water
+		for(int i = 17; i < SIZE-3; i++) {
+			for(int j = 11; j < 17; j++) {
 				map[i][j] = ObstacleType.Water;
 			}
 		}	
+		
+		//bottom border of water
+		for(int j = 12; j < 17; j++) {
+			map[SIZE-3][j] = ObstacleType.WaterBottom;
+		}
+		
 	}
 	
 	public void setBushes() {
@@ -140,10 +193,12 @@ public class MapTwo implements _Map, Serializable {
 	}
 	
 	public void setItems() {
-		map[3][8] = new Bait(false, 2);
+//		map[3][8] = new Bait(false, 2);
 		map[SIZE-2][SIZE-2] = new Rock(false, 6);
 		map[9][18] = new Potion(false, 10);
 	}
+	
+	
 	
 	public Object [][] getObjMap(){
 		return map;
