@@ -33,6 +33,7 @@ public class MapOne implements _Map, Serializable {
 		setDeepGrass();
 		setItems();
 		setStone();
+		setHouse();
 	}
 	
 	public static MapOne getInstanceOf() {
@@ -42,6 +43,10 @@ public class MapOne implements _Map, Serializable {
 		} else {
 			return mapOne;
 		}
+	}
+	
+	public void setHouse() {
+//		map[3][3] = ObstacleType.House;
 	}
 	
 	public void initializeGrid() {
@@ -179,7 +184,7 @@ public class MapOne implements _Map, Serializable {
 		map[10][2] = new Bait(false, 2);
 		map[17][5] = new Rock(false, 6);
 		map[9][18] = new Potion(false, 10);
-		map[5][12] = new SafariBall(false, 3);
+//		map[5][12] = new SafariBall(false, 3);
 		map[17][14] = new SafariBall(false, 3);
 	}
 	
