@@ -24,7 +24,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import views.BattleView;
-import views.BattleView2;
 import views.GraphicView;
 import views.TextView;
 import model.Game;
@@ -65,7 +64,7 @@ public class PokemonGUI extends JFrame {
 		}
 	}
 	
-	private final int WIDTH = 736, HEIGHT = 736;
+	private final int WIDTH = 735, HEIGHT = 735;
 	private Game theGame;
 	private Battle battle;
 	private GraphicView gView;
@@ -207,6 +206,8 @@ public class PokemonGUI extends JFrame {
 						battle = theGame.getBattle();
 						bView.setPokemon(pokemonFound);
 						setView(bView);
+						bView.startTimer();
+
 					}
 				}
 				else {
@@ -228,49 +229,70 @@ public class PokemonGUI extends JFrame {
 			JButton buttonPressed = (JButton) e.getSource();
 			Outcome outcome;
 			if(!battle.isOver() && currentView.equals(bView)){
+				
 				//User clicked throw rock
 				if(buttonPressed.equals(rockB)){
-					System.out.println("rock");
-
-					bView.setActionMade(0);
-					outcome = battle.throwRock();
-					if(outcome.equals(Outcome.NoRocks))   //No rocks to throw 
+					bView.setCurrentItem("Rock");		  //BattleView knows which image to draw
+					
+					outcome = battle.throwRock();		  //See what happens after throwing rock
+					 
+					//No rocks to throw 
+					if(outcome.equals(Outcome.NoRocks))  
 						JOptionPane.showMessageDialog(null, "You have no rocks!");
-					else if(outcome.equals(Outcome.Ran))  //Pokemon ran currentView now is map
+					
+					//Pokemon ran, currentView now is map
+					else if(outcome.equals(Outcome.Ran))  
 						setView(oldView);
-					else {}								  //Pokemon stayed do nothing
+					
+					 //Pokemon stayed do nothing
+					else {}								 
 				}
+				
+				//User clicked throw bait
 				else if(buttonPressed.equals(baitB)){
-					System.out.println("bait");
-
-					bView.setActionMade(1);
-					outcome = battle.throwBait();
-					if(outcome.equals(Outcome.NoBait))    //No bait to throw
+					bView.setCurrentItem("Bait");		   //BattleView knows which image to draw
+					
+					outcome = battle.throwBait();   	   //See what happens after throwing bait
+					
+					//No bait to throw
+					if(outcome.equals(Outcome.NoBait))    
 						JOptionPane.showMessageDialog(null, "You have no bait!");
-					else if(outcome.equals(Outcome.Ran))  //Pokemon ran currentView now is map
+					
+					//Pokemon ran currentView now is map
+					else if(outcome.equals(Outcome.Ran))  
 						setView(oldView);
-					else{}								  //Pokemon stayed do nothing
+					
+					 //Pokemon stayed do nothing
+					else{}								 
 				}
+				
+				//User clicked throw ball
 				else if(buttonPressed.equals(ballB)){
-					System.out.println("ball");
+					bView.setCurrentItem("Ball");   		//BattleView knows which image to draw
 
-					bView.setActionMade(2);
-					outcome = battle.throwBall();
+					outcome = battle.throwBall();			//See what happens after throwing ball
+					
+					//We threw a ball and caught the pokemon
 					if(outcome.equals(Outcome.Caught)) {
-						System.out.println("caught");
 						setView(oldView);
 					}
+					
+					//We threw a ball and the pokemon escaped the ball and ran
 					else if(outcome.equals(Outcome.EscapedAndRan)){
-						System.out.println("run");
 						setView(oldView);
 					}
+					
+					//No balls to throw
 					else if(outcome.equals(Outcome.NoBalls)){
 						JOptionPane.showMessageDialog(null, "You have no Safari Balls!");
 					}
+					
+					//Threw a ball and the pokemon escaped and stayed
 					else {}
 				}
+				
+				//User clicked run
 				else if(buttonPressed.equals(runB)){
-					System.out.println("run1");
 					setView(oldView);
 				}
 				theGame.doNotify();
