@@ -1,10 +1,8 @@
 package model.Pokemon;
 
+import java.awt.Image;
 import java.io.Serializable;
 import java.util.Random;
-
-import javax.swing.ImageIcon;
-
 import model.Items.Bait;
 import model.Items.Item;
 import model.Items.ItemType;
@@ -65,13 +63,11 @@ public abstract class Pokemon implements Serializable {
 	//When a Safari ball is thrown this will be called to see if 
 	//the pokemon is caught
 	public Boolean didCatch(){
-		if(hp <= maxHP) {
-			tookDamage(SafariBall.getHP());
-			numBallsThrown++;
-			Random rand = new Random();
-			int num = rand.nextInt(catchChance)+1;
-			if(num == 1) return true;
-		}
+		tookDamage(SafariBall.getHP());
+		numBallsThrown++;
+		Random rand = new Random();
+		int num = rand.nextInt(catchChance)+1;
+		if(num == 1) return true;
 		return false;
 	}
 	
@@ -97,5 +93,5 @@ public abstract class Pokemon implements Serializable {
 	public abstract PokemonType getPokemonType();
 	
 	//Abstract methof to get the path to the Pokemon's image
-	public abstract ImageIcon getImage();
+	public abstract Image getImage();
 }

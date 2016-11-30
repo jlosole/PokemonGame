@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -24,11 +25,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import views.BattleView;
+import views.BattleView2;
 import views.GraphicView;
 import views.TextView;
 import model.Game;
 import model.Trainer;
 import model.Battle.Battle;
+import model.Battle.Outcome;
 import model.Pokemon.*;
 
 public class PokemonGUI extends JFrame {
@@ -63,15 +66,19 @@ public class PokemonGUI extends JFrame {
 		}
 	}
 	
-	private final int WIDTH = 675;
-	private final int HEIGHT = 675;
+	private final int WIDTH = 675, HEIGHT = 675;
 	private Game theGame;
 	private Battle battle;
 	private GraphicView gView;
 	private TextView tView;
 	private BattleView bView;
-	private JPanel currentView;
+	private JPanel currentView, oldView = null;;
 	private String winCondition;
+	
+	private JButton rockB;
+	private JButton baitB;
+	private JButton ballB;
+	private JButton runB; 
 	
 	
 	public PokemonGUI(Game game) {
@@ -79,7 +86,7 @@ public class PokemonGUI extends JFrame {
 	    this.setSize(WIDTH, HEIGHT);
 	    this.setLocation(100, 40);
 	    this.setTitle("Pokemon");
-	    this.setLayout(new BorderLayout());
+	    //this.setLayout(new BorderLayout());
 	    
 	    theGame = game;
 	    battle = theGame.getBattle();
@@ -92,9 +99,21 @@ public class PokemonGUI extends JFrame {
 	    this.addWindowListener(new MyWindowListener());
 		this.setFocusable(true);
 		this.requestFocus();
+		addListeners();
 		addObservers();
 		addMenus();
 		setView(gView);
+	}
+	
+	public void addListeners(){
+		rockB = bView.getRockButton();
+		runB = bView.getRunButton();
+		baitB = bView.getBaitButton();
+		ballB = bView.getBallButton();
+		rockB.addActionListener(new MyBattleActionListener());
+		baitB.addActionListener(new MyBattleActionListener());
+		runB.addActionListener(new MyBattleActionListener());
+		ballB.addActionListener(new MyBattleActionListener());
 	}
 	
 	//Adds the menus to the frame so you can switch between views
@@ -122,9 +141,10 @@ public class PokemonGUI extends JFrame {
 	public void setView(JPanel newView) {
 		if(currentView != null){
 			remove(currentView);
+			oldView = currentView;
 		}
 		currentView = newView;
-		add(currentView, BorderLayout.CENTER);
+		this.setContentPane(currentView);
 		theGame.doNotify();
 		validate();		
 	}
@@ -173,25 +193,13 @@ public class PokemonGUI extends JFrame {
 					}
 					if(pokemonFound != null) {
 						theGame.startBattle(pokemonFound);
+						battle = theGame.getBattle();
 						bView.setPokemon(pokemonFound);
 						setView(bView);
 					}
 				}
 				else {
 					JOptionPane.showMessageDialog(null, "Game Over! You're out of steps!");
-				}
-			}
-			else {
-				if(keyCode == KeyEvent.VK_UP) {
-					battle.trainerRan();
-					//set currentView = oldView
-				}
-				else if(keyCode == KeyEvent.VK_DOWN){
-				
-				}
-				else if(keyCode == KeyEvent.VK_LEFT){
-				}
-				else if(keyCode == KeyEvent.VK_RIGHT){
 				}
 			}
 		}
@@ -201,7 +209,66 @@ public class PokemonGUI extends JFrame {
 		public void keyTyped(KeyEvent e){}
 	}
 	
-	public class MyWindowListener implements WindowListener {
+	public class MyBattleActionListener implements ActionListener{
+	
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+			JButton buttonPressed = (JButton) e.getSource();
+			Outcome outcome;
+			if(!battle.isOver() && currentView.equals(bView)){
+				//User clicked throw rock
+				if(buttonPressed.equals(rockB)){
+					System.out.println("rock");
+
+					bView.setActionMade(0);
+					outcome = battle.throwRock();
+					if(outcome.equals(Outcome.NoRocks))   //No rocks to throw 
+						JOptionPane.showMessageDialog(null, "You have no rocks!");
+					else if(outcome.equals(Outcome.Ran))  //Pokemon ran currentView now is map
+						setView(oldView);
+					else {}								  //Pokemon stayed do nothing
+				}
+				else if(buttonPressed.equals(baitB)){
+					System.out.println("bait");
+
+					bView.setActionMade(1);
+					outcome = battle.throwBait();
+					if(outcome.equals(Outcome.NoBait))    //No bait to throw
+						JOptionPane.showMessageDialog(null, "You have no bait!");
+					else if(outcome.equals(Outcome.Ran))  //Pokemon ran currentView now is map
+						setView(oldView);
+					else{}								  //Pokemon stayed do nothing
+				}
+				else if(buttonPressed.equals(ballB)){
+					System.out.println("ball");
+
+					bView.setActionMade(2);
+					outcome = battle.throwBall();
+					if(outcome.equals(Outcome.Caught)) {
+						System.out.println("caught");
+						setView(oldView);
+					}
+					else if(outcome.equals(Outcome.EscapedAndRan)){
+						System.out.println("run");
+						setView(oldView);
+					}
+					else if(outcome.equals(Outcome.NoBalls)){
+						JOptionPane.showMessageDialog(null, "You have no Safari Balls!");
+					}
+					else {}
+				}
+				else if(buttonPressed.equals(runB)){
+					System.out.println("run1");
+					setView(oldView);
+				}
+				theGame.doNotify();
+			}
+		}
+		
+	}
+	
+	private class MyWindowListener implements WindowListener {
 		@Override
 		public void windowClosing(WindowEvent e) {
 			int selection = JOptionPane.showConfirmDialog(null, "Would you like to save the " + 

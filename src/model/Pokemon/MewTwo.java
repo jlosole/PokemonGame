@@ -1,7 +1,9 @@
 package model.Pokemon;
 
-import javax.swing.ImageIcon;
-
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import model.Items.Bait;
 import model.Items.Item;
 import model.Items.SuperPotion;
@@ -25,7 +27,12 @@ public class MewTwo extends Pokemon {
 	}
 	
 	@Override
-	public ImageIcon getImage() {
-		return new ImageIcon("cut_sprites/mewtwo.png");
+	public Image getImage() {
+		try {
+			return ImageIO.read(new File("cut_sprites/mewtwo.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }
