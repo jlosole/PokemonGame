@@ -107,8 +107,7 @@ public class GraphicView extends JPanel implements Observer {
 		super.paintComponent(g);
 		
 		objBoard = theGame.getObjBoard();
-		
-<<<<<<< HEAD
+
 		ImageIcon shortGrass = new ImageIcon("cut_sprites/grass.png");
 		ImageIcon tallGrass = new ImageIcon("cut_sprites/tall_grass.png");
 		ImageIcon bush = new ImageIcon("cut_sprites/bush.png");
@@ -127,10 +126,6 @@ public class GraphicView extends JPanel implements Observer {
 		} else {
 			trainer= new ImageIcon("cut_sprites/trainer_right_2.png");
 		}
-		
-
-=======
->>>>>>> 2d4b87f49246b8059ef3ad4db59bcb27fd141af1
 		for(int i = 0; i < 23; i++) {
 			for(int j = 0; j < 23; j++) {
 				shortGrass.paintIcon(this,g, j*32, i *32);
@@ -221,39 +216,6 @@ public class GraphicView extends JPanel implements Observer {
 				else if(objBoard[i][j] instanceof SafariBall) {
 					safariBall.paintIcon(this, g, j*32, i*32);
 				}
-				
-<<<<<<< HEAD
-=======
-				trainerPos = theGame.getTrainerPos();
-				int x = trainerPos.x;
-				int y = trainerPos.y;
-				String dir = theGame.getDirection();
-//				ImageIcon tempTrainer = null;
-//				switch(dir) {
-//					case "Up": tempTrainer = trainerUp2;
-//					case "Down": tempTrainer = trainerDown2;
-//					case "Right": tempTrainer = trainerRight2;
-//					case "Left": tempTrainer = trainerLeft2;
-//				}
-//				ImageIcon trainerToPaint = adjustTrainerImage(tempTrainer, x, y);
-				if(starting) {				
-					trainerUp2.paintIcon(this, g, y*32, x*32);
-					starting = false;
-				}
-				else {
-					switch(dir) {
-						case "Up": trainerUp2.paintIcon(this, g, y*32, x*32);
-						break;
-						case "Left": trainerLeft2.paintIcon(this, g, y*32, x*32);
-						break;
-						case "Right": trainerRight2.paintIcon(this, g, y*32, x*32);
-						break;
-						case "Down": trainerDown2.paintIcon(this, g, y*32, x*32);
-							default: break;
-					}
-				}
-				timer.start();
->>>>>>> 2d4b87f49246b8059ef3ad4db59bcb27fd141af1
 			}
 		}
 		trainerPos = theGame.getTrainerPos();

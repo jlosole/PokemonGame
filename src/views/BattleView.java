@@ -1,9 +1,6 @@
 package views;
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 2d4b87f49246b8059ef3ad4db59bcb27fd141af1
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -108,7 +105,7 @@ public class BattleView extends JPanel implements Observer {
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		g.drawImage(background, 0, 0, null);
-		g.drawImage(trainer, 150, height-340, null);
+		g.drawImage(trainer, 150, height-300, null);
 		
 		Image poke = pokemon.getImage();
 		g.drawImage(poke, width-200, 100, null);
@@ -122,11 +119,6 @@ public class BattleView extends JPanel implements Observer {
 		else if(actionMade == 2){
 			g.drawImage(ballI, width/2, height/2, null);
 		}
-		
-<<<<<<< HEAD
-		
-=======
->>>>>>> 2d4b87f49246b8059ef3ad4db59bcb27fd141af1
     	Font myFont = new Font("Courier", Font.BOLD, 22);
     	g.setFont(myFont);
     	g.setColor(Color.BLACK);
