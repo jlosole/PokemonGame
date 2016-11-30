@@ -33,7 +33,10 @@ public class GraphicView extends JPanel implements Observer {
 		trainerDown1, trainerDown2, trainerDown3,
 		shortGrass, tallGrass, bush, water, waterBottomLeft,
 		waterBottomRight, waterBottom, waterLeft, waterRight,
-		waterTopLeft, waterTopRight, waterTop, safariBall, dirt;
+		waterTopLeft, waterTopRight, waterTop, safariBall, dirt,
+		tree, bait, superPotion, rock, stoneBot, stoneBotLeft,
+		stoneBotRight, stoneLeft, stoneRight, stoneTopLeft, stoneTopRight,
+		stoneWalk, stoneWalk2;
 	private Timer timer;
 	
 	public GraphicView(Game theGame, int width, int height){
@@ -48,22 +51,23 @@ public class GraphicView extends JPanel implements Observer {
 	}
 	
 	public void loadImages() {
+		
 		/////////////////////////TRAINER IMAGES
-		trainerUp1 = new ImageIcon("cut_sprites/trainer_up_1.png");
-		trainerUp2 = new ImageIcon("cut_sprites/trainer_up_2.png");
-		trainerUp3 = new ImageIcon("cut_sprites/trainer_up_3.png");
+		trainerUp1 = new ImageIcon("trainerImages/trainer_up_1.png");
+		trainerUp2 = new ImageIcon("trainerImages/trainer_up_2.png");
+		trainerUp3 = new ImageIcon("trainerImages/trainer_up_3.png");
 		
-		trainerDown1 = new ImageIcon("cut_sprites/trainer_down_1.png");
-		trainerDown2 = new ImageIcon("cut_sprites/trainer_down_2.png");
-		trainerDown3 = new ImageIcon("cut_sprites/trainer_down_3.png");
+		trainerDown1 = new ImageIcon("trainerImages/trainer_down_1.png");
+		trainerDown2 = new ImageIcon("trainerImages/trainer_down_2.png");
+		trainerDown3 = new ImageIcon("trainerImages/trainer_down_3.png");
 		
-		trainerLeft1 = new ImageIcon("cut_sprites/trainer_left_1.png");
-		trainerLeft2 = new ImageIcon("cut_sprites/trainer_left_2.png");
-		trainerLeft3 = new ImageIcon("cut_sprites/trainer_left_3.png");
+		trainerLeft1 = new ImageIcon("trainerImages/trainer_left_1.png");
+		trainerLeft2 = new ImageIcon("trainerImages/trainer_left_2.png");
+		trainerLeft3 = new ImageIcon("trainerImages/trainer_left_3.png");
 
-		trainerRight1 = new ImageIcon("cut_sprites/trainer_right_1.png");
-		trainerRight2 = new ImageIcon("cut_sprites/trainer_right_2.png");
-		trainerRight3 = new ImageIcon("cut_sprites/trainer_right_3.png");
+		trainerRight1 = new ImageIcon("trainerImages/trainer_right_1.png");
+		trainerRight2 = new ImageIcon("trainerImages/trainer_right_2.png");
+		trainerRight3 = new ImageIcon("trainerImages/trainer_right_3.png");
         /////////////////////////////////////////////////////////////////////////
 		
 		/////////////////////////LANDSCAPE IMAGES		
@@ -79,9 +83,24 @@ public class GraphicView extends JPanel implements Observer {
 		waterTopRight = new ImageIcon("cut_sprites/water_top_right.png");
 		waterBottomLeft = new ImageIcon("cut_sprites/water_bottom_left.png");
 		waterBottomRight = new ImageIcon("cut_sprites/water_bottom_right.png");
-		safariBall = new ImageIcon("landscape/safari-ball.png");
+		safariBall = new ImageIcon("cut_sprites/safari-ball.png");
 		dirt = new ImageIcon("cut_sprites/dirt.png");
+		tree = new ImageIcon("cut_sprites/tree.png");
+		stoneBot = new ImageIcon("landscapeTiles/stoneBottom.png");
+		stoneBotLeft = new ImageIcon("landscapeTiles/stoneBotLeft.png");
+		stoneBotRight = new ImageIcon("landscapeTiles/stoneBotRight.png");
+		stoneLeft = new ImageIcon("landscapeTiles/stoneLeft.png");
+		stoneRight = new ImageIcon("landscapeTiles/stoneRight.png");
+		stoneTopLeft = new ImageIcon("landscapeTiles/stoneTopLeft.png");
+		stoneTopRight = new ImageIcon("landscapeTiles/stoneTopRight.png");
+		stoneWalk = new ImageIcon("landscapeTiles/stoneWalk.png");
+		stoneWalk2 = new ImageIcon("landscapeTiles/stoneWalk2.png");
         /////////////////////////////////////////////////////////////////////////
+		
+		/////////////////////////ITEM IMAGES
+		bait = new ImageIcon("cut_sprites/bait.png");
+		rock = new ImageIcon("cut_sprites/throwing_rock.png");
+		superPotion = new ImageIcon("cut_sprites/super_potion.png");
 	}
 	
 	public void paintComponent(Graphics g) {
@@ -93,7 +112,7 @@ public class GraphicView extends JPanel implements Observer {
 			for(int j = 0; j < 23; j++) {
 				shortGrass.paintIcon(this,g, j*32, i *32);
 				if(objBoard[i][j].equals(ObstacleType.Tree)) {
-					bush.paintIcon(this, g, j*32, i*32);
+					tree.paintIcon(this, g, j*32, i*32);
 				}
 				else if(objBoard[i][j].equals(ObstacleType.DeepGrass)) {
 					tallGrass.paintIcon(this, g, j*32, i*32);
@@ -127,6 +146,36 @@ public class GraphicView extends JPanel implements Observer {
 					waterBottomRight.paintIcon(this, g, j*32, i*32);
 				}
 				// all water painting ^^^^^^^^^^^^
+	
+				//all stone painting vvvvvvvvvv
+				else if(objBoard[i][j].equals(ObstacleType.StoneBot)) {
+					stoneBot.paintIcon(this, g, j*32, i*32);
+				}
+				else if(objBoard[i][j].equals(ObstacleType.StoneBotLeft)) {
+					stoneBotLeft.paintIcon(this, g, j*32, i*32);
+				}
+				else if(objBoard[i][j].equals(ObstacleType.StoneBotRight)) {
+					stoneBotRight.paintIcon(this, g, j*32, i*32);
+				}
+				else if(objBoard[i][j].equals(ObstacleType.StoneLeft)) {
+					stoneLeft.paintIcon(this, g, j*32, i*32);
+				}
+				else if(objBoard[i][j].equals(ObstacleType.StoneRight)) {
+					stoneRight.paintIcon(this, g, j*32, i*32);
+				}
+				else if(objBoard[i][j].equals(ObstacleType.StoneTopLeft)) {
+					stoneTopLeft.paintIcon(this, g, j*32, i*32);
+				}
+				else if(objBoard[i][j].equals(ObstacleType.StoneTopRight)) {
+					stoneTopRight.paintIcon(this, g, j*32, i*32);
+				}
+				else if(objBoard[i][j].equals(ObstacleType.StoneWalk)) {
+					stoneWalk.paintIcon(this, g, j*32, i*32);
+				}
+				else if(objBoard[i][j].equals(ObstacleType.StoneWalk2)) {
+					stoneWalk2.paintIcon(this, g, j*32, i*32);
+				}
+				//all stone painting ^^^^^^^^^^^
 				
 				else if(objBoard[i][j].equals(ObstacleType.Bush)) {
 					bush.paintIcon(this, g, j*32, i*32);
@@ -134,27 +183,19 @@ public class GraphicView extends JPanel implements Observer {
 				else if(objBoard[i][j].equals(ObstacleType.Dirt)) {
 					dirt.paintIcon(this, g, j*32, i*32);
 				}
-				else if(objBoard[i][j].equals(ObstacleType.ShortGrass)) {
-					shortGrass.paintIcon(this, g, j*32, i*32);
-				}
 				else if(objBoard[i][j] instanceof Bait) {
-					shortGrass.paintIcon(this, g, j*32, i*32);
-					safariBall.paintIcon(this, g, j*32, i*32);
+					bait.paintIcon(this, g, j*32, i*32);
 				}
 				else if(objBoard[i][j] instanceof Rock) {
-					shortGrass.paintIcon(this, g, j*32, i*32);
-					safariBall.paintIcon(this, g, j*32, i*32);
+					rock.paintIcon(this, g, j*32, i*32);
 				}
 				else if(objBoard[i][j] instanceof Potion) {
-					shortGrass.paintIcon(this, g, j*32, i*32);
-					safariBall.paintIcon(this, g, j*32, i*32);
+					superPotion.paintIcon(this, g, j*32, i*32);
 				}
 				else if(objBoard[i][j] instanceof SuperPotion) {
-					shortGrass.paintIcon(this, g, j*32, i*32);
-					safariBall.paintIcon(this, g, j*32, i*32);
+					superPotion.paintIcon(this, g, j*32, i*32);
 				}
 				else if(objBoard[i][j] instanceof SafariBall) {
-					shortGrass.paintIcon(this, g, j*32, i*32);
 					safariBall.paintIcon(this, g, j*32, i*32);
 				}
 				
@@ -186,7 +227,7 @@ public class GraphicView extends JPanel implements Observer {
 							default: break;
 					}
 				}
-//				timer.start();
+				timer.start();
 			}
 		}
 	}

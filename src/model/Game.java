@@ -23,6 +23,7 @@ public class Game extends Observable implements Serializable{
 	private int size;
 	private Battle battle;
 	private String direction = "";
+	
 	public Game(){
 		trainer = new Trainer();
 		currentMap = mapOne;      //Initialize game to start on MapOne
@@ -215,7 +216,10 @@ public class Game extends Observable implements Serializable{
 		
 		if(rowValid && colValid && (objBoard[row][col] == ObstacleType.ShortGrass || 
 				objBoard[row][col] ==  ObstacleType.DeepGrass || 
-				objBoard[row][col] == ObstacleType.Dirt || objBoard[row][col] instanceof Item))
+				objBoard[row][col] == ObstacleType.Dirt || objBoard[row][col] instanceof Item)
+				|| objBoard[row][col] == ObstacleType.StoneWalk || objBoard[row][col] == ObstacleType.StoneWalk2
+				|| objBoard[row][col] == ObstacleType.StoneBotLeft || objBoard[row][col] == ObstacleType.StoneBotRight
+				|| objBoard[row][col] == ObstacleType.StoneTopLeft || objBoard[row][col] == ObstacleType.StoneTopRight)
 			return true;
 		return false;
 	}

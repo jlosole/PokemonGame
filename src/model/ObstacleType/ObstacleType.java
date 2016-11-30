@@ -18,4 +18,13 @@ public enum ObstacleType implements Serializable {
 	WaterBottomRight,
 	WaterBottom,
 	WaterTop,
+	StoneBot,
+	StoneBotLeft,
+	StoneBotRight,
+	StoneLeft,
+	StoneRight,
+	StoneTopLeft,
+	StoneTopRight,
+	StoneWalk,
+	StoneWalk2
 }
