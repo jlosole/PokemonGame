@@ -10,6 +10,11 @@ import model.Items.Item;
 import model.Map.*;
 import model.ObstacleType.ObstacleType;
 import model.Pokemon.*;
+import songplayer.BattleMusic;
+import songplayer.EndOfSongEvent;
+import songplayer.EndOfSongListener;
+import songplayer.MapMusic;
+import songplayer.SongPlayer;
 
 public class Game extends Observable implements Serializable{
 	
@@ -19,6 +24,15 @@ public class Game extends Observable implements Serializable{
 	private _Map mapTwo = MapTwo.getInstanceOf();
 	private Object [][] objBoard;
 	private Point trainerPos;
+	/*
+	 * @Lanre: added this variable so that GraphicView knows which
+	 * direction-facing trainer to draw. 
+	 * 0 = up
+	 * 1 = down
+	 * 2 = left
+	 * 3 = right
+	 */
+	private int trainerFacing;
 	private boolean gameOver;
 	private int size;
 	private Battle battle;
@@ -31,8 +45,11 @@ public class Game extends Observable implements Serializable{
 		Point pt = new Point(size-1, size/2);
 		trainer.setCurrentPosition(pt);
 		trainerPos = trainer.getCurrentPos();
+		trainerFacing = 0;
 		objBoard = currentMap.getObjMap();
 		gameOver = false;
+		//start music
+		MapMusic.play();
 	}
 	
 	public void setMap(_Map newMap){
@@ -44,9 +61,10 @@ public class Game extends Observable implements Serializable{
 		return currentMap;
 	}
 	
-	public String getDirection() {
-		return direction;
-	}
+	public int getDirection() {
+		System.out.println("returning " + trainerFacing);
+		return trainerFacing;
+	}	
 	
 	public Pokemon move(int row, int col, String direction) {
 		int r = row, c = col;
@@ -54,10 +72,26 @@ public class Game extends Observable implements Serializable{
 		Pokemon pokemon = null;
 		this.direction = direction;
 		//Moves in new direction
-		if(direction.equals("Up")) r -= 1;
-		else if(direction.equals("Down")) r += 1;
-		else if(direction.equals("Left")) c -= 1;
-		else if(direction.equals("Right")) c += 1;
+		if(direction.equals("Up")) {
+			r -= 1;
+			trainerFacing = 0;
+			System.out.println(trainerFacing);
+		}
+		else if(direction.equals("Down")) {
+			r += 1;
+			trainerFacing = 1;
+			System.out.println(trainerFacing);
+		}
+		else if(direction.equals("Left")) {
+			c -= 1;
+			trainerFacing = 2;
+			System.out.println(trainerFacing);
+		}
+		else if(direction.equals("Right")) {
+			c += 1;
+			trainerFacing = 3;
+			System.out.println(trainerFacing);
+		}
 		
 		Point newPoint = new Point(r, c);
 		//if trainer walks to east exit on MapOne
@@ -115,10 +149,15 @@ public class Game extends Observable implements Serializable{
 				trainer.setCurrentPosition(newPoint);
 				trainerPos = trainer.getCurrentPos();
 				if(didStepOnItem()) {
+					SongPlayer.playFile(new DefaultEndListener(), "music/item_obtained.wav");
 					removeItem(r, c);
 				}
 				if(isInDeepGrass()){
 					pokemon = getRandomPokemon();
+					if (pokemon != null) {
+						MapMusic.stop();
+						BattleMusic.play();
+					}
 				}
 				setChanged();
 				notifyObservers();
@@ -126,6 +165,12 @@ public class Game extends Observable implements Serializable{
 			else {
 				gameOver = true;
 			}
+		} else {
+			//hit a border
+			SongPlayer.playFile(new DefaultEndListener(), "music/border.wav");
+			//trainer still faces that way
+			setChanged();
+			notifyObservers();
 		}
 		return pokemon;
 	}
@@ -228,4 +273,16 @@ public class Game extends Observable implements Serializable{
 		setChanged();
 		notifyObservers();
 	}
+	
+	private class DefaultEndListener implements EndOfSongListener {
+
+		@Override
+		public void songFinishedPlaying(EndOfSongEvent eventWithFileNameAndDateFinished) {
+			// TODO Auto-generated method stub
+			//do nothing?
+		}
+		
+	}
+	
+	
 }

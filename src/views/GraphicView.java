@@ -128,10 +128,8 @@ public class GraphicView extends JPanel implements Observer {
 		super.paintComponent(g);
 		
 		objBoard = theGame.getObjBoard();
-		
-		trainerPos = theGame.getTrainerPos();
-		int x = trainerPos.x;
-		int y = trainerPos.y;
+
+		ImageIcon trainer;
 		
 		for(int i = 0; i < 23; i++) {
 			for(int j = 0; j < 23; j++) {
@@ -139,6 +137,10 @@ public class GraphicView extends JPanel implements Observer {
 				g.fillRect(j*32, i*32, 32, 32);
 			}
 		}
+		
+		trainerPos = theGame.getTrainerPos();
+		int x = trainerPos.x;
+		int y = trainerPos.y;
 		
 		for(int i = x-4; i < x+4; i++) {
 			for(int j = y-4; j < y+4; j++) {
@@ -282,25 +284,17 @@ public class GraphicView extends JPanel implements Observer {
 					}
 					///////////////////////////////////////////////////////
 				
-					
-					String dir = theGame.getDirection();
-	
-					if(starting) {				
-						trainerUp2.paintIcon(this, g, y*32, x*32);
-						starting = false;
+					//Trainer faces whichever direction we're walking
+					if (theGame.getDirection() == 0) {
+						trainer = new ImageIcon("cut_sprites/trainer_up_2.png");
+					} else if (theGame.getDirection() == 1) {
+						trainer= new ImageIcon("cut_sprites/trainer_down_2.png");
+					} else if (theGame.getDirection() == 2) {
+						trainer= new ImageIcon("cut_sprites/trainer_left_2.png");
+					} else {
+						trainer= new ImageIcon("cut_sprites/trainer_right_2.png");
 					}
-					else {
-						switch(dir) {
-							case "Up": trainerUp2.paintIcon(this, g, y*32, x*32);
-							break;
-							case "Left": trainerLeft2.paintIcon(this, g, y*32, x*32);
-							break;
-							case "Right": trainerRight2.paintIcon(this, g, y*32, x*32);
-							break;
-							case "Down": trainerDown2.paintIcon(this, g, y*32, x*32);
-								default: break;
-						}
-					}
+					trainer.paintIcon(this, g, y*32, x*32);
 					timer.start();
 				}
 			}
