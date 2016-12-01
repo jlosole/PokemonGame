@@ -196,8 +196,6 @@ public class BattleView extends JPanel implements Observer {
 			trainerX += MOVEMENT_PIXELS;
 		}
 		else {
-			itemX = trainerX;
-			itemY = trainerY;
 			trainerSet = true;
 		}
 		if(pokemonX > pokemonFinalX){

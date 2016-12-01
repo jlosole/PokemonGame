@@ -240,13 +240,19 @@ public class PokemonGUI extends JFrame {
 						JOptionPane.showMessageDialog(null, "You have no rocks!");
 					else {
 						bView.startThrowTimer();
+						
 					}
 					//Pokemon ran, currentView now is map
 					if(outcome.equals(Outcome.Ran)) { 
 						//animate running
+						System.out.println("ran");
+
 					}
 					 //Pokemon stayed do nothing
-					else {}								 
+					else {
+						System.out.println("stay");
+
+					}								 
 				}
 				
 				//User clicked throw bait
@@ -258,14 +264,18 @@ public class PokemonGUI extends JFrame {
 					//No bait to throw
 					if(outcome.equals(Outcome.NoBait))    
 						JOptionPane.showMessageDialog(null, "You have no bait!");
-					else 
+					else {
 						bView.startThrowTimer();
+					}
 					
 					if (outcome.equals(Outcome.Ran)) {
 						//Animate pokemon running
+						System.out.println("ran");
 					}
 					 //Pokemon stayed do nothing
-					else{}								 	
+					else{
+						System.out.println("stayed");
+					}								 	
 				}
 				
 				//User clicked throw ball
@@ -278,26 +288,35 @@ public class PokemonGUI extends JFrame {
 					if(outcome.equals(Outcome.NoBalls)){
 						JOptionPane.showMessageDialog(null, "You have no Safari Balls!");
 					}
-					else 
+					else {
 						bView.startThrowTimer();
+		
+					}
 					
 					//We threw a ball and caught the pokemon
 					if(outcome.equals(Outcome.Caught)) {
-						
+						System.out.println("caught");
+
 					}
 					
 					//We threw a ball and the pokemon escaped the ball and ran
 					else if(outcome.equals(Outcome.EscapedAndRan)){
-						
+						System.out.println("ran");
+
 					}
 					
 					//Threw a ball and the pokemon escaped and stayed
-					else {}
+					else {
+						System.out.println("stay");
+
+					}
 				}
 				
 				//User clicked run
 				else if(buttonPressed.equals(runB)){
 					battle.trainerRan();
+					System.out.println("ran1");
+
 				}
 				
 				
