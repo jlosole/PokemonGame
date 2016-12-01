@@ -16,4 +16,8 @@ public class SafariBall extends Item {
 	public ItemType getItemType(){
 		return ItemType.SafariBall;
 	}
+	
+	public String toString() {
+		return "Safari Ball";
+	}
 }
