@@ -62,7 +62,6 @@ public class Game extends Observable implements Serializable{
 	}
 	
 	public int getDirection() {
-		System.out.println("returning " + trainerFacing);
 		return trainerFacing;
 	}	
 	
@@ -227,6 +226,10 @@ public class Game extends Observable implements Serializable{
 	
 	public void startBattle(Pokemon pokemon) {
 		battle = new Battle(trainer, pokemon);
+	}
+	
+	public void endBattle(){
+		battle = null;
 	}
 	
 	public Battle getBattle(){

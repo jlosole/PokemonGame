@@ -2,6 +2,7 @@ package model.Battle;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.Serializable;
 
 import model.Trainer;
 import model.Pokemon.Pokemon;
@@ -14,7 +15,7 @@ import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
 
 //The logic behind a battle/encounter
-public class Battle {
+public class Battle implements Serializable {
 	
 	//Two subject of the battle
 	private 		Trainer trainer;
