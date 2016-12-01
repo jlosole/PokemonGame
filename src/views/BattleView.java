@@ -48,8 +48,10 @@ public class BattleView extends JPanel implements Observer {
 	//Needed components for animations
 	private final int ENTER_DELAY_IN_MILLS = 20;
 	private final int THROW_DELAY_IN_MILLS = 125;
+	private final int ITEM_DELAY_IN_MILLS = 10;
 	private Timer timer = new Timer(ENTER_DELAY_IN_MILLS, new MyBattleStartListener());
 	private Timer throwTimer = new Timer(THROW_DELAY_IN_MILLS, new MyTrainerThrowingListener());
+	private Timer itemTimer = new Timer(ENTER_DELAY_IN_MILLS, new MyItemThrownListener());
 	private final int MOVEMENT_PIXELS = 2;
 	private final int THROWING_PIXELS = 5;
 	
@@ -83,8 +85,7 @@ public class BattleView extends JPanel implements Observer {
 		trainerFinalX = width/4-40;
 		trainerY = height - 338;
 		pokemonFinalX = width-300;
-		pokemonY = height/2-25;
-		
+		pokemonY = height/2-200;
 		
 		this.setSize(this.width, this.height);
 		this.setLayout(new BorderLayout());
@@ -136,6 +137,7 @@ public class BattleView extends JPanel implements Observer {
 	
 	public void startThrowTimer(){
 		throwTimer.start();
+		itemTimer.start();
 	}
 	
 	public JButton getRockButton(){
@@ -210,10 +212,8 @@ public class BattleView extends JPanel implements Observer {
 		if(!trainerDoneThrowing){
 			moveTrainer();
 		}
-		if(!itemReached){
-			moveItem();
-		}
-		if(trainerDoneThrowing && itemReached){
+		
+		if(trainerDoneThrowing){
 			throwTimer.stop();
 		}
 	}
@@ -227,7 +227,12 @@ public class BattleView extends JPanel implements Observer {
 	}
 	
 	public void updateItemAnimation(){
-		
+		if(!itemReached){
+			moveItem();
+		}
+		else {
+			itemTimer.stop();
+		}
 	}
 
 	
@@ -278,7 +283,7 @@ public class BattleView extends JPanel implements Observer {
 		itemXReached = false;
 		itemYReached = false;
 		itemX = trainerX;
-		itemY = trainerY;
+		itemY = trainerY+50;
 	}
 	
 	public void paintComponent(Graphics g){
@@ -299,8 +304,9 @@ public class BattleView extends JPanel implements Observer {
 			moveTrainer_Pokemon();
 		}
 		
-		if(currentItemImage != null && (actions == 2 || actions == 3)) {
-			g.drawImage(currentItemImage, trainerX-2, trainerY, null);
+		if(currentItemImage != null && !itemReached) {
+			System.out.println("hit");
+			g.drawImage(currentItemImage, itemX, itemY, null);
 		}
 	}
 	
@@ -319,5 +325,14 @@ public class BattleView extends JPanel implements Observer {
 			updateTrainerAnimation();
 			repaint();
 		}
+	}
+	
+	private class MyItemThrownListener implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			updateItemAnimation();
+			repaint();
+		}
+		
 	}
 }
