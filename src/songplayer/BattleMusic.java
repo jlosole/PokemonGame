@@ -2,7 +2,6 @@ package songplayer;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
 
