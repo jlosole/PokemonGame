@@ -81,7 +81,7 @@ public class BattleView extends JPanel implements Observer {
 		this.height = height;
 		
 		trainerFinalX = width/4-40;
-		trainerY = height - 175;
+		trainerY = height - 338;
 		pokemonFinalX = width-300;
 		pokemonY = height/2-25;
 		
@@ -206,7 +206,7 @@ public class BattleView extends JPanel implements Observer {
 		}
 	}
 	
-	public void updateThrowingAnimations(){
+	public void updateTrainerAnimation(){
 		if(!trainerDoneThrowing){
 			moveTrainer();
 		}
@@ -224,6 +224,10 @@ public class BattleView extends JPanel implements Observer {
 			actions = 1;
 			trainerDoneThrowing = true;
 		}
+	}
+	
+	public void updateItemAnimation(){
+		
 	}
 
 	
@@ -295,9 +299,8 @@ public class BattleView extends JPanel implements Observer {
 			moveTrainer_Pokemon();
 		}
 		
-		if(currentItemImage != null && !itemReached){
-			g.drawImage(currentItemImage, itemX, itemY, null);
-			moveItem();
+		if(currentItemImage != null && (actions == 2 || actions == 3)) {
+			g.drawImage(currentItemImage, trainerX-2, trainerY, null);
 		}
 	}
 	
@@ -313,7 +316,7 @@ public class BattleView extends JPanel implements Observer {
 	private class MyTrainerThrowingListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			updateThrowingAnimations();
+			updateTrainerAnimation();
 			repaint();
 		}
 	}
