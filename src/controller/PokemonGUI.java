@@ -321,6 +321,7 @@ public class PokemonGUI extends JFrame {
 				
 				
 				//Now check if game is over
+				//TODO: change this to a dialog box
 				if (battle.isOver()) {
 					setView(oldView);
 					bView.resetBattle();
