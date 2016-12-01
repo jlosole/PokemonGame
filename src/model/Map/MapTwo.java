@@ -119,6 +119,10 @@ public class MapTwo implements _Map, Serializable {
 		
 		//right top border
 		map[12][16] = ObstacleType.WaterTopLeft;
+		map[13][16] = ObstacleType.WaterLeft;
+		map[14][16] = ObstacleType.WaterLeft;
+		map[15][16] = ObstacleType.WaterLeft;
+		map[16][16] = ObstacleType.Water;
 		map[12][17] = ObstacleType.WaterTop;
 		map[12][18] = ObstacleType.WaterTop;
 		map[12][19] = ObstacleType.WaterTopRight;
@@ -127,6 +131,7 @@ public class MapTwo implements _Map, Serializable {
 		for(int i = 13; i < SIZE-3; i++) {
 			map[i][SIZE-4] = ObstacleType.WaterRight;
 		}
+		
 		//bottom right corner
 		map[SIZE-3][SIZE-4] = ObstacleType.WaterBottomRight;
 		
@@ -138,15 +143,26 @@ public class MapTwo implements _Map, Serializable {
 		}
 		//left middle part of water
 		for(int i = 17; i < SIZE-3; i++) {
-			for(int j = 11; j < 17; j++) {
+			for(int j = 12; j < 17; j++) {
 				map[i][j] = ObstacleType.Water;
 			}
 		}	
 		
 		//bottom border of water
-		for(int j = 12; j < 17; j++) {
+		for(int j = 12; j < 19; j++) {
 			map[SIZE-3][j] = ObstacleType.WaterBottom;
 		}
+		//left border left part 
+		map[SIZE-4][11] = ObstacleType.WaterLeft;
+		map[SIZE-5][11] = ObstacleType.WaterLeft;
+		map[SIZE-6][11] = ObstacleType.WaterLeft;
+		map[SIZE-7][11] = ObstacleType.WaterTopLeft;
+		map[SIZE-7][12] = ObstacleType.WaterTop;
+		map[SIZE-7][13] = ObstacleType.WaterTop;
+		map[SIZE-7][14] = ObstacleType.WaterTop;
+		map[SIZE-7][15] = ObstacleType.WaterTop;
+		map[SIZE-7][16] = ObstacleType.Water;
+		map[SIZE-3][11] = ObstacleType.WaterBottomLeft;
 		
 	}
 	
