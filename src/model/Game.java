@@ -228,6 +228,10 @@ public class Game extends Observable implements Serializable{
 		battle = new Battle(trainer, pokemon);
 	}
 	
+	public void endBattle(){
+		battle = null;
+	}
+	
 	public Battle getBattle(){
 		return battle;
 	}
