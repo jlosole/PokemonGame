@@ -10,5 +10,8 @@ public class Potion extends Item {
 	public ItemType getItemType(){
 		return ItemType.Potion;
 	}
-
+	
+	public String toString() {
+		return "Potion";
+	}
 }

@@ -29,6 +29,8 @@ import model.Game;
 import model.Battle.Battle;
 import model.Battle.Outcome;
 import model.Pokemon.*;
+import songplayer.BattleMusic;
+import songplayer.MapMusic;
 
 public class PokemonGUI extends JFrame {
 		
@@ -322,6 +324,8 @@ public class PokemonGUI extends JFrame {
 					
 					//Now check if game is over
 					if (battle.isOver() && bView.doneThrowing()) {
+						BattleMusic.stop();
+						MapMusic.play();
 						setView(oldView);
 						bView.resetBattle();
 						theGame.endBattle();

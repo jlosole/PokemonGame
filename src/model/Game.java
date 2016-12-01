@@ -5,6 +5,8 @@ import java.io.Serializable;
 import java.util.Observable;
 import java.util.Random;
 
+import javax.swing.JOptionPane;
+
 import model.Battle.Battle;
 import model.Items.Item;
 import model.Map.*;
@@ -148,7 +150,6 @@ public class Game extends Observable implements Serializable{
 				trainer.setCurrentPosition(newPoint);
 				trainerPos = trainer.getCurrentPos();
 				if(didStepOnItem()) {
-					SongPlayer.playFile(new DefaultEndListener(), "music/item_obtained.wav");
 					removeItem(r, c);
 				}
 				if(isInDeepGrass()){
@@ -178,7 +179,10 @@ public class Game extends Observable implements Serializable{
 	public Boolean didStepOnItem(){
 		Point trainerPos = trainer.getCurrentPos();
 		if(objBoard[trainerPos.x][trainerPos.y] instanceof Item){
-			trainer.collectedItem((Item)objBoard[trainerPos.x][trainerPos.y]);
+			Item collected = (Item)objBoard[trainerPos.x][trainerPos.y];
+			trainer.collectedItem(collected);
+			SongPlayer.playFile(new DefaultEndListener(), "music/item_obtained.wav");
+			JOptionPane.showMessageDialog(null, "Obtained " + collected.toString() + "!");
 			return true;
 		}
 		return false;
