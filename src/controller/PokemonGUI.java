@@ -227,7 +227,7 @@ public class PokemonGUI extends JFrame {
 			JButton buttonPressed = (JButton) e.getSource();
 			Outcome outcome;
 			if(!battle.isOver() && currentView.equals(bView)){
-				bView.resetItemReached();
+				bView.resetThrowing();
 				
 				//User clicked throw rock
 				if(buttonPressed.equals(rockB)){
@@ -299,6 +299,7 @@ public class PokemonGUI extends JFrame {
 				else if(buttonPressed.equals(runB)){
 					battle.trainerRan();
 				}
+				
 				
 				//Now check if game is over
 				if (battle.isOver()) {
