@@ -51,6 +51,7 @@ public class BattleView extends JPanel implements Observer {
 	private Timer timer = new Timer(ENTER_DELAY_IN_MILLS, new MyBattleStartListener());
 	private Timer throwTimer = new Timer(THROW_DELAY_IN_MILLS, new MyTrainerThrowingListener());
 	private final int MOVEMENT_PIXELS = 2;
+	private final int THROWING_PIXELS = 5;
 	
 	//Trainer instance variables for battle starting animations
 	private int trainerX = 0;
@@ -206,12 +207,32 @@ public class BattleView extends JPanel implements Observer {
 			pokemonSet = true;
 		}
 	}
+	
+	public void updateThrowingAnimations(){
+		if(!trainerDoneThrowing){
+			moveTrainer();
+		}
+		if(!itemReached){
+			moveItem();
+		}
+		if(trainerDoneThrowing && itemReached){
+			throwTimer.stop();
+		}
+	}
+	
+	public void moveTrainer(){
+		actions++;
+		if(actions == 6){
+			actions = 1;
+			trainerDoneThrowing = true;
+		}
+	}
 
 	
 	public void moveItem(){
 		//Move itemX
 		if(itemX < pokemonX){
-			itemX += MOVEMENT_PIXELS;
+			itemX += THROWING_PIXELS;
 		}
 		else {
 			itemXReached = true;
@@ -219,7 +240,7 @@ public class BattleView extends JPanel implements Observer {
 		
 		//Move itemY
 		if(itemY > pokemonY){
-			itemY -= MOVEMENT_PIXELS;
+			itemY -= THROWING_PIXELS;
 		}
 		else {
 			itemYReached = true;
@@ -238,13 +259,24 @@ public class BattleView extends JPanel implements Observer {
 	}
 	
 	public void resetBattle(){
+		currentItemImage = null;
 		pokemonSet = false;
 		trainerSet = false;
+		trainerDoneThrowing = false;
 		itemReached = false;
 		itemXReached = false;
 		itemYReached = false;
 		trainerX = 0;
 		pokemonX = 675;
+	}
+	
+	public void resetThrowing(){
+		trainerDoneThrowing = false;
+		itemReached = false;
+		itemXReached = false;
+		itemYReached = false;
+		itemX = trainerX;
+		itemY = trainerY;
 	}
 	
 	public void paintComponent(Graphics g){
@@ -283,22 +315,7 @@ public class BattleView extends JPanel implements Observer {
 	private class MyTrainerThrowingListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if(!trainerDoneThrowing){
-				actions++;
-				if(actions == 6) {
-					actions = 1;
-					trainerDoneThrowing = true;
-				}
-			}
-			if(!itemReached){
-				moveItem();
-			}
-			else {
-				throwTimer.stop();
-				trainerDoneThrowing = true;
-				itemX = trainerX;
-				itemY = trainerY;
-			}
+			updateThrowingAnimations();
 			repaint();
 		}
 	}
