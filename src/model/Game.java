@@ -52,6 +52,10 @@ public class Game extends Observable implements Serializable{
 		MapMusic.play();
 	}
 	
+	public Trainer getTrainer(){
+		return trainer;
+	}
+	
 	public void setMap(_Map newMap){
 		currentMap = newMap;
 		objBoard = currentMap.getObjMap();

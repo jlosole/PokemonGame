@@ -6,5 +6,10 @@ public enum Outcome {
 	//Throw Ball Outcomes
 	Caught, EscapedAndStayed, EscapedAndRan,
 	//Throw Rock Outcomes
-	Stayed, Ran
+	Stayed, Ran;
+	
+	@Override
+	public String toString(){
+		return name();
+	}
 }

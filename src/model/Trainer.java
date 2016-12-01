@@ -128,4 +128,8 @@ public class Trainer implements Serializable {
 	public Point getCurrentPos(){
 		return currentPosition;
 	}
+	
+	public String getBallsRemainingSTR(){
+		return myItems.get(ItemType.SafariBall).toString();
+	}
 }
