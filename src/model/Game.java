@@ -62,7 +62,6 @@ public class Game extends Observable implements Serializable{
 	}
 	
 	public int getDirection() {
-		System.out.println("returning " + trainerFacing);
 		return trainerFacing;
 	}	
 	
