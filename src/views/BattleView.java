@@ -39,7 +39,10 @@ public class BattleView extends JPanel implements Observer {
 	//Helpers for running battles
 	private int actions = 1;  				 //Will be a counter to see which images to draw
 	private Boolean pokemonInBall = false;   //False is pokemon isnt caught true otherwise
-	private Outcome outcome;
+	private Boolean pokemonBrokeFree = false;//Set to true if the pokemon breaks out of ball
+	private Boolean pokemonRunning = false;
+	private Outcome outcome;				 //Represents the pokemon's turn after a throw
+	private Boolean battleDone;
 	
 	//Needed components for drawing battle screen
 	private int width, height;
@@ -52,7 +55,8 @@ public class BattleView extends JPanel implements Observer {
 	private final int ENTER_DELAY_IN_MILLS = 20;
 	private final int THROW_DELAY_IN_MILLS = 125;
 	private final int ITEM_DELAY_IN_MILLS = 10;
-	private Timer timer = new Timer(ENTER_DELAY_IN_MILLS, new MyBattleStartListener());
+	private Timer startTimer = new Timer(ENTER_DELAY_IN_MILLS, new MyBattleStartListener());
+	private Timer pokRanTimer = new Timer(ENTER_DELAY_IN_MILLS, new MyPokemonRanListener());
 	private Timer throwTimer = new Timer(THROW_DELAY_IN_MILLS, new MyTrainerThrowingListener());
 	private Timer itemTimer = new Timer(ENTER_DELAY_IN_MILLS, new MyItemThrownListener());
 	private final int MOVEMENT_PIXELS = 2;
@@ -77,6 +81,10 @@ public class BattleView extends JPanel implements Observer {
 	private Boolean itemYReached = false;
 	private int itemX;
 	private int itemY;
+	
+	//Pokemon instance variables for a running pokemon
+	private Boolean pokemonReached = false;
+	private int pokFinalX = 575;
 
 	
 	public BattleView(Game game, int width, int height) {
@@ -136,11 +144,15 @@ public class BattleView extends JPanel implements Observer {
 	}
 	
 	public void startTimer(){
-		timer.start();
+		startTimer.start();
 	}
 	
 	public void startThrowTimer(){
 		throwTimer.start();
+	}
+	
+	public void startPokRanTimer(){
+		pokRanTimer.start();
 	}
 	
 	public JButton getRockButton(){
@@ -196,7 +208,7 @@ public class BattleView extends JPanel implements Observer {
 			moveTrainer_Pokemon();
 		}
 		if(trainerSet && pokemonSet){
-			timer.stop();
+			startTimer.stop();
 		}
 	}
 	
@@ -208,6 +220,7 @@ public class BattleView extends JPanel implements Observer {
 			trainerSet = true;
 		}
 		if(pokemonX > pokemonFinalX){
+			System.out.println("no");
 			pokemonX -= MOVEMENT_PIXELS;
 		}
 		else {
@@ -240,11 +253,7 @@ public class BattleView extends JPanel implements Observer {
 		if(!itemReached){
 			moveItem();
 		}
-		else {
-			itemTimer.stop();
-		}
 	}
-
 	
 	public void moveItem(){
 		//Move itemX
@@ -267,6 +276,29 @@ public class BattleView extends JPanel implements Observer {
 			itemReached = true;
 	}
 	
+	public void updatePokemonRanAnimation(){
+		if(!pokemonReached){
+			moveRunningPokemon();
+		}
+		else {
+			pokRanTimer.stop();
+		}
+	}
+	
+	public void moveRunningPokemon(){
+		if(pokemonX < pokFinalX){
+			System.out.println("yes");
+			pokemonX += MOVEMENT_PIXELS;
+		}
+		else {
+			pokemonReached = true;
+		}
+	}
+	
+	public void stopItemTimer(){
+		itemTimer.stop();
+	}
+	
 	public Boolean doneThrowing(){
 		return itemReached; 
 	}
@@ -278,6 +310,7 @@ public class BattleView extends JPanel implements Observer {
 	public void resetBattle(){
 		currentItemImage = null;
 		pokemonSet = false;
+		pokemonRunning = false;
 		trainerSet = false;
 		trainerDoneThrowing = false;
 		itemReached = false;
@@ -290,6 +323,7 @@ public class BattleView extends JPanel implements Observer {
 	public void resetThrowing(){
 		trainerDoneThrowing = false;
 		pokemonInBall = false;
+		pokemonBrokeFree = false;
 		itemReached = false;
 		itemXReached = false;
 		itemYReached = false;
@@ -306,7 +340,8 @@ public class BattleView extends JPanel implements Observer {
 		//draw the trainer
 		switchTrainerImage(); //Switches trainer image 
 		g.drawImage(currentTrainer, trainerX, trainerY, null);
-		moveTrainer_Pokemon();
+		if(!pokemonRunning)
+			moveTrainer_Pokemon();
 		
 		//Draw the trainers amount of safari balls remaining
 		g.setFont(new Font("Courier", Font.BOLD, 24));
@@ -317,22 +352,23 @@ public class BattleView extends JPanel implements Observer {
 		Image poke = pokemon.getImage();
 		//Draw pokemon when: no button is pressed, bait or rock is pressed, or ball is 
 		//pressed and the ball has not reached the pokemon yet
-		if(currentItemImage == null || !currentItemImage.equals(ballImage) ||
-				(currentItemImage.equals(ballImage) && !itemReached)){
+		if((currentItemImage == null || !currentItemImage.equals(ballImage) ||
+				(currentItemImage.equals(ballImage) && !itemReached)) && !pokemonInBall && 
+				!pokemonRunning){
 			g.drawImage(poke, pokemonX, pokemonY, null);
 		}
 		
-		//Draw Pokemon's HP
+		//Draw Pokemon's HP + Pokemon's Name
 		int hp = pokemon.getHP();
 		String hpAsString = Integer.toString(hp);
 		g.drawString("HP: "+ hpAsString, 200, height/6);
 		
-		//Draw Pokemon Name
 		String name = pokemon.getPokemonType().toString();
 		g.drawString(name, 200, height/6-40);
-		moveTrainer_Pokemon();	
+		if(!pokemonRunning)
+			moveTrainer_Pokemon();	
 		
-		//If the item has not reached the pokemon yet, draw the item
+		//Draw item if its not reached pokemon's position
 		if(currentItemImage != null && !itemReached) {
 			g.drawImage(currentItemImage, itemX, itemY, null);
 		}
@@ -343,17 +379,48 @@ public class BattleView extends JPanel implements Observer {
 			g.drawImage(currentItemImage, pokemonX+30, pokemonY+45, null);
 			pokemonInBall = true;
 		}
-		else if(pokemonInBall == true && outcome.equals(Outcome.Stayed)){
+				
+		//If the pokemon is in the ball and chose to stay, sleep for the pokeball to stay
+		//before redrawing the pokemon back
+		else if(pokemonInBall == true && (outcome.equals(Outcome.Stayed) || 
+				outcome.equals(Outcome.Ran))){
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			g.drawImage(pokemon.getImage(), pokemonX, pokemonY, null);
+			stopItemTimer();
 			pokemonInBall = false;
+			pokemonBrokeFree = true;
 		}
 		
-		//
+		//If a ball was thrown and the pokemon broke free and ran or if a rock/bait is thrown
+		//and the pokemon ran, start the timer
+		if(currentItemImage != null && ((currentItemImage.equals(ballImage) && pokemonBrokeFree) ||
+				(!currentItemImage.equals(ballImage) && itemReached)) && outcome.equals(Outcome.Ran)){
+			pokemonRunning = true;
+			currentItemImage = null;
+			startPokRanTimer();
+		}
+		if(pokemonRunning == true){
+			if(!pokemonReached){
+				g.drawImage(poke, pokemonX, pokemonY, null);
+				moveRunningPokemon();
+			}
+			g.drawString("Oh no!", 75, height-200);
+			g.drawString(pokemon.getPokemonType().toString()+
+					" ran away!", 75, height-160);
+		}
+		
+		//If outcome is that we caught the pokemon and the pokemon is in the ball
+		//Draw the pokeball 
 		if(outcome != null && outcome.equals(Outcome.Caught) && pokemonInBall){
-			System.out.println("Hit");
-			g.drawString("Gotcha!", 75, height-250);
+			g.drawImage(currentItemImage, pokemonX+30, pokemonY+45, null);
+			stopItemTimer();
+			g.drawString("Gotcha!", 75, height-200);
 			g.drawString(pokemon.getPokemonType().toString() + " "
-					+ "has been caught!", 75, height-200);
+					+ "has been caught!", 75, height-160);
 		}
 		
 	}
@@ -381,5 +448,14 @@ public class BattleView extends JPanel implements Observer {
 			updateItemAnimation();
 			repaint();
 		}	
+	}
+	
+	private class MyPokemonRanListener implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			updatePokemonRanAnimation();
+			repaint();
+		}
+		
 	}
 }

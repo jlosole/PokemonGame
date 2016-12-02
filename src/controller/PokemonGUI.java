@@ -246,12 +246,14 @@ public class PokemonGUI extends JFrame {
 						}
 						//Pokemon ran, currentView now is map
 						if(outcome.equals(Outcome.Ran)) { 
+							bView.setOutcome(Outcome.Ran);
 							//animate running
 							System.out.println("ran");
 	
 						}
 						 //Pokemon stayed do nothing
 						else {
+							bView.setOutcome(Outcome.Stayed);
 							System.out.println("stay");
 	
 						}								 
@@ -271,11 +273,13 @@ public class PokemonGUI extends JFrame {
 						}
 						
 						if (outcome.equals(Outcome.Ran)) {
+							bView.setOutcome(Outcome.Ran);
 							//Animate pokemon running
 							System.out.println("ran");
 						}
 						 //Pokemon stayed do nothing
 						else{
+							bView.setOutcome(Outcome.Stayed);
 							System.out.println("stayed");
 						}								 	
 					}
@@ -311,6 +315,7 @@ public class PokemonGUI extends JFrame {
 						
 						//Threw a ball and the pokemon escaped and stayed
 						else {
+							bView.setOutcome(Outcome.Stayed);
 							System.out.println("stay");
 	
 						}
@@ -328,7 +333,7 @@ public class PokemonGUI extends JFrame {
 						BattleMusic.stop();
 						MapMusic.play();
 						setView(oldView);
-						bView.resetBattle();
+						//bView.resetBattle();
 						theGame.endBattle();
 					}
 				}
