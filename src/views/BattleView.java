@@ -48,9 +48,12 @@ public class BattleView extends JPanel implements Observer {
 	//Needed components for animations
 	private final int ENTER_DELAY_IN_MILLS = 20;
 	private final int THROW_DELAY_IN_MILLS = 125;
+	private final int ITEM_DELAY_IN_MILLS = 10;
 	private Timer timer = new Timer(ENTER_DELAY_IN_MILLS, new MyBattleStartListener());
 	private Timer throwTimer = new Timer(THROW_DELAY_IN_MILLS, new MyTrainerThrowingListener());
+	private Timer itemTimer = new Timer(ENTER_DELAY_IN_MILLS, new MyItemThrownListener());
 	private final int MOVEMENT_PIXELS = 2;
+	private final int THROWING_PIXELS = 5;
 	
 	//Trainer instance variables for battle starting animations
 	private int trainerX = 0;
@@ -80,10 +83,9 @@ public class BattleView extends JPanel implements Observer {
 		this.height = height;
 		
 		trainerFinalX = width/4-40;
-		trainerY = height - 175;
+		trainerY = height - 338;
 		pokemonFinalX = width-300;
-		pokemonY = height/2-25;
-		
+		pokemonY = height/2-200;
 		
 		this.setSize(this.width, this.height);
 		this.setLayout(new BorderLayout());
@@ -135,6 +137,7 @@ public class BattleView extends JPanel implements Observer {
 	
 	public void startThrowTimer(){
 		throwTimer.start();
+		itemTimer.start();
 	}
 	
 	public JButton getRockButton(){
@@ -195,8 +198,6 @@ public class BattleView extends JPanel implements Observer {
 			trainerX += MOVEMENT_PIXELS;
 		}
 		else {
-			itemX = trainerX;
-			itemY = trainerY;
 			trainerSet = true;
 		}
 		if(pokemonX > pokemonFinalX){
@@ -206,12 +207,39 @@ public class BattleView extends JPanel implements Observer {
 			pokemonSet = true;
 		}
 	}
+	
+	public void updateTrainerAnimation(){
+		if(!trainerDoneThrowing){
+			moveTrainer();
+		}
+		
+		if(trainerDoneThrowing){
+			throwTimer.stop();
+		}
+	}
+	
+	public void moveTrainer(){
+		actions++;
+		if(actions == 6){
+			actions = 1;
+			trainerDoneThrowing = true;
+		}
+	}
+	
+	public void updateItemAnimation(){
+		if(!itemReached){
+			moveItem();
+		}
+		else {
+			itemTimer.stop();
+		}
+	}
 
 	
 	public void moveItem(){
 		//Move itemX
 		if(itemX < pokemonX){
-			itemX += MOVEMENT_PIXELS;
+			itemX += THROWING_PIXELS;
 		}
 		else {
 			itemXReached = true;
@@ -219,7 +247,7 @@ public class BattleView extends JPanel implements Observer {
 		
 		//Move itemY
 		if(itemY > pokemonY){
-			itemY -= MOVEMENT_PIXELS;
+			itemY -= THROWING_PIXELS;
 		}
 		else {
 			itemYReached = true;
@@ -238,13 +266,24 @@ public class BattleView extends JPanel implements Observer {
 	}
 	
 	public void resetBattle(){
+		currentItemImage = null;
 		pokemonSet = false;
 		trainerSet = false;
+		trainerDoneThrowing = false;
 		itemReached = false;
 		itemXReached = false;
 		itemYReached = false;
 		trainerX = 0;
 		pokemonX = 675;
+	}
+	
+	public void resetThrowing(){
+		trainerDoneThrowing = false;
+		itemReached = false;
+		itemXReached = false;
+		itemYReached = false;
+		itemX = trainerX;
+		itemY = trainerY+50;
 	}
 	
 	public void paintComponent(Graphics g){
@@ -265,9 +304,9 @@ public class BattleView extends JPanel implements Observer {
 			moveTrainer_Pokemon();
 		}
 		
-		if(currentItemImage != null && !itemReached){
+		if(currentItemImage != null && !itemReached) {
+			System.out.println("hit");
 			g.drawImage(currentItemImage, itemX, itemY, null);
-			moveItem();
 		}
 	}
 	
@@ -283,23 +322,17 @@ public class BattleView extends JPanel implements Observer {
 	private class MyTrainerThrowingListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if(!trainerDoneThrowing){
-				actions++;
-				if(actions == 6) {
-					actions = 1;
-					trainerDoneThrowing = true;
-				}
-			}
-			if(!itemReached){
-				moveItem();
-			}
-			else {
-				throwTimer.stop();
-				trainerDoneThrowing = true;
-				itemX = trainerX;
-				itemY = trainerY;
-			}
+			updateTrainerAnimation();
 			repaint();
 		}
+	}
+	
+	private class MyItemThrownListener implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			updateItemAnimation();
+			repaint();
+		}
+		
 	}
 }

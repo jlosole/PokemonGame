@@ -39,7 +39,11 @@ public class GraphicView extends JPanel implements Observer {
 		stoneBotRight, stoneLeft, stoneRight, stoneTopLeft, stoneTopRight,
 		stoneWalk, stoneWalk2, hBotLeft, hBotRight, hDoor, hRoofBot,
 		hRoofBotLeft, hRoofBotRight, hRoofMid, hRoofMidLeft, hRoofMidRight,
-		hRoofTop, hRoofTopLeft, hRoofTopRight, hWindowLeft, hWindowRight;
+		hRoofTop, hRoofTopLeft, hRoofTopRight, hWindowLeft, hWindowRight,
+		hillLeft, hillRight, hillBotLeft, hillBotRight, hillTopLeft,
+		hillTopRight, hillDirt, hillDirtTop, dirtLeft, dirtRight, dirtBot,
+		dirtTop, dirtTopRight, dirtTopLeft, dirtBotLeft, dirtBotRight,
+		woodpegs, stairsLeft, stairsRight;
 	private Timer timer;
 	
 	public GraphicView(Game theGame, int width, int height){
@@ -74,21 +78,21 @@ public class GraphicView extends JPanel implements Observer {
         /////////////////////////////////////////////////////////////////////////
 		
 		/////////////////////////LANDSCAPE IMAGES		
-		shortGrass = new ImageIcon("cut_sprites/grass.png");
-		water = new ImageIcon("cut_sprites/water_middle.png");
-		waterTop = new ImageIcon("cut_sprites/water_top_middle.png");
-		waterBottom = new ImageIcon("cut_sprites/water_bottom_middle.png");
-		waterLeft = new ImageIcon("cut_sprites/water_left.png");
-		waterRight = new ImageIcon("cut_sprites/water_right.png");
-		waterTopLeft = new ImageIcon("cut_sprites/water_top_left.png");
-		waterTopRight = new ImageIcon("cut_sprites/water_top_right.png");
-		waterBottomLeft = new ImageIcon("cut_sprites/water_bottom_left.png");
-		waterBottomRight = new ImageIcon("cut_sprites/water_bottom_right.png");
+		shortGrass = new ImageIcon("safariSheet/shortGrass.png");
+		water = new ImageIcon("safariSheet/water.png");
+		waterTop = new ImageIcon("safariSheet/water_top_middle.png");
+		waterBottom = new ImageIcon("safariSheet/water_bottom_middle.png");
+		waterLeft = new ImageIcon("safariSheet/water_left.png");
+		waterRight = new ImageIcon("safariSheet/water_right.png");
+		waterTopLeft = new ImageIcon("safariSheet/water_top_left.png");
+		waterTopRight = new ImageIcon("safariSheet/water_top_right.png");
+		waterBottomLeft = new ImageIcon("safariSheet/water_bottom_left.png");
+		waterBottomRight = new ImageIcon("safariSheet/water_bottom_right.png");
 		safariBall = new ImageIcon("cut_sprites/safari-ball.png");
-		dirt = new ImageIcon("cut_sprites/dirt.png");
+		dirt = new ImageIcon("safariSheet/dirt.png");
 		tree = new ImageIcon("cut_sprites/tree.png");
-		tallGrass = new ImageIcon("landscapeTiles/tall_grass_new.png");
-		bush = new ImageIcon("landscapeTiles/bush.png");
+		tallGrass = new ImageIcon("safariSheet/deepGrass.png");
+		bush = new ImageIcon("safariSheet/bush.png");
 		scatteredStone = new ImageIcon("houseTiles/scatteredStone.png");
 		stoneBot = new ImageIcon("landscapeTiles/stoneBottom.png");
 		stoneBotLeft = new ImageIcon("landscapeTiles/stoneBotLeft.png");
@@ -101,6 +105,33 @@ public class GraphicView extends JPanel implements Observer {
 		stoneWalk2 = new ImageIcon("landscapeTiles/stoneWalk2.png");
         /////////////////////////////////////////////////////////////////////////
 		
+		///////////////////////// HILL/DIRT/STAIRS IMAGES
+		hillLeft = new ImageIcon("safariSheet/hillLeft.png");
+		hillRight = new ImageIcon("safariSheet/hillRight.png");
+		hillBotLeft = new ImageIcon("safariSheet/hillBotLeft.png");
+		hillBotRight = new ImageIcon("safariSheet/hillBotRight.png");
+		hillTopLeft = new ImageIcon("safariSheet/hillTopLeft.png");
+		hillTopRight = new ImageIcon("safariSheet/hillTopRight.png");
+		hillDirt = new ImageIcon("safariSheet/hillDirt.png");
+		hillDirtTop = new ImageIcon("safariSheet/hillDirtTop.png");
+		
+		//dirt
+		dirtLeft = new ImageIcon("safariSheet/dirtLeft.png");
+		dirtRight = new ImageIcon("safariSheet/dirtRight.png");
+		dirtBot = new ImageIcon("safariSheet/dirtBot.png");
+		dirtTop = new ImageIcon("safariSheet/dirtTop.png");
+		dirtTopRight = new ImageIcon("safariSheet/dirtTopRight.png");
+		dirtTopLeft = new ImageIcon("safariSheet/dirtTopLeft.png");
+		dirtBotLeft = new ImageIcon("safariSheet/dirtBotLeft.png");
+		dirtBotRight = new ImageIcon("safariSheet/dirtBotRight.png");
+		woodpegs = new ImageIcon("safariSheet/woodpegs.png");
+		
+		//stairs
+		stairsLeft = new ImageIcon("safariSheet/stairsLeft.png");
+		stairsRight = new ImageIcon("safariSheet/stairsRight.png");
+
+
+
 		/////////////////////////ITEM IMAGES
 		bait = new ImageIcon("cut_sprites/bait.png");
 		rock = new ImageIcon("cut_sprites/throwing_rock.png");
@@ -131,13 +162,13 @@ public class GraphicView extends JPanel implements Observer {
 
 		ImageIcon trainer;
 		
-		for(int i = 0; i < 23; i++) {
-			for(int j = 0; j < 23; j++) {
-				g.setColor(Color.BLACK);
-				g.fillRect(j*32, i*32, 32, 32);
-			}
-		}
-		
+//		for(int i = 0; i < 23; i++) {
+//			for(int j = 0; j < 23; j++) {
+//				g.setColor(Color.BLACK);
+//				g.fillRect(j*32, i*32, 32, 32);
+//			}
+//		}
+//		
 		trainerPos = theGame.getTrainerPos();
 		int x = trainerPos.x;
 		int y = trainerPos.y;
@@ -183,7 +214,7 @@ public class GraphicView extends JPanel implements Observer {
 						waterBottomRight.paintIcon(this, g, j*32, i*32);
 					}
 					// all water painting ^^^^^^^^^^^^
-		
+					
 					//all stone painting vvvvvvvvvv
 					else if(objBoard[i][j].equals(ObstacleType.ScatteredStone)) {
 						scatteredStone.paintIcon(this, g, j*32, i*32);
@@ -283,7 +314,69 @@ public class GraphicView extends JPanel implements Observer {
 						hRoofTop.paintIcon(this, g, j*32, i*32);
 					}
 					///////////////////////////////////////////////////////
-				
+					
+					////////////////// DIRT BORDERS AND HILLS W/ STAIRS
+					else if(objBoard[i][j].equals(ObstacleType.hillLeft)) {
+						hillLeft.paintIcon(this, g, j*32, i*32);
+					}
+					else if(objBoard[i][j].equals(ObstacleType.hillRight)) {
+						hillRight.paintIcon(this, g, j*32, i*32);
+					}
+					else if(objBoard[i][j].equals(ObstacleType.hillBotLeft)) {
+						hillBotLeft.paintIcon(this, g, j*32, i*32);
+					}
+					else if(objBoard[i][j].equals(ObstacleType.hillBotRight)) {
+						hillBotRight.paintIcon(this, g, j*32, i*32);
+					}
+					else if(objBoard[i][j].equals(ObstacleType.hillTopLeft)) {
+						hillTopLeft.paintIcon(this, g, j*32, i*32);
+					}
+					else if(objBoard[i][j].equals(ObstacleType.hillTopRight)) {
+						hillTopRight.paintIcon(this, g, j*32, i*32);
+					}
+					else if(objBoard[i][j].equals(ObstacleType.hillDirt)) {
+						hillDirt.paintIcon(this, g, j*32, i*32);
+					}
+					else if(objBoard[i][j].equals(ObstacleType.hillDirtTop)) {
+						hillDirtTop.paintIcon(this, g, j*32, i*32);
+					}
+					//dirt borders
+					else if(objBoard[i][j].equals(ObstacleType.dirtLeft)) {
+						dirtLeft.paintIcon(this, g, j*32, i*32);
+					}
+					else if(objBoard[i][j].equals(ObstacleType.dirtRight)) {
+						dirtRight.paintIcon(this, g, j*32, i*32);
+					}
+					else if(objBoard[i][j].equals(ObstacleType.dirtBot)) {
+						dirtBot.paintIcon(this, g, j*32, i*32);
+					}
+					else if(objBoard[i][j].equals(ObstacleType.dirtTop)) {
+						dirtTop.paintIcon(this, g, j*32, i*32);
+					}
+					
+					else if(objBoard[i][j].equals(ObstacleType.dirtTopRight)) {
+						dirtTopRight.paintIcon(this, g, j*32, i*32);
+					}
+					else if(objBoard[i][j].equals(ObstacleType.dirtTopLeft)) {
+						dirtTopLeft.paintIcon(this, g, j*32, i*32);
+					}
+					else if(objBoard[i][j].equals(ObstacleType.dirtBotLeft)) {
+						dirtBotLeft.paintIcon(this, g, j*32, i*32);
+					}
+					else if(objBoard[i][j].equals(ObstacleType.dirtBotRight)) {
+						dirtBotRight.paintIcon(this, g, j*32, i*32);
+					}
+					else if(objBoard[i][j].equals(ObstacleType.woodpegs)) {
+						woodpegs.paintIcon(this, g, j*32, i*32);
+					}
+					else if(objBoard[i][j].equals(ObstacleType.stairsLeft)) {
+						stairsLeft.paintIcon(this, g, j*32, i*32);
+					}
+					else if(objBoard[i][j].equals(ObstacleType.stairsRight)) {
+						stairsRight.paintIcon(this, g, j*32, i*32);
+					}
+					///////////////////////////////////////////////////////
+	
 					//Trainer faces whichever direction we're walking
 					if (theGame.getDirection() == 0) {
 						trainer = new ImageIcon("cut_sprites/trainer_up_2.png");

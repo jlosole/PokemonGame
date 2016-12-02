@@ -26,14 +26,15 @@ public class MapOne implements _Map, Serializable {
 		map = new Object[SIZE][SIZE];
 		random = new Random();
 		initializeGrid();
-		setTreesAndExits();
+		setTrees();
 		setWater();
 		setBushes();
 		setShortGrass();
 		setDeepGrass();
 		setItems();
-		setStone();
-		setHouse();
+//		setStone();
+		setTrees();
+		setEntranceAndExits();
 	}
 	
 	public static MapOne getInstanceOf() {
@@ -43,10 +44,6 @@ public class MapOne implements _Map, Serializable {
 		} else {
 			return mapOne;
 		}
-	}
-	
-	public void setHouse() {
-//		map[3][3] = ObstacleType.House;
 	}
 	
 	public void initializeGrid() {
@@ -151,31 +148,68 @@ public class MapOne implements _Map, Serializable {
 		
 	}
 	
-	public void setTreesAndExits() {
+	public void setEntranceAndExits() {
+		//top row
+		map[0][9] = ObstacleType.woodpegs;
+		map[0][10] = ObstacleType.dirtLeft;
+		map[1][10] = ObstacleType.dirtLeft;
+		map[2][10] = ObstacleType.dirtBotLeft;
+		map[2][11] = ObstacleType.dirtBot;
+		map[2][12] = ObstacleType.dirtBotRight;
+		map[1][12] = ObstacleType.dirtRight;
+		map[0][12] = ObstacleType.dirtRight;
+		map[0][11] = ObstacleType.Dirt;
+		map[1][11] = ObstacleType.Dirt;
+		map[0][13] = ObstacleType.woodpegs;
+		
+		//bottom entrance
+		map[SIZE-1][9] = ObstacleType.woodpegs;
+		map[SIZE-1][10] = ObstacleType.dirtLeft;
+		map[SIZE-2][10] = ObstacleType.dirtLeft;
+		map[SIZE-3][10] = ObstacleType.dirtTopLeft;
+		map[SIZE-3][11] = ObstacleType.dirtTop;
+		map[SIZE-3][12] = ObstacleType.dirtTopRight;
+		map[SIZE-1][11] = ObstacleType.Dirt;
+		map[SIZE-2][11] = ObstacleType.Dirt;
+		map[SIZE-1][12] = ObstacleType.dirtRight;
+		map[SIZE-2][12] = ObstacleType.dirtRight;
+		map[SIZE-1][13] = ObstacleType.woodpegs;
+		
+		//RIGHT EXIT
+		map[9][22] = ObstacleType.dirtTop;
+		map[9][21] = ObstacleType.dirtTop;
+		map[9][20] = ObstacleType.dirtTop;
+		map[9][19] = ObstacleType.dirtTopLeft;
+		map[10][22] = ObstacleType.Dirt;
+		map[10][21] = ObstacleType.Dirt;
+		map[10][20] = ObstacleType.Dirt;
+		map[10][19] = ObstacleType.dirtLeft;
+		map[11][22] = ObstacleType.Dirt;
+		map[11][21] = ObstacleType.Dirt;
+		map[11][20] = ObstacleType.Dirt;
+		map[11][19] = ObstacleType.dirtLeft;
+		map[12][19] = ObstacleType.dirtBotLeft;
+		map[12][20] = ObstacleType.dirtBot;
+		map[12][21] = ObstacleType.dirtBot;
+		map[12][22] = ObstacleType.dirtBot;
+
+	}
+	
+	public void setTrees() {
 		for(int i = 0; i < SIZE; i++) {
 			//top row
-			if( i < 10 || i > 13) {
+			if(i < 9 || i > 13) {
 				map[0][i] = ObstacleType.Tree;
-			} else {
-				map[0][i] = ObstacleType.Dirt;
-			}
+			} 
 			//bottom row
 			if(i < 9 || i > 13) {
 				map[SIZE-1][i] = ObstacleType.Tree;
-			} else {
-				map[SIZE-1][i] = ObstacleType.Dirt;
-			}
-			//left column
-			if(i < 9 || i > 13) {
-				map[i][0] = ObstacleType.Tree;
-			} else {
-				map[i][0] = ObstacleType.Dirt;
-			}
+			} 
+//			//left column
+			map[i][0] = ObstacleType.Tree;
 			//right column
 			if(i < 9 || i > 13) {
 				map[i][SIZE-1] = ObstacleType.Tree;
-			} else {
-				map[i][SIZE-1] = ObstacleType.Dirt;
 			}
 		}
 	}

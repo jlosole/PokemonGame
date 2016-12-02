@@ -44,27 +44,28 @@ public class TextView extends JPanel implements Observer {
 	
 	private void updateTextBoard(){
 		objBoard = theGame.getObjBoard();
-		for(int i = 0; i < size; i++){
-			for(int j = 0; j < size; j++) {
-				if(objBoard[i][j].equals(ObstacleType.Tree)) 
-					textBoard[i][j] = 'T';
-				else if(objBoard[i][j].equals(ObstacleType.DeepGrass)) 
-					textBoard[i][j] = 'G';
-				else if(objBoard[i][j].equals(ObstacleType.Water)) 
-					textBoard[i][j] = 'W';
-				else if(objBoard[i][j].equals(ObstacleType.Bush)) 
-					textBoard[i][j] = 'B';				
-				else if(objBoard[i][j].equals(ObstacleType.Dirt)) 
-					textBoard[i][j] = 'D';
-				else if(objBoard[i][j].equals(ObstacleType.ShortGrass)) 
-					textBoard[i][j] = 'g';
-				else if(objBoard[i][j] instanceof Item)
-					textBoard[i][j] = 'I';
-				Point pt = theGame.getTrainerPos();
-				//System.out.println(pt.x + " " + pt.y);
-				textBoard[pt.x][pt.y] = 'X';
-			}
-		}
+//		for(int i = 0; i < size; i++){
+//			for(int j = 0; j < size; j++) {
+////				System.out.println(i + " " + j);
+////				if(objBoard[i][j].equals(ObstacleType.Tree)) 
+////					textBoard[i][j] = 'T';
+////				else if(objBoard[i][j].equals(ObstacleType.DeepGrass)) 
+////					textBoard[i][j] = 'G';
+////				else if(objBoard[i][j].equals(ObstacleType.Water)) 
+////					textBoard[i][j] = 'W';
+////				else if(objBoard[i][j].equals(ObstacleType.Bush)) 
+////					textBoard[i][j] = 'B';				
+////				else if(objBoard[i][j].equals(ObstacleType.Dirt)) 
+////					textBoard[i][j] = 'D';
+////				else if(objBoard[i][j].equals(ObstacleType.ShortGrass)) 
+////					textBoard[i][j] = 'g';
+////				else if(objBoard[i][j] instanceof Item)
+////					textBoard[i][j] = 'I';
+////				Point pt = theGame.getTrainerPos();
+////				//System.out.println(pt.x + " " + pt.y);
+////				textBoard[pt.x][pt.y] = 'X';
+//			}
+//		}
 	}
 	
 	@Override

@@ -16,4 +16,8 @@ public class Rock extends Item {
 	public ItemType getItemType(){
 		return ItemType.Rock;
 	}
+	
+	public String toString() {
+		return "Rock";
+	}
 }

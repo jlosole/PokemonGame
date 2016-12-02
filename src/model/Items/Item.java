@@ -23,5 +23,7 @@ public abstract class Item implements Serializable {
 	}
 	
 	public abstract ItemType getItemType();
+	
+	public abstract String toString();
 }
 

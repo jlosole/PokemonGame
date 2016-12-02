@@ -16,4 +16,8 @@ public class Bait extends Item {
 	public ItemType getItemType(){
 		return ItemType.Bait;
 	}
+	
+	public String toString() {
+		return "Bait";
+	}
 }

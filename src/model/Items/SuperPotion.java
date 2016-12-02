@@ -10,5 +10,8 @@ public class SuperPotion extends Item {
 	public ItemType getItemType(){
 		return ItemType.SuperPotion;
 	}
-
+	
+	public String toString() {
+		return "Super Potion";
+	}
 }

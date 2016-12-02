@@ -106,8 +106,7 @@ public class Battle implements Serializable {
 	
 	public Boolean isOver(){
 		if (over) {
-			BattleMusic.stop();
-			MapMusic.play();
+			
 			System.out.println("yahhh");
 		}
 		return over;
