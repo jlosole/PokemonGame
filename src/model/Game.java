@@ -273,9 +273,10 @@ public class Game extends Observable implements Serializable{
 		if(rowValid && colValid && (objBoard[row][col] == ObstacleType.ShortGrass || 
 				objBoard[row][col] ==  ObstacleType.DeepGrass || 
 				objBoard[row][col] == ObstacleType.Dirt || objBoard[row][col] instanceof Item)
-				|| objBoard[row][col] == ObstacleType.StoneWalk || objBoard[row][col] == ObstacleType.StoneWalk2
-				|| objBoard[row][col] == ObstacleType.StoneBotLeft || objBoard[row][col] == ObstacleType.StoneBotRight
-				|| objBoard[row][col] == ObstacleType.StoneTopLeft || objBoard[row][col] == ObstacleType.StoneTopRight)
+				|| objBoard[row][col] == ObstacleType.dirtLeft || objBoard[row][col] == ObstacleType.dirtRight
+				|| objBoard[row][col] == ObstacleType.dirtTopLeft || objBoard[row][col] == ObstacleType.dirtTopRight
+				|| objBoard[row][col] == ObstacleType.dirtBotLeft || objBoard[row][col] == ObstacleType.dirtBotRight
+				|| objBoard[row][col] == ObstacleType.dirtBot || objBoard[row][col] == ObstacleType.dirtTop)
 			return true;
 		return false;
 	}

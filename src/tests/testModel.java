@@ -3,13 +3,18 @@ import static org.junit.Assert.*;
 
 import java.awt.Point;
 import java.util.Iterator;
+
 import org.junit.Test;
+
 import model.Map.*;
+
 import java.util.Map;
+
+import model.Game;
 import model.Trainer;
+import model.Battle.Battle;
 import model.Items.*;
 import model.Pokemon.*;
-
 import model.Items.Item;
 import model.Items.Potion;
 import model.Items.SafariBall;
@@ -28,7 +33,44 @@ public class testModel {
 		Item superPotion = new SuperPotion(false, 20);
 		assertFalse(sBall.isUsed());
 		assertEquals(superPotion.getHP(), 20);
-		
+	}
+	
+	@Test
+	public void testBattle() {
+		Battle battle = new Battle(new Trainer(), new MewTwo());
+		assertFalse(battle.isOver());
+		battle.throwBait();
+		battle.throwRock();
+		battle.throwBall();
+		battle.trainerRan();
+		assertTrue(battle.isOver());
+	}
+	
+	@Test
+	public void testGame() {
+		Game game = new Game();
+		assertEquals(null, game.move(21, 11, "Up"));
+		assertFalse(game.didStepOnItem());
+		assertFalse(game.isInDeepGrass());
+		game.startBattle(new MewTwo());
+		game.endBattle();
+		assertTrue(game.getTrainerPos().x > 0);
+		assertTrue(game.getTrainerPos().y > 0);
+		game.setMap(MapTwo.getInstanceOf());
+		assertEquals(MapTwo.getInstanceOf(), game.getMap());
+		game.getDirection();
+		game.move(18, 13, "Down");
+		game.move(18, 14, "Right");
+		game.move(18, 12, "Left");
+		game.setMap(MapOne.getInstanceOf());
+		game.move(11, 22, "Right");
+		game.move(11, 0, "Left");
+		game.move(0, 11, "Up");
+		game.setMap(MapTwo.getInstanceOf());
+		game.move(3, 0, "Left");
+		game.setMap(MapOne.getInstanceOf());
+		game.move(21, 2, "Right");
+		game.isInDeepGrass();
 	}
 	
 	@Test
