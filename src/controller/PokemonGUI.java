@@ -356,7 +356,7 @@ public class PokemonGUI extends JFrame {
 				} catch (IOException b) {
 					b.printStackTrace();
 				} 
-			}
+			} 
 		}
 		@Override
 		public void windowClosed(WindowEvent e) {
