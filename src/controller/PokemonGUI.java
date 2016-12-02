@@ -323,20 +323,17 @@ public class PokemonGUI extends JFrame {
 					
 					//User clicked run
 					else if(buttonPressed.equals(runB)){
-						battle.trainerRan();
-						System.out.println("ran1");
-	
-					}
-					
-					//Now check if game is over
-					if (battle.isOver() && bView.doneThrowing()) {
-						BattleMusic.stop();
-						MapMusic.play();
-						setView(oldView);
-						//bView.resetBattle();
-						theGame.endBattle();
+						battle.trainerRan();	
 					}
 				}
+				else {
+					BattleMusic.stop();
+					MapMusic.play();
+					setView(oldView);
+					bView.resetBattle();
+					theGame.endBattle();
+				}
+
 				
 				theGame.doNotify();
 			}

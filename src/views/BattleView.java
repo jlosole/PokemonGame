@@ -42,7 +42,7 @@ public class BattleView extends JPanel implements Observer {
 	private Boolean pokemonBrokeFree = false;//Set to true if the pokemon breaks out of ball
 	private Boolean pokemonRunning = false;
 	private Outcome outcome;				 //Represents the pokemon's turn after a throw
-	private Boolean battleDone;
+	private Boolean battleDone = false;
 	
 	//Needed components for drawing battle screen
 	private int width, height;
@@ -299,8 +299,8 @@ public class BattleView extends JPanel implements Observer {
 		itemTimer.stop();
 	}
 	
-	public Boolean doneThrowing(){
-		return itemReached; 
+	public Boolean battleDone(){
+		return battleDone; 
 	}
 	
 	public void resetItemReached(){
@@ -308,9 +308,11 @@ public class BattleView extends JPanel implements Observer {
 	}
 	
 	public void resetBattle(){
+		battleDone = false;
 		currentItemImage = null;
 		pokemonSet = false;
 		pokemonRunning = false;
+		pokemonReached = false;
 		trainerSet = false;
 		trainerDoneThrowing = false;
 		itemReached = false;
@@ -324,6 +326,8 @@ public class BattleView extends JPanel implements Observer {
 		trainerDoneThrowing = false;
 		pokemonInBall = false;
 		pokemonBrokeFree = false;
+		pokemonRunning = false;
+		pokemonReached = false;
 		itemReached = false;
 		itemXReached = false;
 		itemYReached = false;
@@ -411,6 +415,7 @@ public class BattleView extends JPanel implements Observer {
 			g.drawString("Oh no!", 75, height-200);
 			g.drawString(pokemon.getPokemonType().toString()+
 					" ran away!", 75, height-160);
+			battleDone = true;
 		}
 		
 		//If outcome is that we caught the pokemon and the pokemon is in the ball
@@ -421,8 +426,8 @@ public class BattleView extends JPanel implements Observer {
 			g.drawString("Gotcha!", 75, height-200);
 			g.drawString(pokemon.getPokemonType().toString() + " "
 					+ "has been caught!", 75, height-160);
+			battleDone = true;
 		}
-		
 	}
 	
 	private class MyBattleStartListener implements ActionListener{
