@@ -228,4 +228,16 @@ public class MapTwo implements _Map, Serializable {
 		return map[x][y] == null;
 	}
 
+	@Override
+	public void setTrees() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setEntranceAndExits() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

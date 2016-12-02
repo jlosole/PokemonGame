@@ -243,16 +243,17 @@ public class PokemonGUI extends JFrame {
 							JOptionPane.showMessageDialog(null, "You have no rocks!");
 						else {
 							bView.startThrowTimer();
-							
 						}
 						//Pokemon ran, currentView now is map
 						if(outcome.equals(Outcome.Ran)) { 
+							bView.setOutcome(Outcome.Ran);
 							//animate running
 							System.out.println("ran");
 	
 						}
 						 //Pokemon stayed do nothing
 						else {
+							bView.setOutcome(Outcome.Stayed);
 							System.out.println("stay");
 	
 						}								 
@@ -272,11 +273,13 @@ public class PokemonGUI extends JFrame {
 						}
 						
 						if (outcome.equals(Outcome.Ran)) {
+							bView.setOutcome(Outcome.Ran);
 							//Animate pokemon running
 							System.out.println("ran");
 						}
 						 //Pokemon stayed do nothing
 						else{
+							bView.setOutcome(Outcome.Stayed);
 							System.out.println("stayed");
 						}								 	
 					}
@@ -299,17 +302,20 @@ public class PokemonGUI extends JFrame {
 						//We threw a ball and caught the pokemon
 						if(outcome.equals(Outcome.Caught)) {
 							System.out.println("caught");
+							bView.setOutcome(Outcome.Caught);
 	
 						}
 						
 						//We threw a ball and the pokemon escaped the ball and ran
-						else if(outcome.equals(Outcome.EscapedAndRan)){
+						else if(outcome.equals(Outcome.Ran)){
+							bView.setOutcome(Outcome.Ran);
 							System.out.println("ran");
 	
 						}
 						
 						//Threw a ball and the pokemon escaped and stayed
 						else {
+							bView.setOutcome(Outcome.Stayed);
 							System.out.println("stay");
 	
 						}
@@ -317,20 +323,17 @@ public class PokemonGUI extends JFrame {
 					
 					//User clicked run
 					else if(buttonPressed.equals(runB)){
-						battle.trainerRan();
-						System.out.println("ran1");
-	
-					}
-					
-					//Now check if game is over
-					if (battle.isOver() && bView.doneThrowing()) {
-						BattleMusic.stop();
-						MapMusic.play();
-						setView(oldView);
-						bView.resetBattle();
-						theGame.endBattle();
+						battle.trainerRan();	
 					}
 				}
+				else {
+					BattleMusic.stop();
+					MapMusic.play();
+					setView(oldView);
+					bView.resetBattle();
+					theGame.endBattle();
+				}
+
 				
 				theGame.doNotify();
 			}

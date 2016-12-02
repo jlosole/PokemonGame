@@ -64,9 +64,9 @@ public class Battle implements Serializable {
 				//If escaped, either stayed or ran
 				if (pokemon.didRun()) {
 					over = true;
-					return Outcome.EscapedAndRan;
+					return Outcome.Ran;
 				} 
-				else return Outcome.EscapedAndStayed;
+				else return Outcome.Stayed;
 			}
 		} 
 		else return Outcome.NoBalls;
