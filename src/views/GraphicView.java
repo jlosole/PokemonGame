@@ -94,15 +94,15 @@ public class GraphicView extends JPanel implements Observer {
 		tallGrass = new ImageIcon("safariSheet/deepGrass.png");
 		bush = new ImageIcon("safariSheet/bush.png");
 		scatteredStone = new ImageIcon("houseTiles/scatteredStone.png");
-		stoneBot = new ImageIcon("landscapeTiles/stoneBottom.png");
-		stoneBotLeft = new ImageIcon("landscapeTiles/stoneBotLeft.png");
-		stoneBotRight = new ImageIcon("landscapeTiles/stoneBotRight.png");
-		stoneLeft = new ImageIcon("landscapeTiles/stoneLeft.png");
-		stoneRight = new ImageIcon("landscapeTiles/stoneRight.png");
-		stoneTopLeft = new ImageIcon("landscapeTiles/stoneTopLeft.png");
-		stoneTopRight = new ImageIcon("landscapeTiles/stoneTopRight.png");
-		stoneWalk = new ImageIcon("landscapeTiles/stoneWalk.png");
-		stoneWalk2 = new ImageIcon("landscapeTiles/stoneWalk2.png");
+//		stoneBot = new ImageIcon("landscapeTiles/stoneBottom.png");
+//		stoneBotLeft = new ImageIcon("landscapeTiles/stoneBotLeft.png");
+//		stoneBotRight = new ImageIcon("landscapeTiles/stoneBotRight.png");
+//		stoneLeft = new ImageIcon("landscapeTiles/stoneLeft.png");
+//		stoneRight = new ImageIcon("landscapeTiles/stoneRight.png");
+//		stoneTopLeft = new ImageIcon("landscapeTiles/stoneTopLeft.png");
+//		stoneTopRight = new ImageIcon("landscapeTiles/stoneTopRight.png");
+//		stoneWalk = new ImageIcon("landscapeTiles/stoneWalk.png");
+//		stoneWalk2 = new ImageIcon("landscapeTiles/stoneWalk2.png");
         /////////////////////////////////////////////////////////////////////////
 		
 		///////////////////////// HILL/DIRT/STAIRS IMAGES
@@ -129,8 +129,6 @@ public class GraphicView extends JPanel implements Observer {
 		//stairs
 		stairsLeft = new ImageIcon("safariSheet/stairsLeft.png");
 		stairsRight = new ImageIcon("safariSheet/stairsRight.png");
-
-
 
 		/////////////////////////ITEM IMAGES
 		bait = new ImageIcon("cut_sprites/bait.png");
@@ -216,36 +214,36 @@ public class GraphicView extends JPanel implements Observer {
 					// all water painting ^^^^^^^^^^^^
 					
 					//all stone painting vvvvvvvvvv
-					else if(objBoard[i][j].equals(ObstacleType.ScatteredStone)) {
-						scatteredStone.paintIcon(this, g, j*32, i*32);
-					}
-					else if(objBoard[i][j].equals(ObstacleType.StoneBot)) {
-						stoneBot.paintIcon(this, g, j*32, i*32);
-					}
-					else if(objBoard[i][j].equals(ObstacleType.StoneBotLeft)) {
-						stoneBotLeft.paintIcon(this, g, j*32, i*32);
-					}
-					else if(objBoard[i][j].equals(ObstacleType.StoneBotRight)) {
-						stoneBotRight.paintIcon(this, g, j*32, i*32);
-					}
-					else if(objBoard[i][j].equals(ObstacleType.StoneLeft)) {
-						stoneLeft.paintIcon(this, g, j*32, i*32);
-					}
-					else if(objBoard[i][j].equals(ObstacleType.StoneRight)) {
-						stoneRight.paintIcon(this, g, j*32, i*32);
-					}
-					else if(objBoard[i][j].equals(ObstacleType.StoneTopLeft)) {
-						stoneTopLeft.paintIcon(this, g, j*32, i*32);
-					}
-					else if(objBoard[i][j].equals(ObstacleType.StoneTopRight)) {
-						stoneTopRight.paintIcon(this, g, j*32, i*32);
-					}
-					else if(objBoard[i][j].equals(ObstacleType.StoneWalk)) {
-						stoneWalk.paintIcon(this, g, j*32, i*32);
-					}
-					else if(objBoard[i][j].equals(ObstacleType.StoneWalk2)) {
-						stoneWalk2.paintIcon(this, g, j*32, i*32);
-					}
+//					else if(objBoard[i][j].equals(ObstacleType.ScatteredStone)) {
+//						scatteredStone.paintIcon(this, g, j*32, i*32);
+//					}
+//					else if(objBoard[i][j].equals(ObstacleType.StoneBot)) {
+//						stoneBot.paintIcon(this, g, j*32, i*32);
+//					}
+//					else if(objBoard[i][j].equals(ObstacleType.StoneBotLeft)) {
+//						stoneBotLeft.paintIcon(this, g, j*32, i*32);
+//					}
+//					else if(objBoard[i][j].equals(ObstacleType.StoneBotRight)) {
+//						stoneBotRight.paintIcon(this, g, j*32, i*32);
+//					}
+//					else if(objBoard[i][j].equals(ObstacleType.StoneLeft)) {
+//						stoneLeft.paintIcon(this, g, j*32, i*32);
+//					}
+//					else if(objBoard[i][j].equals(ObstacleType.StoneRight)) {
+//						stoneRight.paintIcon(this, g, j*32, i*32);
+//					}
+//					else if(objBoard[i][j].equals(ObstacleType.StoneTopLeft)) {
+//						stoneTopLeft.paintIcon(this, g, j*32, i*32);
+//					}
+//					else if(objBoard[i][j].equals(ObstacleType.StoneTopRight)) {
+//						stoneTopRight.paintIcon(this, g, j*32, i*32);
+//					}
+//					else if(objBoard[i][j].equals(ObstacleType.StoneWalk)) {
+//						stoneWalk.paintIcon(this, g, j*32, i*32);
+//					}
+//					else if(objBoard[i][j].equals(ObstacleType.StoneWalk2)) {
+//						stoneWalk2.paintIcon(this, g, j*32, i*32);
+//					}
 					//all stone painting ^^^^^^^^^^^
 					
 					else if(objBoard[i][j].equals(ObstacleType.Bush)) {

@@ -32,7 +32,6 @@ public class MapOne implements _Map, Serializable {
 		setShortGrass();
 		setDeepGrass();
 		setItems();
-//		setStone();
 		setTrees();
 		setEntranceAndExits();
 	}
@@ -90,19 +89,6 @@ public class MapOne implements _Map, Serializable {
 				map[i][j] = ObstacleType.DeepGrass;
 			}
 		}
-	}
-	
-	public void setStone() {
-		//entrance walk way
-		for(int i = SIZE-1; i > 15; i--) {
-			map[i][11] = ObstacleType.StoneWalk;
-		}
-		//corner pieces at end of entrance walkway
-		map[16][10] = ObstacleType.StoneBotRight;
-		map[17][10] = ObstacleType.StoneTopRight;
-		map[16][12] = ObstacleType.StoneBotLeft;
-		map[17][12] = ObstacleType.StoneTopLeft;
-
 	}
 	
 	public void setWater() {
