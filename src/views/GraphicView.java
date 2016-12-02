@@ -160,13 +160,13 @@ public class GraphicView extends JPanel implements Observer {
 
 		ImageIcon trainer;
 		
-//		for(int i = 0; i < 23; i++) {
-//			for(int j = 0; j < 23; j++) {
-//				g.setColor(Color.BLACK);
-//				g.fillRect(j*32, i*32, 32, 32);
-//			}
-//		}
-//		
+		for(int i = 0; i < 23; i++) {
+			for(int j = 0; j < 23; j++) {
+				g.setColor(Color.BLACK);
+				g.fillRect(j*32, i*32, 32, 32);
+			}
+		}
+		
 		trainerPos = theGame.getTrainerPos();
 		int x = trainerPos.x;
 		int y = trainerPos.y;
