@@ -135,6 +135,7 @@ public class MapOne implements _Map, Serializable {
 	}
 	
 	public void setEntranceAndExits() {
+		
 		//top row
 		map[0][9] = ObstacleType.woodpegs;
 		map[0][10] = ObstacleType.dirtLeft;
@@ -149,6 +150,7 @@ public class MapOne implements _Map, Serializable {
 		map[0][13] = ObstacleType.woodpegs;
 		
 		//bottom entrance
+		map[19][9] = ObstacleType.woodsign;
 		map[SIZE-1][9] = ObstacleType.woodpegs;
 		map[SIZE-1][10] = ObstacleType.dirtLeft;
 		map[SIZE-2][10] = ObstacleType.dirtLeft;
@@ -166,18 +168,26 @@ public class MapOne implements _Map, Serializable {
 		map[9][21] = ObstacleType.dirtTop;
 		map[9][20] = ObstacleType.dirtTop;
 		map[9][19] = ObstacleType.dirtTopLeft;
+		
 		map[10][22] = ObstacleType.Dirt;
 		map[10][21] = ObstacleType.Dirt;
 		map[10][20] = ObstacleType.Dirt;
 		map[10][19] = ObstacleType.dirtLeft;
+		
 		map[11][22] = ObstacleType.Dirt;
 		map[11][21] = ObstacleType.Dirt;
 		map[11][20] = ObstacleType.Dirt;
 		map[11][19] = ObstacleType.dirtLeft;
-		map[12][19] = ObstacleType.dirtBotLeft;
-		map[12][20] = ObstacleType.dirtBot;
-		map[12][21] = ObstacleType.dirtBot;
-		map[12][22] = ObstacleType.dirtBot;
+		
+		map[12][19] = ObstacleType.dirtLeft;
+		map[12][20] = ObstacleType.Dirt;
+		map[12][21] = ObstacleType.Dirt;
+		map[12][22] = ObstacleType.Dirt;
+		
+		map[13][19] = ObstacleType.dirtBotLeft;
+		map[13][20] = ObstacleType.dirtBot;
+		map[13][21] = ObstacleType.dirtBot;
+		map[13][22] = ObstacleType.dirtBot;
 
 	}
 	

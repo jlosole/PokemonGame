@@ -43,7 +43,7 @@ public class GraphicView extends JPanel implements Observer {
 		hillLeft, hillRight, hillBotLeft, hillBotRight, hillTopLeft,
 		hillTopRight, hillDirt, hillDirtTop, dirtLeft, dirtRight, dirtBot,
 		dirtTop, dirtTopRight, dirtTopLeft, dirtBotLeft, dirtBotRight,
-		woodpegs, stairsLeft, stairsRight;
+		woodsign, woodpegs, stairsLeft, stairsRight;
 	private Timer timer;
 	
 	public GraphicView(Game theGame, int width, int height){
@@ -125,7 +125,7 @@ public class GraphicView extends JPanel implements Observer {
 		dirtBotLeft = new ImageIcon("safariSheet/dirtBotLeft.png");
 		dirtBotRight = new ImageIcon("safariSheet/dirtBotRight.png");
 		woodpegs = new ImageIcon("safariSheet/woodpegs.png");
-		
+		woodsign = new ImageIcon("safariSheet/woodsign.png");
 		//stairs
 		stairsLeft = new ImageIcon("safariSheet/stairsLeft.png");
 		stairsRight = new ImageIcon("safariSheet/stairsRight.png");
@@ -171,8 +171,10 @@ public class GraphicView extends JPanel implements Observer {
 		int x = trainerPos.x;
 		int y = trainerPos.y;
 		
-		for(int i = x-4; i < x+4; i++) {
-			for(int j = y-4; j < y+4; j++) {
+//		for(int i = x-4; i < x+4; i++) {
+//			for(int j = y-4; j < y+4; j++) {
+		for(int i = 0; i < 23; i++) {
+			for(int j = 0; j < 23; j++) {
 				if(i >= 0 && i < 23 &&  j >= 0 && j < 23) {
 					
 					shortGrass.paintIcon(this,g, j*32, i *32);
@@ -213,45 +215,17 @@ public class GraphicView extends JPanel implements Observer {
 					}
 					// all water painting ^^^^^^^^^^^^
 					
-					//all stone painting vvvvvvvvvv
-//					else if(objBoard[i][j].equals(ObstacleType.ScatteredStone)) {
-//						scatteredStone.paintIcon(this, g, j*32, i*32);
-//					}
-//					else if(objBoard[i][j].equals(ObstacleType.StoneBot)) {
-//						stoneBot.paintIcon(this, g, j*32, i*32);
-//					}
-//					else if(objBoard[i][j].equals(ObstacleType.StoneBotLeft)) {
-//						stoneBotLeft.paintIcon(this, g, j*32, i*32);
-//					}
-//					else if(objBoard[i][j].equals(ObstacleType.StoneBotRight)) {
-//						stoneBotRight.paintIcon(this, g, j*32, i*32);
-//					}
-//					else if(objBoard[i][j].equals(ObstacleType.StoneLeft)) {
-//						stoneLeft.paintIcon(this, g, j*32, i*32);
-//					}
-//					else if(objBoard[i][j].equals(ObstacleType.StoneRight)) {
-//						stoneRight.paintIcon(this, g, j*32, i*32);
-//					}
-//					else if(objBoard[i][j].equals(ObstacleType.StoneTopLeft)) {
-//						stoneTopLeft.paintIcon(this, g, j*32, i*32);
-//					}
-//					else if(objBoard[i][j].equals(ObstacleType.StoneTopRight)) {
-//						stoneTopRight.paintIcon(this, g, j*32, i*32);
-//					}
-//					else if(objBoard[i][j].equals(ObstacleType.StoneWalk)) {
-//						stoneWalk.paintIcon(this, g, j*32, i*32);
-//					}
-//					else if(objBoard[i][j].equals(ObstacleType.StoneWalk2)) {
-//						stoneWalk2.paintIcon(this, g, j*32, i*32);
-//					}
-					//all stone painting ^^^^^^^^^^^
-					
 					else if(objBoard[i][j].equals(ObstacleType.Bush)) {
 						bush.paintIcon(this, g, j*32, i*32);
 					}
 					else if(objBoard[i][j].equals(ObstacleType.Dirt)) {
 						dirt.paintIcon(this, g, j*32, i*32);
 					}
+					else if(objBoard[i][j].equals(ObstacleType.woodsign)) {
+						woodsign.paintIcon(this, g, j*32, i*32);
+					}
+					
+					//items vvvvvvvvvvvvvvvvvvvvvvvv
 					else if(objBoard[i][j] instanceof Bait) {
 						bait.paintIcon(this, g, j*32, i*32);
 					}
