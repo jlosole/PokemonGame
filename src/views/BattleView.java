@@ -22,6 +22,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import controller.PokemonGUI;
 import model.Game;
 import model.Trainer;
 import model.Battle.Battle;
@@ -41,15 +42,15 @@ public class BattleView extends JPanel implements Observer {
 	private Boolean pokemonInBall = false;   //False is pokemon isnt caught true otherwise
 	private Boolean pokemonBrokeFree = false;//Set to true if the pokemon breaks out of ball
 	private Boolean pokemonRunning = false;
+	private Boolean pokemonCaught = false;
 	private Outcome outcome;				 //Represents the pokemon's turn after a throw
-	private Boolean battleDone = false;
 	
 	//Needed components for drawing battle screen
 	private int width, height;
 	private JPanel buttonPanel;
 	private BufferedImage background, rockImage, baitImage, ballImage, currentItemImage = null; 
 	private BufferedImage currentTrainer, trainer1, trainer2, trainer3, trainer4, trainer5;		  
-	private JButton bait, rock, run, ball;
+	private JButton bait, rock, run, ball, gameOver;
 	
 	//Needed components for animations
 	private final int ENTER_DELAY_IN_MILLS = 20;
@@ -110,6 +111,10 @@ public class BattleView extends JPanel implements Observer {
 		buttonPanel = new JPanel();
 		buttonPanel.setLayout(new GridLayout(2, 2));
 		
+		gameOver = new JButton();
+		gameOver.setSize(200, 20);
+		gameOver.setLocation(pokemonX-200, pokemonY);
+		
 		bait = new JButton("Throw Bait");
 		rock = new JButton("Throw Rock");
 		ball = new JButton("Throw Ball");
@@ -168,6 +173,10 @@ public class BattleView extends JPanel implements Observer {
 		return ball;
 	}
 	
+	public JButton getGameOverButton(){
+		return gameOver;
+	}
+	
 	public void switchTrainerImage(){
 		if(actions == 1)
 			currentTrainer = trainer1;
@@ -196,6 +205,10 @@ public class BattleView extends JPanel implements Observer {
 	
 	public void setOutcome(Outcome outcome){
 		this.outcome = outcome;
+	}
+	
+	public void setGameOverText(String str){
+		gameOver.setText(str);
 	}
 	
 	@Override
@@ -299,18 +312,16 @@ public class BattleView extends JPanel implements Observer {
 		itemTimer.stop();
 	}
 	
-	public Boolean battleDone(){
-		return battleDone; 
-	}
-	
 	public void resetItemReached(){
 		itemReached = false;
 	}
 	
 	public void resetBattle(){
-		battleDone = false;
+		this.remove(gameOver);
 		currentItemImage = null;
+		outcome = null;
 		pokemonSet = false;
+		pokemonCaught = false;
 		pokemonRunning = false;
 		pokemonReached = false;
 		trainerSet = false;
@@ -319,7 +330,7 @@ public class BattleView extends JPanel implements Observer {
 		itemXReached = false;
 		itemYReached = false;
 		trainerX = 0;
-		pokemonX = 675;
+		pokemonX = 575;
 	}
 	
 	public void resetThrowing(){
@@ -386,7 +397,7 @@ public class BattleView extends JPanel implements Observer {
 				
 		//If the pokemon is in the ball and chose to stay, sleep for the pokeball to stay
 		//before redrawing the pokemon back
-		else if(pokemonInBall == true && (outcome.equals(Outcome.Stayed) || 
+		else if(pokemonInBall && outcome != null && (outcome.equals(Outcome.Stayed) || 
 				outcome.equals(Outcome.Ran))){
 			try {
 				Thread.sleep(1000);
@@ -415,7 +426,7 @@ public class BattleView extends JPanel implements Observer {
 			g.drawString("Oh no!", 75, height-200);
 			g.drawString(pokemon.getPokemonType().toString()+
 					" ran away!", 75, height-160);
-			battleDone = true;
+			setGameOverText("Pokemon ran away!");
 		}
 		
 		//If outcome is that we caught the pokemon and the pokemon is in the ball
@@ -426,7 +437,12 @@ public class BattleView extends JPanel implements Observer {
 			g.drawString("Gotcha!", 75, height-200);
 			g.drawString(pokemon.getPokemonType().toString() + " "
 					+ "has been caught!", 75, height-160);
-			battleDone = true;
+			setGameOverText("You caught the Pokemon!");
+			pokemonCaught = true;
+		}
+		
+		if(pokemonReached || pokemonCaught){
+			this.add(gameOver);
 		}
 	}
 	
