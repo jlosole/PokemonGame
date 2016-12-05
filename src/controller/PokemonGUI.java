@@ -23,6 +23,7 @@ import javax.swing.JPanel;
 
 import views.BattleView;
 import views.GraphicView;
+import views.InventoryView;
 import views.LoadingView;
 import views.TextView;
 import model.Game;
@@ -53,15 +54,12 @@ public class PokemonGUI extends JFrame {
 	private TextView tView;
 	private BattleView bView;
 	private LoadingView lView;
+	private InventoryView iView;
 	private JPanel currentView, oldView = null;
 	private String winCondition;
 	
 	//Battle Buttons
-	private JButton rockB;
-	private JButton baitB;
-	private JButton ballB;
-	private JButton runB; 
-	private JButton gameOverB;
+	private JButton rockB, baitB, ballB, runB, gameOverB;
 	
 	//Loading screen Buttons
 	private JButton yesButton, noButton;
@@ -81,7 +79,7 @@ public class PokemonGUI extends JFrame {
 	    gView = new GraphicView(theGame, WIDTH, HEIGHT);
 	    tView = new TextView(theGame, WIDTH, HEIGHT); 
 	    bView = new BattleView(theGame, WIDTH, HEIGHT);
-	    System.out.println("rono");
+	    iView = new InventoryView(theGame, WIDTH, HEIGHT);
 	    
 	    this.addKeyListener(new MyArrowKeyListener(theGame));
 	    this.addWindowListener(new MyWindowListener());
@@ -132,11 +130,15 @@ public class PokemonGUI extends JFrame {
 	
 	//Adds the menus to the frame so you can switch between views
 	public void addMenus(){
-		JMenuItem menu = new JMenu("Views");
+		JMenuItem menu = new JMenu("Menu");
+		JMenuItem views = new JMenu("Views");
 		JMenuItem graphic = new JMenuItem("Graphic View");
 		JMenuItem text = new JMenuItem("Text View");
-		menu.add(graphic);
-		menu.add(text);
+		JMenuItem inventory = new JMenuItem("Inventory");
+		menu.add(views);
+		menu.add(inventory);
+		views.add(graphic);
+		views.add(text);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -144,6 +146,7 @@ public class PokemonGUI extends JFrame {
 		
 		graphic.addActionListener(new MenuListener());
 		text.addActionListener(new MenuListener());
+		inventory.addActionListener(new MenuListener());
 	}
 	
 	public void addObservers(){
@@ -173,14 +176,8 @@ public class PokemonGUI extends JFrame {
 				setView(gView);
 			else if(entered.equals("Text View"))
 				setView(tView);
-		}
-	}
-	
-	private class MoveListener implements ActionListener {
-		
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			//gView.repaint();
+			else if(entered.equals("Inventory"))
+				setView(iView);
 		}
 	}
 	
