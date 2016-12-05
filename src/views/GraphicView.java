@@ -5,9 +5,13 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -28,10 +32,7 @@ public class GraphicView extends JPanel implements Observer {
 	private int width, height;
 	private boolean starting;
 	private ImageIcon 
-		trainerUp1, trainerUp2, trainerUp3,
-		trainerLeft1, trainerLeft2, trainerLeft3,
-		trainerRight1, trainerRight2, trainerRight3,
-		trainerDown1, trainerDown2, trainerDown3,
+
 		shortGrass, tallGrass, bush, water, waterBottomLeft,
 		waterBottomRight, waterBottom, waterLeft, waterRight,
 		waterTopLeft, waterTopRight, waterTop, safariBall, dirt,
@@ -44,7 +45,15 @@ public class GraphicView extends JPanel implements Observer {
 		woodsign, woodpegs, stairsLeft, stairsRight, graysign, inHillTopLeft,
 		inHillTopRight, g2dBotLeft, g2dBotRight, g2dTopLeft, g2dTopRight;
 	
+	private BufferedImage trainerUp1, trainerUp2, trainerUp3,
+	trainerLeft1, trainerLeft2, trainerLeft3, trainerRight1, 
+	trainerRight2, trainerRight3,trainerDown1, trainerDown2, trainerDown3; 
+	private BufferedImage currentTrainerImage;
 	private Timer timer;
+	private boolean trainerSet;
+	private int trainerX, trainerY, trainerFinalX, trainerFinalY;
+	private int movementPixels = 2;
+	private int times = 0;
 	
 	public GraphicView(Game theGame, int width, int height){
 		this.theGame = theGame;
@@ -54,27 +63,36 @@ public class GraphicView extends JPanel implements Observer {
 		this.starting = true;
 		this.setSize(width, height);
 		timer = new Timer(100, new MoveListener());
+		Point temp = this.theGame.getTrainerPos();
+		trainerX = temp.x;
+		trainerY = temp.y;
 		loadImages();
 	}
 	
 	public void loadImages() {
 		
 		/////////////////////////TRAINER IMAGES
-		trainerUp1 = new ImageIcon("trainerImages/trainer_up_1.png");
-		trainerUp2 = new ImageIcon("trainerImages/trainer_up_2.png");
-		trainerUp3 = new ImageIcon("trainerImages/trainer_up_3.png");
-		
-		trainerDown1 = new ImageIcon("trainerImages/trainer_down_1.png");
-		trainerDown2 = new ImageIcon("trainerImages/trainer_down_2.png");
-		trainerDown3 = new ImageIcon("trainerImages/trainer_down_3.png");
-		
-		trainerLeft1 = new ImageIcon("trainerImages/trainer_left_1.png");
-		trainerLeft2 = new ImageIcon("trainerImages/trainer_left_2.png");
-		trainerLeft3 = new ImageIcon("trainerImages/trainer_left_3.png");
+		try {
+			trainerUp1 = ImageIO.read(new File("trainerImages/trainer_up_1.png"));
+			trainerUp2 = ImageIO.read(new File("trainerImages/trainer_up_2.png"));
+			trainerUp3 = ImageIO.read(new File("trainerImages/trainer_up_3.png"));
+			
+			trainerDown1 = ImageIO.read(new File("trainerImages/trainer_up_1.png"));
+			trainerDown2 = ImageIO.read(new File("trainerImages/trainer_up_2.png"));
+			trainerDown3 = ImageIO.read(new File("trainerImages/trainer_up_3.png"));
+			
+			trainerLeft1 = ImageIO.read(new File("trainerImages/trainer_up_1.png"));
+			trainerLeft2 = ImageIO.read(new File("trainerImages/trainer_up_2.png"));
+			trainerLeft3 = ImageIO.read(new File("trainerImages/trainer_up_3.png"));
 
-		trainerRight1 = new ImageIcon("trainerImages/trainer_right_1.png");
-		trainerRight2 = new ImageIcon("trainerImages/trainer_right_2.png");
-		trainerRight3 = new ImageIcon("trainerImages/trainer_right_3.png");
+			trainerRight1 = ImageIO.read(new File("trainerImages/trainer_up_1.png"));
+			trainerRight2 = ImageIO.read(new File("trainerImages/trainer_up_2.png"));
+			trainerRight3 = ImageIO.read(new File("trainerImages/trainer_up_3.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		currentTrainerImage = trainerUp2;
         /////////////////////////////////////////////////////////////////////////
 		
 		/////////////////////////LANDSCAPE IMAGES		
@@ -158,8 +176,6 @@ public class GraphicView extends JPanel implements Observer {
 		super.paintComponent(g);
 		
 		objBoard = theGame.getObjBoard();
-
-		ImageIcon trainer;
 		
 		for(int i = 0; i < 23; i++) {
 			for(int j = 0; j < 23; j++) {
@@ -167,11 +183,7 @@ public class GraphicView extends JPanel implements Observer {
 				g.fillRect(j*28, i*28, 28, 28);
 			}
 		}
-		
-		trainerPos = theGame.getTrainerPos();
-		int x = trainerPos.x;
-		int y = trainerPos.y;
-		
+
 //		for(int i = x-4; i < x+4; i++) {
 //			for(int j = y-4; j < y+4; j++) {
 		for(int i = 0; i < 23; i++) {
@@ -375,50 +387,158 @@ public class GraphicView extends JPanel implements Observer {
 					else if(objBoard[i][j].equals(ObstacleType.stairsRight)) {
 						stairsRight.paintIcon(this, g, j*28, i*28);
 					}
+					
+					switchTrainerImage(); //Switches trainer image 
+					g.drawImage(currentTrainerImage, trainerX, trainerY, null);
 					///////////////////////////////////////////////////////
-	
-					//Trainer faces whichever direction we're walking
-					if (theGame.getDirection() == 0) {
-						trainer = new ImageIcon("cut_sprites/trainer_up_2.png");
-					} else if (theGame.getDirection() == 1) {
-						trainer= new ImageIcon("cut_sprites/trainer_down_2.png");
-					} else if (theGame.getDirection() == 2) {
-						trainer= new ImageIcon("cut_sprites/trainer_left_2.png");
-					} else {
-						trainer= new ImageIcon("cut_sprites/trainer_right_2.png");
-					}
-					trainer.paintIcon(this, g, y*28, x*28);
-					timer.start();
 				}
 			}
 		}
 	}
 	
+	public void startTimer() {
+		timer.start();
+	}
+	
 	public void updateAnimations() {
-		// What do I need to draw? (check state)
-		if (starting) {
-			repaint();
-		} else if (!theGame.gameOver()) {
-			
-		} else {
-			
+		if (!trainerSet) {
+			moveTrainer();
+			updateTimes();
+		} 
+		else {
+			timer.stop();
 		}
 	}
 	
-	public ImageIcon adjustTrainerImage(String dir, int trainerX, int trainerY) {
-//		switch(dir) {
-//			case "Up": return trainerUp2;
-//			case "Left": return trainerLeft2;
-//			case "Right": return trainerRight2;
-//			case "Down": return trainerDown2;
-//			default: return null;
-//		}
-		return null;
+	public void updateTimes(){
+		times++;
+		if(times == 2){
+			times = 0;
+		}
 	}
+	
+	public void switchTrainerImage() {
+		
+		int dir = theGame.getDirection();
+		System.out.println(times + "****************");
+		
+		if(dir == 0) { //walking up
+			if(times == 0) {
+				currentTrainerImage = trainerUp1;
+			}
+			else if(times == 1) {
+				currentTrainerImage = trainerUp3;
+			}
+			else {
+				currentTrainerImage = trainerUp2;
+				timer.stop();
+			}
+		}
+		if(dir == 1) { //walking down
+			if(times == 0) {
+				currentTrainerImage = trainerDown1;
+			}
+			else if(times == 1) {
+				currentTrainerImage = trainerDown3;
+			}
+			else {
+				currentTrainerImage = trainerDown2;
+				timer.stop();
+			}
+		}
+		if(dir == 2) { //walking left
+			if(times == 0) {
+				currentTrainerImage = trainerLeft1;
+			}
+			else if(times == 1) {
+				currentTrainerImage = trainerLeft3;
+			}
+			else {
+				currentTrainerImage = trainerLeft2;
+				timer.stop();
+			}
+		}
+		if(dir == 3) { // walking right
+			if(times == 0) {
+				currentTrainerImage = trainerRight1;
+			}
+			else if(times == 1) {
+				currentTrainerImage = trainerRight3;
+			}
+			else {
+				currentTrainerImage = trainerRight2;
+				timer.stop();
+			}
+		}
+	}
+	
+	public void setFinalPositions(Point point, String dir) {
+		trainerX = point.x * 28;
+		trainerY = point.y * 28;
+		
+		if(dir.equals("Up")) {
+			trainerFinalY = trainerY - 28;
+		}
+		else if(dir.equals("Down")) {
+			trainerFinalY = trainerY + 28;
+		}
+		else if(dir.equals("Left")) {
+			trainerFinalX = trainerX - 28;
+		}
+		else if(dir.equals("Right")) {
+			trainerFinalX = trainerX + 28;
+		}
+	}
+	
+	public void moveTrainer() {
+		
+		int dir = theGame.getDirection();
+		
+		if(dir == 0) { //moving up
+			if(trainerY > trainerFinalY) {
+				trainerY -= movementPixels;
+			}
+			else {
+				trainerSet = true;
+			}
+		}
+		else if(dir == 1) { //moving up
+			if(trainerY < trainerFinalY) {
+				trainerY += movementPixels;
+			}
+			else {
+				trainerSet = true;
+			}
+		}
+		else if(dir == 2) { //moving up
+			if(trainerX > trainerFinalX) {
+				trainerX -= movementPixels;
+			}
+			else {
+				trainerSet = true;
+			}
+		}
+		else if(dir == 3) { //moving up
+			if(trainerX < trainerFinalX) {
+				trainerX += movementPixels;
+			}
+			else {
+				trainerSet = true;
+			}
+		}
+		
+	}
+
+	
+//	public ImageIcon adjustTrainerImage() {
+//
+//		
+//	}
 	
 	private class MoveListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			updateAnimations();
 			repaint();
 		}
 	}
