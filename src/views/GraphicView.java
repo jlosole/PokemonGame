@@ -78,17 +78,17 @@ public class GraphicView extends JPanel implements Observer {
 			trainerUp2 = ImageIO.read(new File("trainerImages/trainer_up_2.png"));
 			trainerUp3 = ImageIO.read(new File("trainerImages/trainer_up_3.png"));
 			
-			trainerDown1 = ImageIO.read(new File("trainerImages/trainer_up_1.png"));
-			trainerDown2 = ImageIO.read(new File("trainerImages/trainer_up_2.png"));
-			trainerDown3 = ImageIO.read(new File("trainerImages/trainer_up_3.png"));
+			trainerDown1 = ImageIO.read(new File("trainerImages/trainer_down_1.png"));
+			trainerDown2 = ImageIO.read(new File("trainerImages/trainer_down_2.png"));
+			trainerDown3 = ImageIO.read(new File("trainerImages/trainer_down_3.png"));
 			
-			trainerLeft1 = ImageIO.read(new File("trainerImages/trainer_up_1.png"));
-			trainerLeft2 = ImageIO.read(new File("trainerImages/trainer_up_2.png"));
-			trainerLeft3 = ImageIO.read(new File("trainerImages/trainer_up_3.png"));
+			trainerLeft1 = ImageIO.read(new File("trainerImages/trainer_left_1.png"));
+			trainerLeft2 = ImageIO.read(new File("trainerImages/trainer_left_2.png"));
+			trainerLeft3 = ImageIO.read(new File("trainerImages/trainer_left_3.png"));
 
-			trainerRight1 = ImageIO.read(new File("trainerImages/trainer_up_1.png"));
-			trainerRight2 = ImageIO.read(new File("trainerImages/trainer_up_2.png"));
-			trainerRight3 = ImageIO.read(new File("trainerImages/trainer_up_3.png"));
+			trainerRight1 = ImageIO.read(new File("trainerImages/trainer_right_1.png"));
+			trainerRight2 = ImageIO.read(new File("trainerImages/trainer_right_2.png"));
+			trainerRight3 = ImageIO.read(new File("trainerImages/trainer_right_3.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -389,8 +389,8 @@ public class GraphicView extends JPanel implements Observer {
 						stairsRight.paintIcon(this, g, j*28, i*28);
 					}
 					
-					switchTrainerImage(); //Switches trainer image 
-					g.drawImage(currentTrainerImage, trainerY, trainerX, null);
+					//Switches trainer image 
+					g.drawImage(getTrainerImage(), trainerY, trainerX, null);
 					///////////////////////////////////////////////////////
 				}
 			}
@@ -422,59 +422,60 @@ public class GraphicView extends JPanel implements Observer {
 //	}
 	
 	// USES BOOLEAN FLAG (initialized to true) TO SWITCH BETWEEN THE WALKING IMAGES
-	public void switchTrainerImage() {
+	public BufferedImage getTrainerImage() {
 		
 		int dir = theGame.getDirection();
 //		System.out.println(times + "****************");
-//		System.out.println(dir + " -- direction in switchTrainerImage()");
+		System.out.println(dir + " -- direction in switchTrainerImage()");
 
 		if(dir == 0) { //walking up
 			if(flag) {
-				currentTrainerImage = trainerUp1;
 				flag = false;
+				return trainerUp1;
 			}
 			else {
-				currentTrainerImage = trainerUp3;
 				flag = true;
+				return trainerUp3;
 			}
 		}
 		if(dir == 1) { //walking down
 			if(flag) {
-				currentTrainerImage = trainerDown1;
 				flag = false;
+				return trainerDown1;
 			}
 			else if(times == 1) {
-				currentTrainerImage = trainerDown3;
 				flag = true;
+				return trainerDown3;
 			}
 		}
 		if(dir == 2) { //walking left
 			if(flag) {
-				currentTrainerImage = trainerLeft1;
 				flag = false;
+				return trainerLeft1;
 			}
 			else {
-				currentTrainerImage = trainerLeft3;
 				flag = true;
+				return trainerLeft3;
 			}
 		}
 		if(dir == 3) { // walking right
 			if(flag) {
-				currentTrainerImage = trainerRight1;
 				flag = false;
+				return trainerRight1;
 			}
 			else {
-				currentTrainerImage = trainerRight3;
 				flag = true;
+				return trainerRight3;
 			}
 		}
+		return null;
 	}
 	
 	public void setFinalPositions(Point point, String dir) {
 		
 		trainerX = point.x * 28;
 		trainerY = point.y * 28;
-		System.out.println(trainerX + ": " + trainerFinalX + " " + dir + " -- setFinalPositions");
+		
 		if(dir.equals("Up")) {
 			trainerFinalX = trainerX - 28;
 		}
@@ -487,13 +488,13 @@ public class GraphicView extends JPanel implements Observer {
 		else if(dir.equals("Right")) {
 			trainerFinalY = trainerY + 28;
 		}
-		System.out.println(trainerX + ": " + trainerFinalX);
+//		System.out.println(trainerX + ": " + trainerFinalX);
 	}
 	
 	public void moveTrainer() {
 		
 		int dir = theGame.getDirection();
-		System.out.println(dir + " -- direction in movetrainer()");
+//		System.out.println(dir + " -- direction in movetrainer()");
 		if(dir == 0) { //moving up
 			if(trainerX > trainerFinalX) {
 				trainerX -= movementPixels;
