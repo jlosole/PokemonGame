@@ -66,7 +66,7 @@ public class PokemonGUI extends JFrame {
 	//Loading screen Buttons
 	private JButton yesButton, noButton;
 	private JButton steps, catches;
-	private Timer timer;
+//	private Timer timer;
 	
 	public PokemonGUI(Game game) {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -83,8 +83,8 @@ public class PokemonGUI extends JFrame {
 	    tView = new TextView(theGame, WIDTH, HEIGHT); 
 	    bView = new BattleView(theGame, WIDTH, HEIGHT);
 
-	    timer = new Timer(DELAY_IN_MILLS, new MoveListener());
-	    timer.start();
+//	    timer = new Timer(DELAY_IN_MILLS, new MoveListener());
+//	    timer.start();
 	    
 	    this.addKeyListener(new MyArrowKeyListener(theGame));
 	    this.addWindowListener(new MyWindowListener());
@@ -204,8 +204,8 @@ public class PokemonGUI extends JFrame {
 				
 				
 				if(!theGame.gameOver()){
-					
 					if(keyCode == KeyEvent.VK_UP) {
+						gView.trainerNotSet();
 						gView.setFinalPositions(trainerPos, "Up");
 						pokemonFound = theGame.move(row, col, "Up");
 						gView.startTimer();
@@ -216,22 +216,16 @@ public class PokemonGUI extends JFrame {
 						gView.startTimer();
 					}
 					else if(keyCode == KeyEvent.VK_LEFT){
-						gView.setFinalPositions(trainerPos, "Left");
 						pokemonFound = theGame.move(row, col, "Left");
+						gView.setFinalPositions(trainerPos, "Left");
 						gView.startTimer();
 					}
 					else if(keyCode == KeyEvent.VK_RIGHT){
-						gView.setFinalPositions(trainerPos, "Right");
 						pokemonFound = theGame.move(row, col, "Right");
+						gView.setFinalPositions(trainerPos, "Right");
 						gView.startTimer();
 					}
 					if(pokemonFound != null) {
-						/*
-						 * @Lanre - changed so that every time a battle
-						 * starts, a new battleView is constructed. Using the
-						 * same bView the whole time caused some errors when
-						 * starting multiple battles in the game
-						 */
 
 						theGame.startBattle(pokemonFound);
 						battle = theGame.getBattle();

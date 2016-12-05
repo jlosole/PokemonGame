@@ -30,7 +30,8 @@ public class GraphicView extends JPanel implements Observer {
 	private Object [][] objBoard;
 	private Point trainerPos;
 	private int width, height;
-	private boolean starting;
+	private boolean starting = true;	
+	private boolean flag = true;
 	private ImageIcon 
 
 		shortGrass, tallGrass, bush, water, waterBottomLeft,
@@ -64,8 +65,8 @@ public class GraphicView extends JPanel implements Observer {
 		this.setSize(width, height);
 		timer = new Timer(100, new MoveListener());
 		Point temp = this.theGame.getTrainerPos();
-		trainerX = temp.x;
-		trainerY = temp.y;
+		trainerX = temp.x * 28;
+		trainerY = temp.y * 28;
 		loadImages();
 	}
 	
@@ -389,7 +390,7 @@ public class GraphicView extends JPanel implements Observer {
 					}
 					
 					switchTrainerImage(); //Switches trainer image 
-					g.drawImage(currentTrainerImage, trainerX, trainerY, null);
+					g.drawImage(currentTrainerImage, trainerY, trainerX, null);
 					///////////////////////////////////////////////////////
 				}
 			}
@@ -400,117 +401,100 @@ public class GraphicView extends JPanel implements Observer {
 		timer.start();
 	}
 	
+	public void trainerNotSet() {
+		trainerSet = false;
+	}
+	
 	public void updateAnimations() {
 		if (!trainerSet) {
 			moveTrainer();
-			updateTimes();
 		} 
 		else {
 			timer.stop();
 		}
 	}
 	
-	public void updateTimes(){
-		times++;
-		if(times == 2){
-			times = 0;
-		}
-	}
+//	public void updateTimes(){
+////		times++;
+////		if(times == 2){
+////			times = 0;
+////		}
+//	}
 	
+	// USES BOOLEAN FLAG (initialized to true) TO SWITCH BETWEEN THE WALKING IMAGES
 	public void switchTrainerImage() {
 		
 		int dir = theGame.getDirection();
-		System.out.println(times + "****************");
-		
+//		System.out.println(times + "****************");
+//		System.out.println(dir + " -- direction in switchTrainerImage()");
+
 		if(dir == 0) { //walking up
-			if(times == 0) {
+			if(flag) {
 				currentTrainerImage = trainerUp1;
-			}
-			else if(times == 1) {
-				currentTrainerImage = trainerUp3;
+				flag = false;
 			}
 			else {
-				currentTrainerImage = trainerUp2;
-				timer.stop();
+				currentTrainerImage = trainerUp3;
+				flag = true;
 			}
 		}
 		if(dir == 1) { //walking down
-			if(times == 0) {
+			if(flag) {
 				currentTrainerImage = trainerDown1;
+				flag = false;
 			}
 			else if(times == 1) {
 				currentTrainerImage = trainerDown3;
-			}
-			else {
-				currentTrainerImage = trainerDown2;
-				timer.stop();
+				flag = true;
 			}
 		}
 		if(dir == 2) { //walking left
-			if(times == 0) {
+			if(flag) {
 				currentTrainerImage = trainerLeft1;
-			}
-			else if(times == 1) {
-				currentTrainerImage = trainerLeft3;
+				flag = false;
 			}
 			else {
-				currentTrainerImage = trainerLeft2;
-				timer.stop();
+				currentTrainerImage = trainerLeft3;
+				flag = true;
 			}
 		}
 		if(dir == 3) { // walking right
-			if(times == 0) {
+			if(flag) {
 				currentTrainerImage = trainerRight1;
-			}
-			else if(times == 1) {
-				currentTrainerImage = trainerRight3;
+				flag = false;
 			}
 			else {
-				currentTrainerImage = trainerRight2;
-				timer.stop();
+				currentTrainerImage = trainerRight3;
+				flag = true;
 			}
 		}
 	}
 	
 	public void setFinalPositions(Point point, String dir) {
+		
 		trainerX = point.x * 28;
 		trainerY = point.y * 28;
-		
+		System.out.println(trainerX + ": " + trainerFinalX + " " + dir + " -- setFinalPositions");
 		if(dir.equals("Up")) {
-			trainerFinalY = trainerY - 28;
-		}
-		else if(dir.equals("Down")) {
-			trainerFinalY = trainerY + 28;
-		}
-		else if(dir.equals("Left")) {
 			trainerFinalX = trainerX - 28;
 		}
-		else if(dir.equals("Right")) {
+		else if(dir.equals("Down")) {
 			trainerFinalX = trainerX + 28;
 		}
+		else if(dir.equals("Left")) {
+			trainerFinalY = trainerY - 28;
+		}
+		else if(dir.equals("Right")) {
+			trainerFinalY = trainerY + 28;
+		}
+		System.out.println(trainerX + ": " + trainerFinalX);
 	}
 	
 	public void moveTrainer() {
 		
 		int dir = theGame.getDirection();
-		
+		System.out.println(dir + " -- direction in movetrainer()");
 		if(dir == 0) { //moving up
-			if(trainerY > trainerFinalY) {
-				trainerY -= movementPixels;
-			}
-			else {
-				trainerSet = true;
-			}
-		}
-		else if(dir == 1) { //moving up
-			if(trainerY < trainerFinalY) {
-				trainerY += movementPixels;
-			}
-			else {
-				trainerSet = true;
-			}
-		}
-		else if(dir == 2) { //moving up
 			if(trainerX > trainerFinalX) {
 				trainerX -= movementPixels;
 			}
@@ -518,7 +502,7 @@ public class GraphicView extends JPanel implements Observer {
 				trainerSet = true;
 			}
 		}
-		else if(dir == 3) { //moving up
+		else if(dir == 1) { //moving Down
 			if(trainerX < trainerFinalX) {
 				trainerX += movementPixels;
 			}
@@ -526,14 +510,23 @@ public class GraphicView extends JPanel implements Observer {
 				trainerSet = true;
 			}
 		}
-		
+		else if(dir == 2) { //moving Left
+			if(trainerY > trainerFinalY) {
+				trainerY -= movementPixels;
+			}
+			else {
+				trainerSet = true;
+			}
+		}
+		else if(dir == 3) { //moving Right
+			if(trainerY < trainerFinalY) {
+				trainerY += movementPixels;
+			}
+			else {
+				trainerSet = true;
+			}
+		}
 	}
-
-	
-//	public ImageIcon adjustTrainerImage() {
-//
-//		
-//	}
 	
 	private class MoveListener implements ActionListener {
 		@Override
