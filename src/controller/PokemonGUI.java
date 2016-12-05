@@ -44,7 +44,6 @@ public class PokemonGUI extends JFrame {
 	public static void main(String [] args) {
 		startGUI = new PokemonGUI();
 		startGUI.setVisible(true);
-		System.out.println("yahh");
 	}
 	
 	private final int WIDTH = 644, HEIGHT = 688;
@@ -84,8 +83,7 @@ public class PokemonGUI extends JFrame {
 	    tView = new TextView(theGame, WIDTH, HEIGHT); 
 	    bView = new BattleView(theGame, WIDTH, HEIGHT);
 
-//	    timer = new Timer(DELAY_IN_MILLS, new MoveListener());
-//	    timer.start();
+	    System.out.println("rono");
 	    
 	    this.addKeyListener(new MyArrowKeyListener(theGame));
 	    this.addWindowListener(new MyWindowListener());
@@ -95,7 +93,7 @@ public class PokemonGUI extends JFrame {
 		addObservers();
 		addMenus();
 		setView(gView);
-		System.out.println("rono");
+		
 	}
 	
 	public PokemonGUI(){
@@ -455,7 +453,6 @@ public class PokemonGUI extends JFrame {
 				else if(buttonPressed.equals(noButton)){
 					lView.setFirstWindowDone();
 					lView.update();
-					
 				}
 			}
 			else {
