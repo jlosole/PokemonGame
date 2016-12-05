@@ -105,10 +105,7 @@ public class Battle implements Serializable {
 	}
 	
 	public Boolean isOver(){
-		if (over) {
-			
-			System.out.println("yahhh");
-		}
+		
 		return over;
 	}
 }
