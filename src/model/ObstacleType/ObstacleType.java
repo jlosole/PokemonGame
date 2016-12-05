@@ -18,16 +18,6 @@ public enum ObstacleType implements Serializable {
 	WaterBottomRight,
 	WaterBottom,
 	WaterTop,
-	ScatteredStone,
-	StoneBot,
-	StoneBotLeft,
-	StoneBotRight,
-	StoneLeft,
-	StoneRight,
-	StoneTopLeft,
-	StoneTopRight,
-	StoneWalk,
-	StoneWalk2,
 	hBotLeft,
 	hBotRight,
 	hDoor,
@@ -42,7 +32,11 @@ public enum ObstacleType implements Serializable {
 	hRoofTopLeft,
 	hRoofTopRight,
 	hRoofTop,
+	inHillTopLeft,
+	inHillTopRight,
+	hillBot,
 	hillLeft,
+	hillTop,
 	hillRight,
 	hillBotLeft,
 	hillBotRight,
@@ -59,6 +53,15 @@ public enum ObstacleType implements Serializable {
 	dirtBotLeft,
 	dirtBotRight,
 	woodpegs,
+	woodsign,
 	stairsLeft,
-	stairsRight
+	stairsRight,
+	graysign,
+	g2dBotLeft,
+	g2dBotRight,
+	g2dTopLeft,
+	g2dTopRight
 }
+
+
+

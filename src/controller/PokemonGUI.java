@@ -1,5 +1,4 @@
 package controller;
-import java.awt.BorderLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -66,7 +65,7 @@ public class PokemonGUI extends JFrame {
 		}
 	}
 	
-	private final int WIDTH = 735, HEIGHT = 735;
+	private final int WIDTH = 644, HEIGHT = 688;
 	private Game theGame;
 	private Battle battle;
 	private GraphicView gView;
@@ -79,6 +78,7 @@ public class PokemonGUI extends JFrame {
 	private JButton baitB;
 	private JButton ballB;
 	private JButton runB; 
+	private JButton gameOverB;
 	private Timer timer;
 	
 	public PokemonGUI(Game game) {
@@ -113,10 +113,12 @@ public class PokemonGUI extends JFrame {
 		runB = bView.getRunButton();
 		baitB = bView.getBaitButton();
 		ballB = bView.getBallButton();
+		gameOverB = bView.getGameOverButton();
 		rockB.addActionListener(new MyBattleActionListener());
 		baitB.addActionListener(new MyBattleActionListener());
 		runB.addActionListener(new MyBattleActionListener());
 		ballB.addActionListener(new MyBattleActionListener());
+		gameOverB.addActionListener(new MyBattleActionListener());
 	}
 	
 	//Adds the menus to the frame so you can switch between views
@@ -217,7 +219,6 @@ public class PokemonGUI extends JFrame {
 						bView.setPokemon(pokemonFound);
 						setView(bView);
 						bView.startTimer();
-
 					}
 				}
 				else {
@@ -238,7 +239,15 @@ public class PokemonGUI extends JFrame {
 			
 			JButton buttonPressed = (JButton) e.getSource();
 			Outcome outcome;
+			
 			if(currentView.equals(bView)){
+				if(buttonPressed.equals(gameOverB)){
+					BattleMusic.stop();
+					MapMusic.play();
+					setView(oldView);
+					bView.resetBattle();
+					theGame.endBattle();
+				}
 				if(!battle.isOver()){
 					bView.resetThrowing();
 					
@@ -257,7 +266,6 @@ public class PokemonGUI extends JFrame {
 						//Pokemon ran, currentView now is map
 						if(outcome.equals(Outcome.Ran)) { 
 							bView.setOutcome(Outcome.Ran);
-							//animate running
 							System.out.println("ran");
 	
 						}
@@ -284,7 +292,6 @@ public class PokemonGUI extends JFrame {
 						
 						if (outcome.equals(Outcome.Ran)) {
 							bView.setOutcome(Outcome.Ran);
-							//Animate pokemon running
 							System.out.println("ran");
 						}
 						 //Pokemon stayed do nothing
@@ -334,7 +341,11 @@ public class PokemonGUI extends JFrame {
 					
 					//User clicked run
 					else if(buttonPressed.equals(runB)){
-						battle.trainerRan();	
+						battle.trainerRan();
+						BattleMusic.stop();
+						MapMusic.play();
+						setView(oldView);
+						theGame.endBattle();
 					}
 					if (bView.caught()) {
 						BattleMusic.stop();
@@ -352,7 +363,6 @@ public class PokemonGUI extends JFrame {
 					setView(oldView);
 				}
 
-				
 				theGame.doNotify();
 			}
 		}
