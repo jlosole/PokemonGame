@@ -107,7 +107,7 @@ public class PokemonGUI extends JFrame {
 		addListeners();
 		addObservers();
 		addMenus();
-		setView(lView);
+		setView(gView);
 		
 	}
 	
