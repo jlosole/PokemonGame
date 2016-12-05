@@ -190,18 +190,28 @@ public class PokemonGUI extends JFrame {
 				int col = (int) trainerPos.getY();
 				Pokemon pokemonFound = null;
 				
+				
 				if(!theGame.gameOver()){
+					
 					if(keyCode == KeyEvent.VK_UP) {
+						gView.setFinalPositions(trainerPos, "Up");
 						pokemonFound = theGame.move(row, col, "Up");
+						gView.startTimer();
 					}
 					else if(keyCode == KeyEvent.VK_DOWN){
+						gView.setFinalPositions(trainerPos, "Down");
 						pokemonFound = theGame.move(row, col, "Down");
+						gView.startTimer();
 					}
 					else if(keyCode == KeyEvent.VK_LEFT){
+						gView.setFinalPositions(trainerPos, "Left");
 						pokemonFound = theGame.move(row, col, "Left");
+						gView.startTimer();
 					}
 					else if(keyCode == KeyEvent.VK_RIGHT){
+						gView.setFinalPositions(trainerPos, "Right");
 						pokemonFound = theGame.move(row, col, "Right");
+						gView.startTimer();
 					}
 					if(pokemonFound != null) {
 						theGame.startBattle(pokemonFound);
