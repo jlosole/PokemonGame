@@ -1,5 +1,4 @@
 package controller;
-import java.awt.BorderLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -210,7 +209,6 @@ public class PokemonGUI extends JFrame {
 						bView.setPokemon(pokemonFound);
 						setView(bView);
 						bView.startTimer();
-
 					}
 				}
 				else {
@@ -231,6 +229,7 @@ public class PokemonGUI extends JFrame {
 			
 			JButton buttonPressed = (JButton) e.getSource();
 			Outcome outcome;
+			
 			if(currentView.equals(bView)){
 				if(buttonPressed.equals(gameOverB)){
 					BattleMusic.stop();
@@ -257,7 +256,6 @@ public class PokemonGUI extends JFrame {
 						//Pokemon ran, currentView now is map
 						if(outcome.equals(Outcome.Ran)) { 
 							bView.setOutcome(Outcome.Ran);
-							//animate running
 							System.out.println("ran");
 	
 						}
@@ -284,7 +282,6 @@ public class PokemonGUI extends JFrame {
 						
 						if (outcome.equals(Outcome.Ran)) {
 							bView.setOutcome(Outcome.Ran);
-							//Animate pokemon running
 							System.out.println("ran");
 						}
 						 //Pokemon stayed do nothing
