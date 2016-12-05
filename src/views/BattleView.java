@@ -51,7 +51,8 @@ public class BattleView extends JPanel implements Observer {
 	private int width, height;
 	private JPanel buttonPanel;
 	private BufferedImage background, rockImage, baitImage, ballImage, currentItemImage = null; 
-	private BufferedImage currentTrainer, trainer1, trainer2, trainer3, trainer4, trainer5;		  
+	private BufferedImage currentTrainer, trainer1, trainer2, trainer3, trainer4, trainer5;	
+	private BufferedImage pokTextBox;
 	private JButton bait, rock, run, ball, gameOver;
 	
 	//Needed components for animations
@@ -145,7 +146,8 @@ public class BattleView extends JPanel implements Observer {
 	//Creates all images that might be used in a battle
 	public void setupImages(){
 		try {
-			background = ImageIO.read(new File("cut_sprites/battle_background.png"));			
+			background = ImageIO.read(new File("cut_sprites/battle_background.png"));	
+			pokTextBox = ImageIO.read(new File("safariSheet/battleTextBox.png"));
 			ballImage = ImageIO.read(new File("cut_sprites/safari-ball-battle.png"));
 			rockImage = ImageIO.read(new File("cut_sprites/throwing_rock.png"));
 			baitImage = ImageIO.read(new File("cut_sprites/bait.png"));
@@ -396,6 +398,9 @@ public class BattleView extends JPanel implements Observer {
 		
 		//draw the background
 		g.drawImage(background, 0, 0, null);
+		
+		//draw the textbox
+		g.drawImage(pokTextBox, 5, height-200, null);
 		
 		//draw the trainer
 		switchTrainerImage(); //Switches trainer image 

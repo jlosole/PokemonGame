@@ -153,6 +153,7 @@ public class PokemonGUI extends JFrame {
 		theGame.addObserver(gView);
 		theGame.addObserver(tView);
 		theGame.addObserver(bView);
+		theGame.addObserver(iView);
 	}
 	
 	public void setView(JPanel newView) {
