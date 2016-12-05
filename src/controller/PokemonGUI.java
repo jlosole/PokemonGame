@@ -65,7 +65,7 @@ public class PokemonGUI extends JFrame {
 		}
 	}
 	
-	private final int WIDTH = 735, HEIGHT = 735;
+	private final int WIDTH = 644, HEIGHT = 688;
 	private Game theGame;
 	private Battle battle;
 	private GraphicView gView;
