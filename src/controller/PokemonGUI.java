@@ -44,6 +44,7 @@ public class PokemonGUI extends JFrame {
 	public static void main(String [] args) {
 		startGUI = new PokemonGUI();
 		startGUI.setVisible(true);
+		System.out.println("yahh");
 	}
 	
 	private final int WIDTH = 644, HEIGHT = 688;
@@ -94,6 +95,7 @@ public class PokemonGUI extends JFrame {
 		addObservers();
 		addMenus();
 		setView(gView);
+		System.out.println("rono");
 	}
 	
 	public PokemonGUI(){
