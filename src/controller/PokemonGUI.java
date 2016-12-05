@@ -30,6 +30,7 @@ import model.Battle.Battle;
 import model.Battle.Outcome;
 import model.Pokemon.*;
 import songplayer.BattleMusic;
+import songplayer.CaughtMusic;
 import songplayer.MapMusic;
 
 public class PokemonGUI extends JFrame {
@@ -209,6 +210,13 @@ public class PokemonGUI extends JFrame {
 						pokemonFound = theGame.move(row, col, "Right");
 					}
 					if(pokemonFound != null) {
+						/*
+						 * @Lanre - changed so that every time a battle
+						 * starts, a new battleView is constructed. Using the
+						 * same bView the whole time caused some errors when
+						 * starting multiple battles in the game
+						 */
+
 						theGame.startBattle(pokemonFound);
 						battle = theGame.getBattle();
 						bView.setPokemon(pokemonFound);
@@ -243,7 +251,7 @@ public class PokemonGUI extends JFrame {
 					bView.resetBattle();
 					theGame.endBattle();
 				}
-				if(!battle.isOver()){
+				else if(!battle.isOver()){
 					bView.resetThrowing();
 					
 					//User clicked throw rock
@@ -315,14 +323,15 @@ public class PokemonGUI extends JFrame {
 						if(outcome.equals(Outcome.Caught)) {
 							System.out.println("caught");
 							bView.setOutcome(Outcome.Caught);
-	
+							BattleMusic.stop();
+							CaughtMusic.play();
 						}
 						
 						//We threw a ball and the pokemon escaped the ball and ran
 						else if(outcome.equals(Outcome.Ran)){
 							bView.setOutcome(Outcome.Ran);
 							System.out.println("ran");
-	
+							//BattleMusic.stop();
 						}
 						
 						//Threw a ball and the pokemon escaped and stayed
@@ -341,7 +350,22 @@ public class PokemonGUI extends JFrame {
 						setView(oldView);
 						theGame.endBattle();
 					}
+					if (bView.caught()) {
+						BattleMusic.stop();
+						CaughtMusic.play();
+					}
 				}
+				
+				else {
+					if (BattleMusic.on()) BattleMusic.stop();
+					if (CaughtMusic.on()) CaughtMusic.stop();
+					MapMusic.play();
+					
+					bView.resetBattle();
+					theGame.endBattle();
+					setView(oldView);
+				}
+
 				theGame.doNotify();
 			}
 		}
@@ -366,7 +390,7 @@ public class PokemonGUI extends JFrame {
 				} catch (IOException b) {
 					b.printStackTrace();
 				} 
-			}
+			} 
 		}
 		@Override
 		public void windowClosed(WindowEvent e) {
