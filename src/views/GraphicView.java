@@ -49,11 +49,12 @@ public class GraphicView extends JPanel implements Observer {
 	private BufferedImage trainerUp1, trainerUp2, trainerUp3,
 	trainerLeft1, trainerLeft2, trainerLeft3, trainerRight1, 
 	trainerRight2, trainerRight3,trainerDown1, trainerDown2, trainerDown3; 
+	
 	private BufferedImage currentTrainerImage;
 	private Timer timer;
-	private boolean trainerSet;
+	private boolean trainerSet = true;
 	private int trainerX, trainerY, trainerFinalX, trainerFinalY;
-	private int movementPixels = 2;
+	private int movementPixels = 6;
 	private int times = 0;
 	
 	public GraphicView(Game theGame, int width, int height){
@@ -63,7 +64,7 @@ public class GraphicView extends JPanel implements Observer {
 		this.height = height;
 		this.starting = true;
 		this.setSize(width, height);
-		timer = new Timer(100, new MoveListener());
+		timer = new Timer(75, new MoveListener());
 		Point temp = this.theGame.getTrainerPos();
 		trainerX = temp.x * 28;
 		trainerY = temp.y * 28;
@@ -185,8 +186,6 @@ public class GraphicView extends JPanel implements Observer {
 			}
 		}
 
-//		for(int i = x-4; i < x+4; i++) {
-//			for(int j = y-4; j < y+4; j++) {
 		for(int i = 0; i < 23; i++) {
 			for(int j = 0; j < 23; j++) {
 				if(i >= 0 && i < 23 &&  j >= 0 && j < 23) {
@@ -405,6 +404,16 @@ public class GraphicView extends JPanel implements Observer {
 		trainerSet = false;
 	}
 	
+	public Boolean getTrainerSet(){
+		return trainerSet;
+	}
+	
+	public void updateTrainerPos(){
+		Point pt = theGame.getTrainerPos();
+		trainerX = pt.x * 28;
+		trainerY = pt.y * 28;
+	}
+	
 	public void updateAnimations() {
 		if (!trainerSet) {
 			moveTrainer();
@@ -426,7 +435,7 @@ public class GraphicView extends JPanel implements Observer {
 		
 		int dir = theGame.getDirection();
 //		System.out.println(times + "****************");
-		System.out.println(dir + " -- direction in switchTrainerImage()");
+//		System.out.println(dir + " -- direction in switchTrainerImage()");
 
 		if(dir == 0) { //walking up
 			if(flag) {
@@ -443,7 +452,7 @@ public class GraphicView extends JPanel implements Observer {
 				flag = false;
 				return trainerDown1;
 			}
-			else if(times == 1) {
+			else {
 				flag = true;
 				return trainerDown3;
 			}
@@ -475,6 +484,7 @@ public class GraphicView extends JPanel implements Observer {
 		
 		trainerX = point.x * 28;
 		trainerY = point.y * 28;
+		System.out.println(point.x + " " + point.y);
 		
 		if(dir.equals("Up")) {
 			trainerFinalX = trainerX - 28;

@@ -66,7 +66,6 @@ public class PokemonGUI extends JFrame {
 	//Loading screen Buttons
 	private JButton yesButton, noButton;
 	private JButton steps, catches;
-//	private Timer timer;
 	
 	public PokemonGUI(Game game) {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -82,9 +81,6 @@ public class PokemonGUI extends JFrame {
 	    gView = new GraphicView(theGame, WIDTH, HEIGHT);
 	    tView = new TextView(theGame, WIDTH, HEIGHT); 
 	    bView = new BattleView(theGame, WIDTH, HEIGHT);
-
-//	    timer = new Timer(DELAY_IN_MILLS, new MoveListener());
-//	    timer.start();
 	    
 	    this.addKeyListener(new MyArrowKeyListener(theGame));
 	    this.addWindowListener(new MyWindowListener());
@@ -164,6 +160,7 @@ public class PokemonGUI extends JFrame {
 		theGame.doNotify();
 		validate();		
 	}
+	
 
 	//Class that has listeners for changing between views
 	private class MenuListener implements ActionListener {
@@ -204,32 +201,71 @@ public class PokemonGUI extends JFrame {
 				
 				
 				if(!theGame.gameOver()){
+					int moved;
+					
+					//User moved up
 					if(keyCode == KeyEvent.VK_UP) {
-						gView.trainerNotSet();
-						gView.setFinalPositions(trainerPos, "Up");
-						pokemonFound = theGame.move(row, col, "Up");
-						gView.startTimer();
+						moved = theGame.move(row, col, "Up");
+						if(moved == 1) 
+							gView.updateTrainerPos();
+						else if(moved == 2){
+							gView.trainerNotSet();
+							gView.setFinalPositions(trainerPos, "Up");
+							gView.startTimer();
+							if(theGame.isInDeepGrass()){
+								pokemonFound = theGame.getRandomPokemon();
+							}
+						}
 					}
+					
+					//User moved down
 					else if(keyCode == KeyEvent.VK_DOWN){
-						gView.trainerNotSet();
-						gView.setFinalPositions(trainerPos, "Down");
-						pokemonFound = theGame.move(row, col, "Down");
-						gView.startTimer();
+						moved = theGame.move(row, col, "Down");
+						if(moved == 1) 
+							gView.updateTrainerPos();
+						else if(moved == 2){
+							gView.trainerNotSet();
+							gView.setFinalPositions(trainerPos, "Down");
+							gView.startTimer();
+							if(theGame.isInDeepGrass()){
+								pokemonFound = theGame.getRandomPokemon();
+							}
+						}
 					}
+					
+					//User moved left
 					else if(keyCode == KeyEvent.VK_LEFT){
-						gView.trainerNotSet();
-						pokemonFound = theGame.move(row, col, "Left");
-						gView.setFinalPositions(trainerPos, "Left");
-						gView.startTimer();
+						moved = theGame.move(row, col, "Left");
+						if(moved == 1) 
+							gView.updateTrainerPos();
+						else if(moved == 2) {
+							gView.trainerNotSet();
+							gView.setFinalPositions(trainerPos, "Left");
+							gView.startTimer();
+							if(theGame.isInDeepGrass()){
+								pokemonFound = theGame.getRandomPokemon();
+							}
+						}
 					}
+					
+					//User moved right
 					else if(keyCode == KeyEvent.VK_RIGHT){
-						gView.trainerNotSet();
-						pokemonFound = theGame.move(row, col, "Right");
-						gView.setFinalPositions(trainerPos, "Right");
-						gView.startTimer();
+						moved = theGame.move(row, col, "Right");
+						if(moved == 1)
+							gView.updateTrainerPos();
+						else if(moved == 2){
+							gView.trainerNotSet();
+							gView.setFinalPositions(trainerPos, "Right");
+							gView.startTimer();
+							if(theGame.isInDeepGrass()){
+								pokemonFound = theGame.getRandomPokemon();
+							}
+						}
 					}
+					
 					if(pokemonFound != null) {
-
+						MapMusic.stop();
+						BattleMusic.play();
 						theGame.startBattle(pokemonFound);
 						battle = theGame.getBattle();
 						bView.setPokemon(pokemonFound);
@@ -237,7 +273,7 @@ public class PokemonGUI extends JFrame {
 						bView.startTimer();
 					}
 				}
-				else {
+				else if(theGame.gameOver()){
 					JOptionPane.showMessageDialog(null, "Game Over! You're out of steps!");
 				}
 			}

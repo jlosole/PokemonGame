@@ -75,7 +75,7 @@ public class Game extends Observable implements Serializable{
 		return trainerFacing;
 	}	
 	
-	public Pokemon move(int row, int col, String direction) {
+	public int move(int row, int col, String direction) {
 		int r = row, c = col;
 
 		Pokemon pokemon = null;
@@ -107,6 +107,8 @@ public class Game extends Observable implements Serializable{
 		if(((r > 9 || r < 13) && (c == size)
 				&& currentMap.equals(mapOne))) {
 			setMap(mapTwo);
+			if(r == 9) r += 1;
+			else if(r == 13) r -= 1;
 			Point point = new Point(r, 0);
 			if(trainer.stepMade(point)) {
 				trainer.setCurrentPosition(point);
@@ -114,7 +116,7 @@ public class Game extends Observable implements Serializable{
 				setChanged();
 				notifyObservers();
 			}
-			return null;
+			return 1;
 		}
 		//if trainer walks to north exit on MapOne
 		if(currentMap.equals(mapOne) && (c >= 10 && c <= 13) && (r == -1)) {
@@ -126,7 +128,7 @@ public class Game extends Observable implements Serializable{
 				setChanged();
 				notifyObservers();
 			}
-			return null;
+			return 1;
 		}
 		//if trainer walks to west exit on MapTwo
 		if(currentMap.equals(mapTwo) && (r >= 9 && r <= 13) && (c == -1)) {
@@ -138,7 +140,7 @@ public class Game extends Observable implements Serializable{
 				setChanged();
 				notifyObservers();
 			}
-			return null;
+			return 1;
 		}
 		//if trainer walks to northwest exit on MapTwo
 		if(currentMap.equals(mapTwo) && (r >= 2 && r <= 5) && (c == -1)) {
@@ -150,7 +152,7 @@ public class Game extends Observable implements Serializable{
 				setChanged();
 				notifyObservers();
 			}
-			return null;
+			return 1;
 		}
 
 		if(canMoveHere(r, c)) {
@@ -160,15 +162,9 @@ public class Game extends Observable implements Serializable{
 				if(didStepOnItem()) {
 					removeItem(r, c);
 				}
-				if(isInDeepGrass()){
-					pokemon = getRandomPokemon();
-					if (pokemon != null) {
-						MapMusic.stop();
-						BattleMusic.play();
-					}
-				}
 				setChanged();
 				notifyObservers();
+				return 2;
 			}
 			else {
 				gameOver = true;
@@ -179,8 +175,9 @@ public class Game extends Observable implements Serializable{
 			//trainer still faces that way
 			setChanged();
 			notifyObservers();
+			return 3;
 		}
-		return pokemon;
+		return 3;
 	}
 	
 	
