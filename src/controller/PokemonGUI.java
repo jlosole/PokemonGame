@@ -81,6 +81,7 @@ public class PokemonGUI extends JFrame {
 	    gView = new GraphicView(theGame, WIDTH, HEIGHT);
 	    tView = new TextView(theGame, WIDTH, HEIGHT); 
 	    bView = new BattleView(theGame, WIDTH, HEIGHT);
+	    System.out.println("rono");
 	    
 	    this.addKeyListener(new MyArrowKeyListener(theGame));
 	    this.addWindowListener(new MyWindowListener());
@@ -90,6 +91,7 @@ public class PokemonGUI extends JFrame {
 		addObservers();
 		addMenus();
 		setView(gView);
+		
 	}
 	
 	public PokemonGUI(){
@@ -489,7 +491,6 @@ public class PokemonGUI extends JFrame {
 				else if(buttonPressed.equals(noButton)){
 					lView.setFirstWindowDone();
 					lView.update();
-					
 				}
 			}
 			else {

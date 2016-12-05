@@ -133,7 +133,7 @@ public class Game extends Observable implements Serializable{
 		//if trainer walks to west exit on MapTwo
 		if(currentMap.equals(mapTwo) && (r >= 9 && r <= 13) && (c == -1)) {
 			setMap(mapOne);
-			Point point = new Point(10, size-1);
+			Point point = new Point(r, size-1);
 			if(trainer.stepMade(point)) {
 				trainer.setCurrentPosition(point);
 				trainerPos = trainer.getCurrentPos();
