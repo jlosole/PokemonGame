@@ -65,6 +65,9 @@ public abstract class Pokemon implements Serializable {
 	public Boolean didCatch(){
 		tookDamage(SafariBall.getHP());
 		numBallsThrown++;
+		if(hp == 0){
+			return true;
+		}
 		Random rand = new Random();
 		int num = rand.nextInt(catchChance)+1;
 		if(num == 1) return true;
@@ -85,7 +88,12 @@ public abstract class Pokemon implements Serializable {
 	
 	//When a pokemon gets hit with a rock or a ball is thrown at it
 	public void tookDamage(int damage){
-		hp -= damage;
+		int temp = hp;
+		if((temp -= damage) <= 0)
+			hp = 0;
+		else {
+			hp -= damage;
+		}
 	}
 
 	

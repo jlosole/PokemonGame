@@ -35,15 +35,15 @@ public class GraphicView extends JPanel implements Observer {
 		shortGrass, tallGrass, bush, water, waterBottomLeft,
 		waterBottomRight, waterBottom, waterLeft, waterRight,
 		waterTopLeft, waterTopRight, waterTop, safariBall, dirt,
-		tree, bait, superPotion, rock, scatteredStone, stoneBot, stoneBotLeft,
-		stoneBotRight, stoneLeft, stoneRight, stoneTopLeft, stoneTopRight,
-		stoneWalk, stoneWalk2, hBotLeft, hBotRight, hDoor, hRoofBot,
+		tree, bait, superPotion, rock, hBotLeft, hBotRight, hDoor, hRoofBot,
 		hRoofBotLeft, hRoofBotRight, hRoofMid, hRoofMidLeft, hRoofMidRight,
 		hRoofTop, hRoofTopLeft, hRoofTopRight, hWindowLeft, hWindowRight,
-		hillLeft, hillRight, hillBotLeft, hillBotRight, hillTopLeft,
+		hillBot, hillTop, hillLeft, hillRight, hillBotLeft, hillBotRight, hillTopLeft,
 		hillTopRight, hillDirt, hillDirtTop, dirtLeft, dirtRight, dirtBot,
 		dirtTop, dirtTopRight, dirtTopLeft, dirtBotLeft, dirtBotRight,
-		woodsign, woodpegs, stairsLeft, stairsRight;
+		woodsign, woodpegs, stairsLeft, stairsRight, graysign, inHillTopLeft,
+		inHillTopRight, g2dBotLeft, g2dBotRight, g2dTopLeft, g2dTopRight;
+	
 	private Timer timer;
 	
 	public GraphicView(Game theGame, int width, int height){
@@ -81,7 +81,7 @@ public class GraphicView extends JPanel implements Observer {
 		shortGrass = new ImageIcon("safariSheet/shortGrass.png");
 		water = new ImageIcon("safariSheet/water.png");
 		waterTop = new ImageIcon("safariSheet/water_top_middle.png");
-		waterBottom = new ImageIcon("safariSheet/water_bottom_middle.png");
+		waterBottom = new ImageIcon("safariSheet/water_bottom.png");
 		waterLeft = new ImageIcon("safariSheet/water_left.png");
 		waterRight = new ImageIcon("safariSheet/water_right.png");
 		waterTopLeft = new ImageIcon("safariSheet/water_top_left.png");
@@ -93,19 +93,11 @@ public class GraphicView extends JPanel implements Observer {
 		tree = new ImageIcon("cut_sprites/tree.png");
 		tallGrass = new ImageIcon("safariSheet/deepGrass.png");
 		bush = new ImageIcon("safariSheet/bush.png");
-		scatteredStone = new ImageIcon("houseTiles/scatteredStone.png");
-//		stoneBot = new ImageIcon("landscapeTiles/stoneBottom.png");
-//		stoneBotLeft = new ImageIcon("landscapeTiles/stoneBotLeft.png");
-//		stoneBotRight = new ImageIcon("landscapeTiles/stoneBotRight.png");
-//		stoneLeft = new ImageIcon("landscapeTiles/stoneLeft.png");
-//		stoneRight = new ImageIcon("landscapeTiles/stoneRight.png");
-//		stoneTopLeft = new ImageIcon("landscapeTiles/stoneTopLeft.png");
-//		stoneTopRight = new ImageIcon("landscapeTiles/stoneTopRight.png");
-//		stoneWalk = new ImageIcon("landscapeTiles/stoneWalk.png");
-//		stoneWalk2 = new ImageIcon("landscapeTiles/stoneWalk2.png");
         /////////////////////////////////////////////////////////////////////////
 		
 		///////////////////////// HILL/DIRT/STAIRS IMAGES
+		hillTop = new ImageIcon("safariSheet/hillTop.png");
+		hillBot = new ImageIcon("safariSheet/hillBot.png");
 		hillLeft = new ImageIcon("safariSheet/hillLeft.png");
 		hillRight = new ImageIcon("safariSheet/hillRight.png");
 		hillBotLeft = new ImageIcon("safariSheet/hillBotLeft.png");
@@ -114,8 +106,15 @@ public class GraphicView extends JPanel implements Observer {
 		hillTopRight = new ImageIcon("safariSheet/hillTopRight.png");
 		hillDirt = new ImageIcon("safariSheet/hillDirt.png");
 		hillDirtTop = new ImageIcon("safariSheet/hillDirtTop.png");
-		
+		inHillTopLeft = new ImageIcon("safariSheet/inHillTopLeft.png");
+		inHillTopRight = new ImageIcon("safariSheet/inHillTopRight.png");
+
 		//dirt
+		g2dBotLeft = new ImageIcon("safariSheet/g2dBotLeft.png");
+		g2dBotRight = new ImageIcon("safariSheet/g2dBotRight.png");
+		g2dTopLeft = new ImageIcon("safariSheet/g2dTopLeft.png");
+		g2dTopRight = new ImageIcon("safariSheet/g2dBotLeft.png");
+		
 		dirtLeft = new ImageIcon("safariSheet/dirtLeft.png");
 		dirtRight = new ImageIcon("safariSheet/dirtRight.png");
 		dirtBot = new ImageIcon("safariSheet/dirtBot.png");
@@ -126,6 +125,8 @@ public class GraphicView extends JPanel implements Observer {
 		dirtBotRight = new ImageIcon("safariSheet/dirtBotRight.png");
 		woodpegs = new ImageIcon("safariSheet/woodpegs.png");
 		woodsign = new ImageIcon("safariSheet/woodsign.png");
+		graysign = new ImageIcon("safariSheet/graysign.png");
+		
 		//stairs
 		stairsLeft = new ImageIcon("safariSheet/stairsLeft.png");
 		stairsRight = new ImageIcon("safariSheet/stairsRight.png");
@@ -163,7 +164,7 @@ public class GraphicView extends JPanel implements Observer {
 		for(int i = 0; i < 23; i++) {
 			for(int j = 0; j < 23; j++) {
 				g.setColor(Color.BLACK);
-				g.fillRect(j*32, i*32, 32, 32);
+				g.fillRect(j*28, i*28, 28, 28);
 			}
 		}
 		
@@ -177,175 +178,202 @@ public class GraphicView extends JPanel implements Observer {
 			for(int j = 0; j < 23; j++) {
 				if(i >= 0 && i < 23 &&  j >= 0 && j < 23) {
 					
-					shortGrass.paintIcon(this,g, j*32, i *32);
+					shortGrass.paintIcon(this,g, j*28, i *28);
 					
 					if(objBoard[i][j].equals(ObstacleType.Tree)) {
-						tree.paintIcon(this, g, j*32, i*32);
+						bush.paintIcon(this, g, j*28, i*28);
 					}
 					else if(objBoard[i][j].equals(ObstacleType.DeepGrass)) {
-						tallGrass.paintIcon(this, g, j*32, i*32);
+						tallGrass.paintIcon(this, g, j*28, i*28);
 					}
 					// all water painting
 					else if(objBoard[i][j].equals(ObstacleType.Water)) {
-						water.paintIcon(this, g, j*32, i*32);
+						water.paintIcon(this, g, j*28, i*28);
 					}
 					else if(objBoard[i][j].equals(ObstacleType.WaterTop)) {
-						waterTop.paintIcon(this, g, j*32, i*32);
+						waterTop.paintIcon(this, g, j*28, i*28);
 					}
 					else if(objBoard[i][j].equals(ObstacleType.WaterLeft)) {
-						waterLeft.paintIcon(this, g, j*32, i*32);
+						waterLeft.paintIcon(this, g, j*28, i*28);
 					}
 					else if(objBoard[i][j].equals(ObstacleType.WaterRight)) {
-						waterRight.paintIcon(this, g, j*32, i*32);
+						waterRight.paintIcon(this, g, j*28, i*28);
 					}
 					else if(objBoard[i][j].equals(ObstacleType.WaterBottom)) {
-						waterBottom.paintIcon(this, g, j*32, i*32);
+						waterBottom.paintIcon(this, g, j*28, i*28);
 					}
 					else if(objBoard[i][j].equals(ObstacleType.WaterTopLeft)) {
-						waterTopLeft.paintIcon(this, g, j*32, i*32);
+						waterTopLeft.paintIcon(this, g, j*28, i*28);
 					}
 					else if(objBoard[i][j].equals(ObstacleType.WaterTopRight)) {
-						waterTopRight.paintIcon(this, g, j*32, i*32);
+						waterTopRight.paintIcon(this, g, j*28, i*28);
 					}
 					else if(objBoard[i][j].equals(ObstacleType.WaterBottomLeft)) {
-						waterBottomLeft.paintIcon(this, g, j*32, i*32);
+						waterBottomLeft.paintIcon(this, g, j*28, i*28);
 					}
 					else if(objBoard[i][j].equals(ObstacleType.WaterBottomRight)) {
-						waterBottomRight.paintIcon(this, g, j*32, i*32);
+						waterBottomRight.paintIcon(this, g, j*28, i*28);
 					}
 					// all water painting ^^^^^^^^^^^^
 					
 					else if(objBoard[i][j].equals(ObstacleType.Bush)) {
-						bush.paintIcon(this, g, j*32, i*32);
+						bush.paintIcon(this, g, j*28, i*28);
 					}
 					else if(objBoard[i][j].equals(ObstacleType.Dirt)) {
-						dirt.paintIcon(this, g, j*32, i*32);
+						dirt.paintIcon(this, g, j*28, i*28);
 					}
 					else if(objBoard[i][j].equals(ObstacleType.woodsign)) {
-						woodsign.paintIcon(this, g, j*32, i*32);
+						woodsign.paintIcon(this, g, j*28, i*28);
+					}
+					else if(objBoard[i][j].equals(ObstacleType.graysign)) {
+						graysign.paintIcon(this, g, j*28, i*28);
 					}
 					
 					//items vvvvvvvvvvvvvvvvvvvvvvvv
 					else if(objBoard[i][j] instanceof Bait) {
-						bait.paintIcon(this, g, j*32, i*32);
+						bait.paintIcon(this, g, j*28, i*28);
 					}
 					else if(objBoard[i][j] instanceof Rock) {
-						rock.paintIcon(this, g, j*32, i*32);
+						rock.paintIcon(this, g, j*28, i*28);
 					}
 					else if(objBoard[i][j] instanceof Potion) {
-						superPotion.paintIcon(this, g, j*32, i*32);
+						superPotion.paintIcon(this, g, j*28, i*28);
 					}
 					else if(objBoard[i][j] instanceof SuperPotion) {
-						superPotion.paintIcon(this, g, j*32, i*32);
+						superPotion.paintIcon(this, g, j*28, i*28);
 					}
 					else if(objBoard[i][j] instanceof SafariBall) {
-						safariBall.paintIcon(this, g, j*32, i*32);
+						safariBall.paintIcon(this, g, j*28, i*28);
 					}
 					
 					//house painting
 					else if(objBoard[i][j].equals(ObstacleType.hBotLeft)) {
-						hBotLeft.paintIcon(this, g, j*32, i*32);
+						hBotLeft.paintIcon(this, g, j*28, i*28);
 					}
 					else if(objBoard[i][j].equals(ObstacleType.hBotRight)) {
-						hBotRight.paintIcon(this, g, j*32, i*32);
+						hBotRight.paintIcon(this, g, j*28, i*28);
 					}
 					else if(objBoard[i][j].equals(ObstacleType.hDoor)) {
-						hDoor.paintIcon(this, g, j*32, i*32);
+						hDoor.paintIcon(this, g, j*28, i*28);
 					}
 					else if(objBoard[i][j].equals(ObstacleType.hWindowLeft)) {
-						hWindowLeft.paintIcon(this, g, j*32, i*32);
+						hWindowLeft.paintIcon(this, g, j*28, i*28);
 					}
 					else if(objBoard[i][j].equals(ObstacleType.hWindowRight)) {
-						hWindowRight.paintIcon(this, g, j*32, i*32);
+						hWindowRight.paintIcon(this, g, j*28, i*28);
 					}
 					else if(objBoard[i][j].equals(ObstacleType.hRoofBot)) {
-						hRoofBot.paintIcon(this, g, j*32, i*32);
+						hRoofBot.paintIcon(this, g, j*28, i*28);
 					}
 					else if(objBoard[i][j].equals(ObstacleType.hRoofBotLeft)) {
-						hRoofBotLeft.paintIcon(this, g, j*32, i*32);
+						hRoofBotLeft.paintIcon(this, g, j*28, i*28);
 					}
 					else if(objBoard[i][j].equals(ObstacleType.hRoofBotRight)) {
-						hRoofBotRight.paintIcon(this, g, j*32, i*32);
+						hRoofBotRight.paintIcon(this, g, j*28, i*28);
 					}
 					else if(objBoard[i][j].equals(ObstacleType.hRoofMid)) {
-						hRoofMid.paintIcon(this, g, j*32, i*32);
+						hRoofMid.paintIcon(this, g, j*28, i*28);
 					}
 					else if(objBoard[i][j].equals(ObstacleType.hRoofMidLeft)) {
-						hRoofMidLeft.paintIcon(this, g, j*32, i*32);
+						hRoofMidLeft.paintIcon(this, g, j*28, i*28);
 					}
 					else if(objBoard[i][j].equals(ObstacleType.hRoofMidRight)) {
-						hRoofMidRight.paintIcon(this, g, j*32, i*32);
+						hRoofMidRight.paintIcon(this, g, j*28, i*28);
 					}
 					else if(objBoard[i][j].equals(ObstacleType.hRoofTopLeft)) {
-						hRoofTopLeft.paintIcon(this, g, j*32, i*32);
+						hRoofTopLeft.paintIcon(this, g, j*28, i*28);
 					}
 					else if(objBoard[i][j].equals(ObstacleType.hRoofTopRight)) {
-						hRoofTopRight.paintIcon(this, g, j*32, i*32);
+						hRoofTopRight.paintIcon(this, g, j*28, i*28);
 					}
 					else if(objBoard[i][j].equals(ObstacleType.hRoofTop)) {
-						hRoofTop.paintIcon(this, g, j*32, i*32);
+						hRoofTop.paintIcon(this, g, j*28, i*28);
 					}
 					///////////////////////////////////////////////////////
 					
 					////////////////// DIRT BORDERS AND HILLS W/ STAIRS
+					else if(objBoard[i][j].equals(ObstacleType.hillTop)) {
+						hillTop.paintIcon(this, g, j*28, i*28);
+					}
+					else if(objBoard[i][j].equals(ObstacleType.inHillTopRight)) {
+						inHillTopRight.paintIcon(this, g, j*28, i*28);
+					}
+					else if(objBoard[i][j].equals(ObstacleType.inHillTopLeft)) {
+						inHillTopLeft.paintIcon(this, g, j*28, i*28);
+					}
+					else if(objBoard[i][j].equals(ObstacleType.hillBot)) {
+						hillBot.paintIcon(this, g, j*28, i*28);
+					}
 					else if(objBoard[i][j].equals(ObstacleType.hillLeft)) {
-						hillLeft.paintIcon(this, g, j*32, i*32);
+						hillLeft.paintIcon(this, g, j*28, i*28);
 					}
 					else if(objBoard[i][j].equals(ObstacleType.hillRight)) {
-						hillRight.paintIcon(this, g, j*32, i*32);
+						hillRight.paintIcon(this, g, j*28, i*28);
 					}
 					else if(objBoard[i][j].equals(ObstacleType.hillBotLeft)) {
-						hillBotLeft.paintIcon(this, g, j*32, i*32);
+						hillBotLeft.paintIcon(this, g, j*28, i*28);
 					}
 					else if(objBoard[i][j].equals(ObstacleType.hillBotRight)) {
-						hillBotRight.paintIcon(this, g, j*32, i*32);
+						hillBotRight.paintIcon(this, g, j*28, i*28);
 					}
 					else if(objBoard[i][j].equals(ObstacleType.hillTopLeft)) {
-						hillTopLeft.paintIcon(this, g, j*32, i*32);
+						hillTopLeft.paintIcon(this, g, j*28, i*28);
 					}
 					else if(objBoard[i][j].equals(ObstacleType.hillTopRight)) {
-						hillTopRight.paintIcon(this, g, j*32, i*32);
+						hillTopRight.paintIcon(this, g, j*28, i*28);
 					}
 					else if(objBoard[i][j].equals(ObstacleType.hillDirt)) {
-						hillDirt.paintIcon(this, g, j*32, i*32);
+						hillDirt.paintIcon(this, g, j*28, i*28);
 					}
 					else if(objBoard[i][j].equals(ObstacleType.hillDirtTop)) {
-						hillDirtTop.paintIcon(this, g, j*32, i*32);
+						hillDirtTop.paintIcon(this, g, j*28, i*28);
 					}
 					//dirt borders
 					else if(objBoard[i][j].equals(ObstacleType.dirtLeft)) {
-						dirtLeft.paintIcon(this, g, j*32, i*32);
+						dirtLeft.paintIcon(this, g, j*28, i*28);
 					}
 					else if(objBoard[i][j].equals(ObstacleType.dirtRight)) {
-						dirtRight.paintIcon(this, g, j*32, i*32);
+						dirtRight.paintIcon(this, g, j*28, i*28);
 					}
 					else if(objBoard[i][j].equals(ObstacleType.dirtBot)) {
-						dirtBot.paintIcon(this, g, j*32, i*32);
+						dirtBot.paintIcon(this, g, j*28, i*28);
 					}
 					else if(objBoard[i][j].equals(ObstacleType.dirtTop)) {
-						dirtTop.paintIcon(this, g, j*32, i*32);
+						dirtTop.paintIcon(this, g, j*28, i*28);
 					}
 					
 					else if(objBoard[i][j].equals(ObstacleType.dirtTopRight)) {
-						dirtTopRight.paintIcon(this, g, j*32, i*32);
+						dirtTopRight.paintIcon(this, g, j*28, i*28);
 					}
 					else if(objBoard[i][j].equals(ObstacleType.dirtTopLeft)) {
-						dirtTopLeft.paintIcon(this, g, j*32, i*32);
+						dirtTopLeft.paintIcon(this, g, j*28, i*28);
 					}
 					else if(objBoard[i][j].equals(ObstacleType.dirtBotLeft)) {
-						dirtBotLeft.paintIcon(this, g, j*32, i*32);
+						dirtBotLeft.paintIcon(this, g, j*28, i*28);
 					}
 					else if(objBoard[i][j].equals(ObstacleType.dirtBotRight)) {
-						dirtBotRight.paintIcon(this, g, j*32, i*32);
+						dirtBotRight.paintIcon(this, g, j*28, i*28);
 					}
 					else if(objBoard[i][j].equals(ObstacleType.woodpegs)) {
-						woodpegs.paintIcon(this, g, j*32, i*32);
+						woodpegs.paintIcon(this, g, j*28, i*28);
+					}
+					else if(objBoard[i][j].equals(ObstacleType.g2dBotLeft)) {
+						g2dBotLeft.paintIcon(this, g, j*28, i*28);
+					}
+					else if(objBoard[i][j].equals(ObstacleType.g2dBotRight)) {
+						g2dBotRight.paintIcon(this, g, j*28, i*28);
+					}
+					else if(objBoard[i][j].equals(ObstacleType.g2dTopLeft)) {
+						g2dTopLeft.paintIcon(this, g, j*28, i*28);
+					}
+					else if(objBoard[i][j].equals(ObstacleType.g2dTopRight)) {
+						g2dTopRight.paintIcon(this, g, j*28, i*28);
 					}
 					else if(objBoard[i][j].equals(ObstacleType.stairsLeft)) {
-						stairsLeft.paintIcon(this, g, j*32, i*32);
+						stairsLeft.paintIcon(this, g, j*28, i*28);
 					}
 					else if(objBoard[i][j].equals(ObstacleType.stairsRight)) {
-						stairsRight.paintIcon(this, g, j*32, i*32);
+						stairsRight.paintIcon(this, g, j*28, i*28);
 					}
 					///////////////////////////////////////////////////////
 	
@@ -359,7 +387,7 @@ public class GraphicView extends JPanel implements Observer {
 					} else {
 						trainer= new ImageIcon("cut_sprites/trainer_right_2.png");
 					}
-					trainer.paintIcon(this, g, y*32, x*32);
+					trainer.paintIcon(this, g, y*28, x*28);
 					timer.start();
 				}
 			}

@@ -1,5 +1,4 @@
 package controller;
-import java.awt.BorderLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -65,7 +64,7 @@ public class PokemonGUI extends JFrame {
 		}
 	}
 	
-	private final int WIDTH = 735, HEIGHT = 735;
+	private final int WIDTH = 644, HEIGHT = 688;
 	private Game theGame;
 	private Battle battle;
 	private GraphicView gView;
@@ -78,6 +77,7 @@ public class PokemonGUI extends JFrame {
 	private JButton baitB;
 	private JButton ballB;
 	private JButton runB; 
+	private JButton gameOverB;
 	private Timer timer;
 	
 	public PokemonGUI(Game game) {
@@ -112,10 +112,12 @@ public class PokemonGUI extends JFrame {
 		runB = bView.getRunButton();
 		baitB = bView.getBaitButton();
 		ballB = bView.getBallButton();
+		gameOverB = bView.getGameOverButton();
 		rockB.addActionListener(new MyBattleActionListener());
 		baitB.addActionListener(new MyBattleActionListener());
 		runB.addActionListener(new MyBattleActionListener());
 		ballB.addActionListener(new MyBattleActionListener());
+		gameOverB.addActionListener(new MyBattleActionListener());
 	}
 	
 	//Adds the menus to the frame so you can switch between views
@@ -207,7 +209,6 @@ public class PokemonGUI extends JFrame {
 						bView.setPokemon(pokemonFound);
 						setView(bView);
 						bView.startTimer();
-
 					}
 				}
 				else {
@@ -228,7 +229,15 @@ public class PokemonGUI extends JFrame {
 			
 			JButton buttonPressed = (JButton) e.getSource();
 			Outcome outcome;
+			
 			if(currentView.equals(bView)){
+				if(buttonPressed.equals(gameOverB)){
+					BattleMusic.stop();
+					MapMusic.play();
+					setView(oldView);
+					bView.resetBattle();
+					theGame.endBattle();
+				}
 				if(!battle.isOver()){
 					bView.resetThrowing();
 					
@@ -243,16 +252,16 @@ public class PokemonGUI extends JFrame {
 							JOptionPane.showMessageDialog(null, "You have no rocks!");
 						else {
 							bView.startThrowTimer();
-							
 						}
 						//Pokemon ran, currentView now is map
 						if(outcome.equals(Outcome.Ran)) { 
-							//animate running
+							bView.setOutcome(Outcome.Ran);
 							System.out.println("ran");
 	
 						}
 						 //Pokemon stayed do nothing
 						else {
+							bView.setOutcome(Outcome.Stayed);
 							System.out.println("stay");
 	
 						}								 
@@ -272,11 +281,12 @@ public class PokemonGUI extends JFrame {
 						}
 						
 						if (outcome.equals(Outcome.Ran)) {
-							//Animate pokemon running
+							bView.setOutcome(Outcome.Ran);
 							System.out.println("ran");
 						}
 						 //Pokemon stayed do nothing
 						else{
+							bView.setOutcome(Outcome.Stayed);
 							System.out.println("stayed");
 						}								 	
 					}
@@ -299,17 +309,20 @@ public class PokemonGUI extends JFrame {
 						//We threw a ball and caught the pokemon
 						if(outcome.equals(Outcome.Caught)) {
 							System.out.println("caught");
+							bView.setOutcome(Outcome.Caught);
 	
 						}
 						
 						//We threw a ball and the pokemon escaped the ball and ran
-						else if(outcome.equals(Outcome.EscapedAndRan)){
+						else if(outcome.equals(Outcome.Ran)){
+							bView.setOutcome(Outcome.Ran);
 							System.out.println("ran");
 	
 						}
 						
 						//Threw a ball and the pokemon escaped and stayed
 						else {
+							bView.setOutcome(Outcome.Stayed);
 							System.out.println("stay");
 	
 						}
@@ -318,20 +331,12 @@ public class PokemonGUI extends JFrame {
 					//User clicked run
 					else if(buttonPressed.equals(runB)){
 						battle.trainerRan();
-						System.out.println("ran1");
-	
-					}
-					
-					//Now check if game is over
-					if (battle.isOver() && bView.doneThrowing()) {
 						BattleMusic.stop();
 						MapMusic.play();
 						setView(oldView);
-						bView.resetBattle();
 						theGame.endBattle();
 					}
 				}
-				
 				theGame.doNotify();
 			}
 		}

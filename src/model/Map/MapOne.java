@@ -2,12 +2,14 @@ package model.Map;
 
 import java.io.Serializable;
 import java.util.Random;
+
 import model.Items.Bait;
 import model.Items.Item;
 import model.Items.ItemType;
 import model.Items.Potion;
 import model.Items.Rock;
 import model.Items.SafariBall;
+import model.Items.SuperPotion;
 import model.ObstacleType.ObstacleType;
 import model.Pokemon.Charmander;
 import model.Pokemon.MewTwo;
@@ -64,9 +66,9 @@ public class MapOne implements _Map, Serializable {
 	}
 	
 	public void setDeepGrass() {
-		//northwest patch
-		for(int i = 2; i < 6; i++) {
-			for(int j = 2; j < 5; j++) {
+		//west patch
+		for(int i = 12; i < 16; i++) {
+			for(int j = 1; j < 5; j++) {
 				map[i][j] = ObstacleType.DeepGrass;
 			}
 		}
@@ -122,25 +124,21 @@ public class MapOne implements _Map, Serializable {
 	}
 	
 	public void setBushes() {
-		for(int i = 1; i < 8; i++) {
-			map[i][8] = ObstacleType.Bush;
-		}
-		
 		for(int j = 1; j < 7; j++) {
 			map[16][j] = ObstacleType.Bush;
 		}
 		map[14][6] = ObstacleType.Bush;
 		map[15][6] = ObstacleType.Bush;
-		
 	}
 	
 	public void setEntranceAndExits() {
 		
-		//top row
+		//top entrance
 		map[0][9] = ObstacleType.woodpegs;
 		map[0][10] = ObstacleType.dirtLeft;
 		map[1][10] = ObstacleType.dirtLeft;
 		map[2][10] = ObstacleType.dirtBotLeft;
+		map[2][9] = ObstacleType.graysign;
 		map[2][11] = ObstacleType.dirtBot;
 		map[2][12] = ObstacleType.dirtBotRight;
 		map[1][12] = ObstacleType.dirtRight;
@@ -164,6 +162,9 @@ public class MapOne implements _Map, Serializable {
 		map[SIZE-1][13] = ObstacleType.woodpegs;
 		
 		//RIGHT EXIT
+		map[8][20] = ObstacleType.woodpegs;
+		map[8][21] = ObstacleType.woodpegs;
+
 		map[9][22] = ObstacleType.dirtTop;
 		map[9][21] = ObstacleType.dirtTop;
 		map[9][20] = ObstacleType.dirtTop;
@@ -188,6 +189,8 @@ public class MapOne implements _Map, Serializable {
 		map[13][20] = ObstacleType.dirtBot;
 		map[13][21] = ObstacleType.dirtBot;
 		map[13][22] = ObstacleType.dirtBot;
+		map[14][20] = ObstacleType.woodpegs;
+		map[14][21] = ObstacleType.woodpegs;
 
 	}
 	
@@ -211,11 +214,12 @@ public class MapOne implements _Map, Serializable {
 	}
 	
 	public void setItems() {
-		map[10][2] = new Bait(false, 2);
+		map[2][2] = new Bait(false, 2);
 		map[17][5] = new Rock(false, 6);
 		map[9][18] = new Potion(false, 10);
-//		map[5][12] = new SafariBall(false, 3);
+		map[3][7] = new SafariBall(false, 3);
 		map[17][14] = new SafariBall(false, 3);
+		map[15][5] = new SuperPotion(false, 5);
 	}
 	
 	public Object [][] getObjMap(){
