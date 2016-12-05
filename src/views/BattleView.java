@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -28,6 +29,8 @@ import model.Battle.Battle;
 import model.Battle.Outcome;
 import model.Items.Item;
 import model.Pokemon.Pokemon;
+import songplayer.BattleMusic;
+import songplayer.CaughtMusic;
 
 public class BattleView extends JPanel implements Observer {
 	
@@ -86,6 +89,12 @@ public class BattleView extends JPanel implements Observer {
 	private Boolean pokemonReached = false;
 	private int pokFinalX = 575;
 
+	//List of buttons to disable during animation
+	private ArrayList<JButton> buttons;
+	
+	//Boolean for PokemonGUI to wait on in order to play the caught 
+	//pokemon music
+	private Boolean caught = false;
 	
 	public BattleView(Game game, int width, int height) {
 		theGame = game;
@@ -115,12 +124,31 @@ public class BattleView extends JPanel implements Observer {
 		ball = new JButton("Throw Ball");
 		run = new JButton("Run Away"); 
 		
+		buttons = new ArrayList<JButton>();
+		buttons.add(bait);
+		buttons.add(rock);
+		buttons.add(ball);
+		buttons.add(run);
+		
 		buttonPanel.add(bait);
 		buttonPanel.add(rock);
 		buttonPanel.add(ball);
 		buttonPanel.add(run);
 		buttonPanel.setSize(232, 232);
 		this.add(buttonPanel, BorderLayout.SOUTH);
+	}
+	
+	//These methods should be called before and after the animation
+	//to ensure the user doesn't click buttons during animations
+	
+	private void enableButtons() {
+		for (JButton j : buttons)
+			j.setEnabled(true);
+	}
+	
+	private void disableButtons() {
+		for (JButton j : buttons)
+			j.setEnabled(false);
 	}
 	
 	//Creates all images that might be used in a battle
@@ -145,14 +173,17 @@ public class BattleView extends JPanel implements Observer {
 	
 	public void startTimer(){
 		startTimer.start();
+		disableButtons();
 	}
 	
 	public void startThrowTimer(){
 		throwTimer.start();
+		disableButtons();
 	}
 	
 	public void startPokRanTimer(){
 		pokRanTimer.start();
+		disableButtons();
 	}
 	
 	public JButton getRockButton(){
@@ -209,6 +240,7 @@ public class BattleView extends JPanel implements Observer {
 		}
 		if(trainerSet && pokemonSet){
 			startTimer.stop();
+			enableButtons();
 		}
 	}
 	
@@ -242,6 +274,7 @@ public class BattleView extends JPanel implements Observer {
 		actions++;
 		if(actions == 2) {
 			itemTimer.start();
+			disableButtons();
 		}
 		if(actions == 6){
 			actions = 1;
@@ -272,8 +305,11 @@ public class BattleView extends JPanel implements Observer {
 			itemYReached = true;
 		}
 		
-		if(itemXReached && itemYReached)
+		if(itemXReached && itemYReached) {
 			itemReached = true;
+			enableButtons();
+		}
+			
 	}
 	
 	public void updatePokemonRanAnimation(){
@@ -282,6 +318,7 @@ public class BattleView extends JPanel implements Observer {
 		}
 		else {
 			pokRanTimer.stop();
+			enableButtons();
 		}
 	}
 	
@@ -297,6 +334,7 @@ public class BattleView extends JPanel implements Observer {
 	
 	public void stopItemTimer(){
 		itemTimer.stop();
+		enableButtons();
 	}
 	
 	public Boolean battleDone(){
@@ -320,6 +358,7 @@ public class BattleView extends JPanel implements Observer {
 		itemYReached = false;
 		trainerX = 0;
 		pokemonX = 675;
+		outcome = null;
 	}
 	
 	public void resetThrowing(){
@@ -386,17 +425,19 @@ public class BattleView extends JPanel implements Observer {
 				
 		//If the pokemon is in the ball and chose to stay, sleep for the pokeball to stay
 		//before redrawing the pokemon back
-		else if(pokemonInBall == true && (outcome.equals(Outcome.Stayed) || 
+		else if(outcome != null) {
+			if (pokemonInBall == true && (outcome.equals(Outcome.Stayed) || 
 				outcome.equals(Outcome.Ran))){
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				g.drawImage(pokemon.getImage(), pokemonX, pokemonY, null);
+				stopItemTimer();
+				pokemonInBall = false;
+				pokemonBrokeFree = true;
 			}
-			g.drawImage(pokemon.getImage(), pokemonX, pokemonY, null);
-			stopItemTimer();
-			pokemonInBall = false;
-			pokemonBrokeFree = true;
 		}
 		
 		//If a ball was thrown and the pokemon broke free and ran or if a rock/bait is thrown
@@ -423,11 +464,19 @@ public class BattleView extends JPanel implements Observer {
 		if(outcome != null && outcome.equals(Outcome.Caught) && pokemonInBall){
 			g.drawImage(currentItemImage, pokemonX+30, pokemonY+45, null);
 			stopItemTimer();
+			enableButtons();
 			g.drawString("Gotcha!", 75, height-200);
 			g.drawString(pokemon.getPokemonType().toString() + " "
 					+ "has been caught!", 75, height-160);
 			battleDone = true;
+			caught = true;
+			//BattleMusic.stop();
+			//CaughtMusic.play();
 		}
+	}
+	
+	public Boolean caught() {
+		return caught;
 	}
 	
 	private class MyBattleStartListener implements ActionListener{

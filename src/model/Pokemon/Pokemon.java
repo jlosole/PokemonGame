@@ -86,6 +86,7 @@ public abstract class Pokemon implements Serializable {
 	//When a pokemon gets hit with a rock or a ball is thrown at it
 	public void tookDamage(int damage){
 		hp -= damage;
+		if (hp < 0) hp = 0;
 	}
 
 	
