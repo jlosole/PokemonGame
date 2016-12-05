@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -90,6 +91,9 @@ public class BattleView extends JPanel implements Observer {
 	
 	//Boolean for music
 	private Boolean caught = false;
+	
+	//List to disable buttons
+	private ArrayList<JButton> buttons;
 
 	
 	public BattleView(Game game, int width, int height) {
@@ -124,6 +128,12 @@ public class BattleView extends JPanel implements Observer {
 		ball = new JButton("Throw Ball");
 		run = new JButton("Run Away"); 
 		
+		buttons = new ArrayList<JButton>();
+		buttons.add(bait);
+		buttons.add(rock);
+		buttons.add(ball);
+		buttons.add(run);
+		
 		buttonPanel.add(bait);
 		buttonPanel.add(rock);
 		buttonPanel.add(ball);
@@ -150,6 +160,16 @@ public class BattleView extends JPanel implements Observer {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private void enableButtons() {
+		for (JButton j : buttons)
+			j.setEnabled(true);
+	}
+	
+	private void disableButtons(){
+		for (JButton j : buttons)
+			j.setEnabled(false);
 	}
 	
 	public void startTimer(){
@@ -250,6 +270,7 @@ public class BattleView extends JPanel implements Observer {
 		}
 		
 		if(trainerDoneThrowing){
+			enableButtons();
 			throwTimer.stop();
 		}
 	}
@@ -258,10 +279,12 @@ public class BattleView extends JPanel implements Observer {
 		actions++;
 		if(actions == 2) {
 			itemTimer.start();
+			disableButtons();
 		}
 		if(actions == 6){
 			actions = 1;
 			trainerDoneThrowing = true;
+			enableButtons();
 		}
 	}
 	
@@ -298,6 +321,7 @@ public class BattleView extends JPanel implements Observer {
 		}
 		else {
 			pokRanTimer.stop();
+			enableButtons();
 		}
 	}
 	
@@ -308,6 +332,7 @@ public class BattleView extends JPanel implements Observer {
 		}
 		else {
 			pokemonReached = true;
+			enableButtons();
 		}
 	}
 	
@@ -432,6 +457,7 @@ public class BattleView extends JPanel implements Observer {
 			stopItemTimer();
 			pokemonInBall = false;
 			pokemonBrokeFree = true;
+			enableButtons();
 		}
 		
 		//If a ball was thrown and the pokemon broke free and ran or if a rock/bait is thrown
