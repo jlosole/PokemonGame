@@ -480,7 +480,8 @@ public class BattleView extends JPanel implements Observer {
 			setGameOverText("Pokemon ran away!");
 		}
 		
-		if(!currentItemImage.equals(ballImage) && itemReached && outcome.equals(Outcome.Stayed)){
+		if(currentItemImage != null && !currentItemImage.equals(ballImage) 
+				&& itemReached && outcome.equals(Outcome.Stayed)){
 			g.drawString("What will Ash throw?", 50, height-155);
 
 		}

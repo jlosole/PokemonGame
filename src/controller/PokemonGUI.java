@@ -38,32 +38,12 @@ public class PokemonGUI extends JFrame {
 	private static FileInputStream fis;
 	private static ObjectInputStream oIStream;
 	private static int DELAY_IN_MILLS = 1000;
+	private static PokemonGUI startGUI;
+	private static PokemonGUI gameGUI;
 	
 	public static void main(String [] args) {
-		int selection = JOptionPane.showConfirmDialog(null, "Start from previous saved game?",
-				"Pokemon", JOptionPane.YES_NO_CANCEL_OPTION);
-		if(selection == JOptionPane.NO_OPTION){
-			PokemonGUI gui = new PokemonGUI(new Game());
-			gui.setVisible(true);
-		}
-		else if(selection == JOptionPane.YES_OPTION){
-			//read from data.txt
-			try {
-				fis = new FileInputStream("data.txt");
-				oIStream = new ObjectInputStream(fis);
-				try {
-					Game game = (Game) oIStream.readObject();
-					PokemonGUI gui = new PokemonGUI(game);
-					gui.setVisible(true);
-				} catch (ClassNotFoundException e) {
-					e.printStackTrace();
-				}
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+		startGUI = new PokemonGUI();
+		startGUI.setVisible(true);
 	}
 	
 	private final int WIDTH = 644, HEIGHT = 688;
@@ -73,14 +53,19 @@ public class PokemonGUI extends JFrame {
 	private TextView tView;
 	private BattleView bView;
 	private LoadingView lView;
-	private JPanel currentView, oldView = null;;
+	private JPanel currentView, oldView = null;
 	private String winCondition;
 	
+	//Battle Buttons
 	private JButton rockB;
 	private JButton baitB;
 	private JButton ballB;
 	private JButton runB; 
 	private JButton gameOverB;
+	
+	//Loading screen Buttons
+	private JButton yesButton, noButton;
+	private JButton steps, catches;
 	private Timer timer;
 	
 	public PokemonGUI(Game game) {
@@ -92,12 +77,12 @@ public class PokemonGUI extends JFrame {
 	    
 	    theGame = game;
 	    battle = theGame.getBattle();
+	    theGame.setWinCondition(winCondition);
 
 	    gView = new GraphicView(theGame, WIDTH, HEIGHT);
 	    tView = new TextView(theGame, WIDTH, HEIGHT); 
 	    bView = new BattleView(theGame, WIDTH, HEIGHT);
-	    lView = new LoadingView(theGame, WIDTH, HEIGHT);
-	    
+
 	    timer = new Timer(DELAY_IN_MILLS, new MoveListener());
 	    timer.start();
 	    
@@ -109,7 +94,29 @@ public class PokemonGUI extends JFrame {
 		addObservers();
 		addMenus();
 		setView(gView);
-		
+	}
+	
+	public PokemonGUI(){
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    this.setSize(WIDTH, HEIGHT);
+	    this.setLocation(100, 40);
+	    this.setTitle("Pokemon");
+	    this.setLayout(null);
+	    lView = new LoadingView(theGame, WIDTH, HEIGHT);
+	    setUpLoadingButtons();
+	    this.setContentPane(lView);
+	}
+	
+	public void setUpLoadingButtons(){
+	    yesButton = lView.getYesButton();
+	    yesButton.addActionListener(new LoadingScreenListener());
+	    noButton = lView.getNoButton();
+	    noButton.addActionListener(new LoadingScreenListener());
+	    
+	    steps = lView.getStepsButton();
+	    steps.addActionListener(new LoadingScreenListener());
+	    catches = lView.getCatchesButton();
+	    catches.addActionListener(new LoadingScreenListener());
 	}
 	
 	public void addListeners(){
@@ -145,7 +152,6 @@ public class PokemonGUI extends JFrame {
 		theGame.addObserver(gView);
 		theGame.addObserver(tView);
 		theGame.addObserver(bView);
-		theGame.addObserver(lView);
 	}
 	
 	public void setView(JPanel newView) {
@@ -409,6 +415,51 @@ public class PokemonGUI extends JFrame {
 		}
 		@Override
 		public void windowOpened(WindowEvent e) {
+		}
+	}
+	
+	private class LoadingScreenListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Boolean firstWindowDone = lView.getFirstWindowDone();
+			JButton buttonPressed = (JButton)e.getSource();
+			
+			if(!firstWindowDone){
+				if(buttonPressed.equals(yesButton)){
+					try {
+						fis = new FileInputStream("data.txt");
+						oIStream = new ObjectInputStream(fis);
+						try {
+							Game game = (Game) oIStream.readObject();
+							PokemonGUI gui = new PokemonGUI(game);
+							gui.setVisible(true);
+						} catch (ClassNotFoundException c) {
+							c.printStackTrace();
+						}
+					} catch (FileNotFoundException d) {
+						d.printStackTrace();
+					} catch (IOException d) {
+						d.printStackTrace();
+					}
+				}
+				else if(buttonPressed.equals(noButton)){
+					lView.setFirstWindowDone();
+					lView.update();
+					
+				}
+			}
+			else {
+				if(buttonPressed.equals(steps)){
+					winCondition = "Steps";
+				}
+				else if(buttonPressed.equals(catches)){
+					winCondition = "Catches";
+				}	
+				startGUI.setVisible(false);
+				gameGUI = new PokemonGUI(new Game());
+				gameGUI.setVisible(true);
+			}
 		}
 	}
 }

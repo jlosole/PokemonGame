@@ -62,6 +62,10 @@ public class Game extends Observable implements Serializable{
 		currentMap = newMap;
 		objBoard = currentMap.getObjMap();
 	}
+	
+	public void setWinCondition(String string) {
+		
+	}
 		
 	public _Map getMap(){
 		return currentMap;
