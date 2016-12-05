@@ -23,6 +23,7 @@ import javax.swing.JPanel;
 
 import views.BattleView;
 import views.GraphicView;
+import views.LoadingView;
 import views.TextView;
 import model.Game;
 import model.Battle.Battle;
@@ -70,6 +71,7 @@ public class PokemonGUI extends JFrame {
 	private GraphicView gView;
 	private TextView tView;
 	private BattleView bView;
+	private LoadingView lView;
 	private JPanel currentView, oldView = null;;
 	private String winCondition;
 	
@@ -93,6 +95,7 @@ public class PokemonGUI extends JFrame {
 	    gView = new GraphicView(theGame, WIDTH, HEIGHT);
 	    tView = new TextView(theGame, WIDTH, HEIGHT); 
 	    bView = new BattleView(theGame, WIDTH, HEIGHT);
+	    lView = new LoadingView(theGame, WIDTH, HEIGHT);
 	    
 	    timer = new Timer(DELAY_IN_MILLS, new MoveListener());
 	    timer.start();
@@ -104,7 +107,8 @@ public class PokemonGUI extends JFrame {
 		addListeners();
 		addObservers();
 		addMenus();
-		setView(gView);
+		setView(lView);
+		
 	}
 	
 	public void addListeners(){
@@ -140,6 +144,7 @@ public class PokemonGUI extends JFrame {
 		theGame.addObserver(gView);
 		theGame.addObserver(tView);
 		theGame.addObserver(bView);
+		theGame.addObserver(lView);
 	}
 	
 	public void setView(JPanel newView) {
