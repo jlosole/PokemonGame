@@ -211,16 +211,19 @@ public class PokemonGUI extends JFrame {
 						gView.startTimer();
 					}
 					else if(keyCode == KeyEvent.VK_DOWN){
+						gView.trainerNotSet();
 						gView.setFinalPositions(trainerPos, "Down");
 						pokemonFound = theGame.move(row, col, "Down");
 						gView.startTimer();
 					}
 					else if(keyCode == KeyEvent.VK_LEFT){
+						gView.trainerNotSet();
 						pokemonFound = theGame.move(row, col, "Left");
 						gView.setFinalPositions(trainerPos, "Left");
 						gView.startTimer();
 					}
 					else if(keyCode == KeyEvent.VK_RIGHT){
+						gView.trainerNotSet();
 						pokemonFound = theGame.move(row, col, "Right");
 						gView.setFinalPositions(trainerPos, "Right");
 						gView.startTimer();
