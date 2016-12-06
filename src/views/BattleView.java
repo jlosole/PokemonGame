@@ -165,7 +165,6 @@ public class BattleView extends JPanel implements Observer {
 	}
 	
 	private void enableButtons() {
-		System.out.println("e");
 		for (JButton j : buttons)
 			j.setEnabled(true);
 	}
