@@ -15,7 +15,7 @@ public class MewTwo extends Pokemon {
 	private static final int MAXHP = 140;
 	private static final int RUNCHANCE = 4;
 	private static final int CATCHCHANCE = 7;
-	private static final Item SUPERPOTION = new SuperPotion(false, 50);
+	private static final Item SUPERPOTION = new SuperPotion(false, 10);
 	
 	public MewTwo (){
 		super(HP, MAXHP, RUNCHANCE, CATCHCHANCE, SUPERPOTION);
@@ -34,5 +34,16 @@ public class MewTwo extends Pokemon {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	
+	@Override
+	public Image getInventoryImage() {
+		try {
+			return ImageIO.read(new File("inventory_pokemon/mewtwo.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;	
 	}
 }

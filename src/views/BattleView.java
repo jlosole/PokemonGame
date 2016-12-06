@@ -67,7 +67,7 @@ public class BattleView extends JPanel implements Observer {
 	private final int THROWING_PIXELS = 5;
 	
 	//Trainer instance variables for battle starting animations
-	private int trainerX = 0;
+	private int trainerX = 25;
 	private int trainerFinalX;
 	private int trainerY;
 	private Boolean trainerSet = false;
@@ -272,7 +272,6 @@ public class BattleView extends JPanel implements Observer {
 		}
 		
 		if(trainerDoneThrowing){
-			enableButtons();
 			throwTimer.stop();
 		}
 	}
@@ -286,13 +285,16 @@ public class BattleView extends JPanel implements Observer {
 		if(actions == 6){
 			actions = 1;
 			trainerDoneThrowing = true;
-			enableButtons();
 		}
 	}
 	
 	public void updateItemAnimation(){
+		if (outcome == null) return;
 		if(!itemReached){
 			moveItem();
+			disableButtons();
+		} else if (!outcome.equals(Outcome.Ran) && !outcome.equals(Outcome.EscapedAndRan)) {
+			enableButtons();
 		}
 	}
 	
@@ -306,35 +308,36 @@ public class BattleView extends JPanel implements Observer {
 		}
 		
 		//Move itemY
-		if(itemY > pokemonY){
+		if(itemY > pokemonY+20){
 			itemY -= THROWING_PIXELS;
 		}
 		else {
 			itemYReached = true;
 		}
 		
-		if(itemXReached && itemYReached)
+		if(itemXReached && itemYReached) {
 			itemReached = true;
+			enableButtons();
+		}
+			
 	}
 	
 	public void updatePokemonRanAnimation(){
+		disableButtons();
 		if(!pokemonReached){
 			moveRunningPokemon();
 		}
 		else {
 			pokRanTimer.stop();
-			enableButtons();
 		}
 	}
 	
 	public void moveRunningPokemon(){
 		if(pokemonX < pokFinalX){
-			System.out.println("yes");
 			pokemonX += MOVEMENT_PIXELS;
 		}
 		else {
 			pokemonReached = true;
-			enableButtons();
 		}
 	}
 	
@@ -347,7 +350,7 @@ public class BattleView extends JPanel implements Observer {
 	}
 	
 	public void resetBattle(){
-		this.remove(gameOver);
+		//this.remove(gameOver);
 		currentItemImage = null;
 		outcome = null;
 		
@@ -364,12 +367,14 @@ public class BattleView extends JPanel implements Observer {
 		itemReached = false;
 		itemXReached = false;
 		itemYReached = false;
-		trainerX = 0;
+		trainerX = 25;
 		pokemonX = 575;
 		didAlert = false;
 
 		caught = false;
 		outcome = null;
+		enableButtons();
+		if (gameOver != null) this.remove(gameOver);
 	}
 	
 	public Boolean caught() {
@@ -391,6 +396,7 @@ public class BattleView extends JPanel implements Observer {
 		itemX = trainerX;
 		itemY = trainerY+50;
 		didAlert = false;
+		
 	}
 	
 	public void paintComponent(Graphics g){
@@ -462,7 +468,6 @@ public class BattleView extends JPanel implements Observer {
 			stopItemTimer();
 			pokemonInBall = false;
 			pokemonBrokeFree = true;
-			enableButtons();
 		}
 		
 		//If a ball was thrown and the pokemon broke free and ran or if a rock/bait is thrown

@@ -47,4 +47,15 @@ public class Krabby extends Pokemon {
 		return null;
 	}
 	
+	
+	@Override
+	public Image getInventoryImage() {
+		try {
+			return ImageIO.read(new File("inventory_pokemon/krabby.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;	
+	}
+	
 }
