@@ -85,9 +85,9 @@ public class InventoryView extends JPanel implements Observer {
 		for(Pokemon pokemon : pokemonSet){
 			int numPokemon = pokemonList.get(pokemon);
 			for(int i = 0; i < numPokemon; i++) {
-				g.drawImage(pokemon.getImage(), width/7, 100+spacing, null);
-				g.drawString(pokemon.toString(), width/7+IMAGE_SIZE, 100+spacing);
-				spacing += 20;
+				g.drawImage(pokemon.getInventoryImage(), width/7-10, 100+spacing, null);
+				g.drawString(pokemon.getPokemonType().toString(), width/7+IMAGE_SIZE, 125+spacing);
+				spacing += IMAGE_SIZE;
 			}
 		}
 		

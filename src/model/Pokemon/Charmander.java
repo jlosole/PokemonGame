@@ -34,4 +34,15 @@ public class Charmander extends Pokemon {
 		}
 		return null;	
 	}
+	
+	
+	@Override
+	public Image getInventoryImage() {
+		try {
+			return ImageIO.read(new File("inventory_pokemon/charmander.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;	
+	}
 }

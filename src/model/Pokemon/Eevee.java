@@ -41,4 +41,15 @@ public class Eevee extends Pokemon {
 		}
 		return null;
 	}
+	
+	
+	@Override
+	public Image getInventoryImage() {
+		try {
+			return ImageIO.read(new File("inventory_pokemon/eevee.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;	
+	}
 }
