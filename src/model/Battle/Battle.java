@@ -5,12 +5,12 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import model.Trainer;
+import model.Music.BattleMusic;
+import model.Music.EndOfSongEvent;
+import model.Music.EndOfSongListener;
+import model.Music.MapMusic;
+import model.Music.SongPlayer;
 import model.Pokemon.Pokemon;
-import songplayer.BattleMusic;
-import songplayer.EndOfSongEvent;
-import songplayer.EndOfSongListener;
-import songplayer.MapMusic;
-import songplayer.SongPlayer;
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
 

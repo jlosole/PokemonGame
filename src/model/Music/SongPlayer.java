@@ -1,4 +1,4 @@
-package songplayer;
+package model.Music;
 
 /**
  * SongPlayer has two static methods that allow an audio file to be played

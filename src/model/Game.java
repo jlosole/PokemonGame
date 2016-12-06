@@ -10,13 +10,13 @@ import javax.swing.JOptionPane;
 import model.Battle.Battle;
 import model.Items.Item;
 import model.Map.*;
+import model.Music.BattleMusic;
+import model.Music.EndOfSongEvent;
+import model.Music.EndOfSongListener;
+import model.Music.MapMusic;
+import model.Music.SongPlayer;
 import model.ObstacleType.ObstacleType;
 import model.Pokemon.*;
-import songplayer.BattleMusic;
-import songplayer.EndOfSongEvent;
-import songplayer.EndOfSongListener;
-import songplayer.MapMusic;
-import songplayer.SongPlayer;
 
 public class Game extends Observable implements Serializable{
 	
