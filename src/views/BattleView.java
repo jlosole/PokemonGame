@@ -272,7 +272,6 @@ public class BattleView extends JPanel implements Observer {
 		}
 		
 		if(trainerDoneThrowing){
-			enableButtons();
 			throwTimer.stop();
 		}
 	}
@@ -293,7 +292,8 @@ public class BattleView extends JPanel implements Observer {
 	public void updateItemAnimation(){
 		if(!itemReached){
 			moveItem();
-		}
+			disableButtons();
+		} else enableButtons();
 	}
 	
 	public void moveItem(){
@@ -313,8 +313,11 @@ public class BattleView extends JPanel implements Observer {
 			itemYReached = true;
 		}
 		
-		if(itemXReached && itemYReached)
+		if(itemXReached && itemYReached) {
 			itemReached = true;
+			enableButtons();
+		}
+			
 	}
 	
 	public void updatePokemonRanAnimation(){
@@ -370,6 +373,7 @@ public class BattleView extends JPanel implements Observer {
 
 		caught = false;
 		outcome = null;
+		enableButtons();
 	}
 	
 	public Boolean caught() {
@@ -462,7 +466,6 @@ public class BattleView extends JPanel implements Observer {
 			stopItemTimer();
 			pokemonInBall = false;
 			pokemonBrokeFree = true;
-			enableButtons();
 		}
 		
 		//If a ball was thrown and the pokemon broke free and ran or if a rock/bait is thrown

@@ -294,7 +294,6 @@ public class PokemonGUI extends JFrame {
 			
 			if(currentView.equals(bView)){
 				if(buttonPressed.equals(gameOverB)){
-					System.out.println("yeet");
 					if (BattleMusic.on()) BattleMusic.stop();
 					if (CaughtMusic.on()) CaughtMusic.stop();
 					MapMusic.play();
