@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 public abstract class Item implements Serializable {
 	
-	private static boolean isUsed;
-	private static int hp;
+	private boolean isUsed;
+	private int hp;
 	
 	//Hp as the parameter will be amount of hp restored from potions
 	//and will be damage done by bait or rock
@@ -14,11 +14,11 @@ public abstract class Item implements Serializable {
 		this.hp = hp;
 	}
 	
-	public  boolean isUsed() {
+	public Boolean isUsed() {
 		return this.isUsed;
 	}
 	
-	public static int getHP() {
+	public int getHP() {
 		return hp;
 	}
 	

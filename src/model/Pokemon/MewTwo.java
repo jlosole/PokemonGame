@@ -15,7 +15,7 @@ public class MewTwo extends Pokemon {
 	private static final int MAXHP = 140;
 	private static final int RUNCHANCE = 4;
 	private static final int CATCHCHANCE = 7;
-	private static final Item SUPERPOTION = new SuperPotion(false, 50);
+	private static final Item SUPERPOTION = new SuperPotion(false, 10);
 	
 	public MewTwo (){
 		super(HP, MAXHP, RUNCHANCE, CATCHCHANCE, SUPERPOTION);

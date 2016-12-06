@@ -41,14 +41,14 @@ public abstract class Pokemon implements Serializable {
 	
 	//When a player chooses to throw bait this method is called
 	public void ateBait(){
-		tookDamage(Bait.getHP());
+		tookDamage(2);
 		runChance++;
 		catchChance++;
 	}
 	
 	//When a player chooses to throw a rock this method is called
 	public void hitByRock(){
-		tookDamage(Rock.getHP());
+		tookDamage(6);
 		runChance--;
 		catchChance--;
 	}
@@ -63,7 +63,7 @@ public abstract class Pokemon implements Serializable {
 	//When a Safari ball is thrown this will be called to see if 
 	//the pokemon is caught
 	public Boolean didCatch(){
-		tookDamage(SafariBall.getHP());
+		tookDamage(3);
 		numBallsThrown++;
 		if(hp == 0){
 			return true;
