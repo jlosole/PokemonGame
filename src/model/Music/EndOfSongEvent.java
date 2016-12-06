@@ -1,4 +1,4 @@
-package songplayer;
+package model.Music;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

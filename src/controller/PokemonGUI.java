@@ -31,10 +31,10 @@ import views.TextView;
 import model.Game;
 import model.Battle.Battle;
 import model.Battle.Outcome;
+import model.Music.BattleMusic;
+import model.Music.CaughtMusic;
+import model.Music.MapMusic;
 import model.Pokemon.*;
-import songplayer.BattleMusic;
-import songplayer.CaughtMusic;
-import songplayer.MapMusic;
 
 public class PokemonGUI extends JFrame {
 		

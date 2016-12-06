@@ -1,4 +1,4 @@
-package songplayer;
+package model.Music;
 
 /**
  * This one method interface allows any new type to become 

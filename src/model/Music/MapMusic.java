@@ -1,18 +1,19 @@
-package songplayer;
+package model.Music;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
 
-public class BattleMusic {
-	//Class responsible for playing and stopping the battle music
+public class MapMusic {
+	//Class responsible for playing and stopping the map theme music
 	private static AudioStream audioStream = null;
 	private static Boolean on = false;
 	public static void play() {
 		//Try to get the audio file
 		try {
-			FileInputStream is = new FileInputStream("music/battle.wav");
+			FileInputStream is = new FileInputStream("music/map.wav");
 			audioStream = new AudioStream(is);
 			AudioPlayer.player.start(audioStream);
 			on = true;
