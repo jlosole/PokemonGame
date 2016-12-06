@@ -165,6 +165,7 @@ public class BattleView extends JPanel implements Observer {
 	}
 	
 	private void enableButtons() {
+		System.out.println("e");
 		for (JButton j : buttons)
 			j.setEnabled(true);
 	}
@@ -285,15 +286,17 @@ public class BattleView extends JPanel implements Observer {
 		if(actions == 6){
 			actions = 1;
 			trainerDoneThrowing = true;
-			enableButtons();
 		}
 	}
 	
 	public void updateItemAnimation(){
+		if (outcome == null) return;
 		if(!itemReached){
 			moveItem();
 			disableButtons();
-		} else enableButtons();
+		} else if (!outcome.equals(Outcome.Ran) && !outcome.equals(Outcome.EscapedAndRan)) {
+			enableButtons();
+		}
 	}
 	
 	public void moveItem(){
@@ -321,23 +324,21 @@ public class BattleView extends JPanel implements Observer {
 	}
 	
 	public void updatePokemonRanAnimation(){
+		disableButtons();
 		if(!pokemonReached){
 			moveRunningPokemon();
 		}
 		else {
 			pokRanTimer.stop();
-			enableButtons();
 		}
 	}
 	
 	public void moveRunningPokemon(){
 		if(pokemonX < pokFinalX){
-			System.out.println("yes");
 			pokemonX += MOVEMENT_PIXELS;
 		}
 		else {
 			pokemonReached = true;
-			enableButtons();
 		}
 	}
 	
@@ -350,7 +351,7 @@ public class BattleView extends JPanel implements Observer {
 	}
 	
 	public void resetBattle(){
-		this.remove(gameOver);
+		//this.remove(gameOver);
 		currentItemImage = null;
 		outcome = null;
 		
@@ -374,6 +375,7 @@ public class BattleView extends JPanel implements Observer {
 		caught = false;
 		outcome = null;
 		enableButtons();
+		if (gameOver != null) this.remove(gameOver);
 	}
 	
 	public Boolean caught() {
@@ -395,6 +397,7 @@ public class BattleView extends JPanel implements Observer {
 		itemX = trainerX;
 		itemY = trainerY+50;
 		didAlert = false;
+		
 	}
 	
 	public void paintComponent(Graphics g){

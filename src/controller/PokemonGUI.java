@@ -397,8 +397,9 @@ public class PokemonGUI extends JFrame {
 						battle.trainerRan();
 						BattleMusic.stop();
 						MapMusic.play();
-						setView(oldView);
+						
 						theGame.endBattle();
+						setView(oldView);
 					}
 					if (bView.caught()) {
 						BattleMusic.stop();
