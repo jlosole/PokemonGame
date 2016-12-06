@@ -7,6 +7,7 @@ import java.util.Random;
 
 import javax.swing.JOptionPane;
 
+import controller.PokemonGUI;
 import model.Battle.Battle;
 import model.Items.Item;
 import model.Map.*;
@@ -268,8 +269,8 @@ public class Game extends Observable implements Serializable{
 		boolean rowValid = true;
 		boolean colValid = true;
 		
+		Point pt = trainerPos;
 		//special case if trainer is trying to walk off top of hill
-		Point pt = trainer.getCurrentPos();
 		if(objBoard[pt.x][pt.y] == ObstacleType.hillTop) {
 			if(row < pt.x) {
 				return false;
@@ -280,9 +281,6 @@ public class Game extends Observable implements Serializable{
 		if((pt.x == 10 || pt.x == 2) && objBoard[row][col] == ObstacleType.hillTop) {
 			return false;
 		}
-		
-		
-		
 		
 		if(row < 0 || row >= size) rowValid = false;
 		if(col < 0 || col >= size) colValid = false;

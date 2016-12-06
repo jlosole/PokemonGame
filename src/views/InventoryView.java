@@ -50,7 +50,6 @@ public class InventoryView extends JPanel implements Observer {
 		pokemonLabel.setText("Pokemon");
 		pokemonLabel.setSize(100, 20);
 		pokemonLabel.setLocation(width/7, 100);
-		
 		itemLabel = new JLabel();
 		itemLabel.setFont(new Font("Courier", Font.BOLD, 24));
 		itemLabel.setText("Items");

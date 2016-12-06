@@ -43,7 +43,8 @@ public class PokemonGUI extends JFrame {
 	private static int DELAY_IN_MILLS = 1000;
 	private static PokemonGUI startGUI;
 	private static PokemonGUI gameGUI;
-	
+	public static boolean playFromSavedGame;
+
 	public static void main(String [] args) {
 		startGUI = new PokemonGUI();
 		startGUI.setVisible(true);
@@ -456,9 +457,9 @@ public class PokemonGUI extends JFrame {
 					b.printStackTrace();
 				} 
 			}
-			else if(selection == JOptionPane.CANCEL_OPTION) {
-				return;
-			}
+//			else if(selection == JOptionPane.CANCEL_OPTION) {
+//				return;
+//			}
 		}
 		@Override
 		public void windowClosed(WindowEvent e) {
@@ -496,6 +497,7 @@ public class PokemonGUI extends JFrame {
 							Game game = (Game) oIStream.readObject();
 							PokemonGUI gui = new PokemonGUI(game);
 							gui.setVisible(true);
+							playFromSavedGame = true;
 						} catch (ClassNotFoundException c) {
 							c.printStackTrace();
 						}

@@ -54,7 +54,7 @@ public class GraphicView extends JPanel implements Observer {
 	private Timer timer;
 	private boolean trainerSet = true;
 	private int trainerX, trainerY, trainerFinalX, trainerFinalY;
-	private int movementPixels = 6;
+	private int movementPixels = 7;
 	private int times = 0;
 	
 	public GraphicView(Game theGame, int width, int height){
