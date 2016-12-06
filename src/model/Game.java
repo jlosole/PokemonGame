@@ -275,12 +275,13 @@ public class Game extends Observable implements Serializable{
 				return false;
 			}
 		}
-		//special case if trainer is trying to walk from deepGrass on to hillTop
-//		if(objBoard[pt.x][pt.y] == ObstacleType.DeepGrass) {
-//			if(row > pt.x) {
-//				return false;
-//			}
-//		}
+		//special case if trainer is trying to walk down onto hillTop
+		//hill top at row 11, 11-18  \\\ row 3, 14-21
+		if((pt.x == 10 || pt.x == 2) && objBoard[row][col] == ObstacleType.hillTop) {
+			return false;
+		}
+		
+		
 		
 		
 		if(row < 0 || row >= size) rowValid = false;
