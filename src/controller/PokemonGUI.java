@@ -272,7 +272,7 @@ public class PokemonGUI extends JFrame {
 							}
 						}
 					}
-					
+					//opening and closing inventory view
 					else if(keyCode == KeyEvent.VK_I) {
 						if(!openedInventory) {
 							openedInventory = true;

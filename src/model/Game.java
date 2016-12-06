@@ -264,8 +264,24 @@ public class Game extends Observable implements Serializable{
 	}
 	
 	public boolean canMoveHere(int row, int col) {
+		
 		boolean rowValid = true;
 		boolean colValid = true;
+		
+		//special case if trainer is trying to walk off top of hill
+		Point pt = trainer.getCurrentPos();
+		if(objBoard[pt.x][pt.y] == ObstacleType.hillTop) {
+			if(row < pt.x) {
+				return false;
+			}
+		}
+		//special case if trainer is trying to walk from deepGrass on to hillTop
+//		if(objBoard[pt.x][pt.y] == ObstacleType.DeepGrass) {
+//			if(row > pt.x) {
+//				return false;
+//			}
+//		}
+		
 		
 		if(row < 0 || row >= size) rowValid = false;
 		if(col < 0 || col >= size) colValid = false;
