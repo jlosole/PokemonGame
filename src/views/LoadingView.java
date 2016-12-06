@@ -1,5 +1,6 @@
 package views;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -32,7 +33,7 @@ public class LoadingView extends JPanel{
 		this.setSize(width, height);
 		this.setLayout(null);
 		try {
-			image = ImageIO.read(new File("cut_sprites/safari_zone.png"));
+			image = ImageIO.read(new File("safariSheet/biggerSafariLogo.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -48,7 +49,7 @@ public class LoadingView extends JPanel{
 		//Buttons for the first loading screen
 		yes = new JButton("YES");
 		yes.setSize(100, 20);
-		yes.setLocation(width/4, height-115);
+		yes.setLocation((width/4) - 54 , height-115);
 		no = new JButton("NO");
 		no.setSize(100, 20);
 		no.setLocation(width-200, height-115);
@@ -75,7 +76,10 @@ public class LoadingView extends JPanel{
 	
 	
 	public void paintComponent(Graphics g){
-		g.drawImage(image, 0, 0, null);
+		g.setColor(Color.white);
+		g.fillRect(0, 0, width, height);
+		g.drawImage(image, 40, 40, null);
+		g.setColor(Color.black);
 		g.setFont(new Font("Courier", Font.BOLD, 16));
 		if(!firstWindowDone){
 			this.add(no);

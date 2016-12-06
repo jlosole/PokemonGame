@@ -12,6 +12,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+
 import javax.swing.JButton;
 import javax.swing.Timer;
 import javax.swing.JFrame;
@@ -23,6 +24,7 @@ import javax.swing.JPanel;
 
 import views.BattleView;
 import views.GraphicView;
+import views.InstructionsView;
 import views.InventoryView;
 import views.LoadingView;
 import views.TextView;
@@ -54,6 +56,7 @@ public class PokemonGUI extends JFrame {
 	private TextView tView;
 	private BattleView bView;
 	private LoadingView lView;
+	private InstructionsView instructionView;
 	private InventoryView iView;
 	private JPanel currentView, oldView = null;
 	private String winCondition;
@@ -61,6 +64,8 @@ public class PokemonGUI extends JFrame {
 	//Battle Buttons
 	private JButton rockB, baitB, ballB, runB, gameOverB;
 	
+	//instruction screen button
+	private JButton playGameButton;
 	//Loading screen Buttons
 	private JButton yesButton, noButton;
 	private JButton steps, catches;
@@ -113,6 +118,11 @@ public class PokemonGUI extends JFrame {
 	    steps.addActionListener(new LoadingScreenListener());
 	    catches = lView.getCatchesButton();
 	    catches.addActionListener(new LoadingScreenListener());
+	}
+	
+	public void setInstructionButton() {
+		playGameButton = instructionView.getButton();
+		playGameButton.addActionListener(new InstructionScreenListener());
 	}
 	
 	public void addListeners(){
@@ -501,10 +511,22 @@ public class PokemonGUI extends JFrame {
 				else if(buttonPressed.equals(catches)){
 					winCondition = "Catches";
 				}	
+			    instructionView = new InstructionsView(theGame, WIDTH, HEIGHT);
+			    setInstructionButton();
+				setContentPane(instructionView);
+			}
+		}
+	}
+	
+	private class InstructionScreenListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JButton buttonPressed = (JButton)e.getSource();
+			if(buttonPressed.equals(playGameButton)) {
 				startGUI.setVisible(false);
 				gameGUI = new PokemonGUI(new Game());
 				gameGUI.setVisible(true);
 			}
-		}
+		}	
 	}
 }
