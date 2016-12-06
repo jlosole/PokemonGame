@@ -35,4 +35,15 @@ public class MewTwo extends Pokemon {
 		}
 		return null;
 	}
+	
+	
+	@Override
+	public Image getInventoryImage() {
+		try {
+			return ImageIO.read(new File("inventory_pokemon/mewtwo.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;	
+	}
 }

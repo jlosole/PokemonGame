@@ -43,4 +43,15 @@ public class Drowzee extends Pokemon {
 		}
 		return null;
 	}
+	
+	
+	@Override
+	public Image getInventoryImage() {
+		try {
+			return ImageIO.read(new File("inventory_pokemon/drowzee.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;	
+	}
 }

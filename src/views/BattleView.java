@@ -67,7 +67,7 @@ public class BattleView extends JPanel implements Observer {
 	private final int THROWING_PIXELS = 5;
 	
 	//Trainer instance variables for battle starting animations
-	private int trainerX = 0;
+	private int trainerX = 25;
 	private int trainerFinalX;
 	private int trainerY;
 	private Boolean trainerSet = false;
@@ -306,7 +306,7 @@ public class BattleView extends JPanel implements Observer {
 		}
 		
 		//Move itemY
-		if(itemY > pokemonY){
+		if(itemY > pokemonY+20){
 			itemY -= THROWING_PIXELS;
 		}
 		else {
@@ -364,7 +364,7 @@ public class BattleView extends JPanel implements Observer {
 		itemReached = false;
 		itemXReached = false;
 		itemYReached = false;
-		trainerX = 0;
+		trainerX = 25;
 		pokemonX = 575;
 		didAlert = false;
 

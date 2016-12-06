@@ -43,10 +43,20 @@ public class Caterpie extends Pokemon {
 		try {
 			return ImageIO.read(new File("cut_sprites/caterpie.png"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;	
 	}
+	
+	@Override
+	public Image getInventoryImage() {
+		try {
+			return ImageIO.read(new File("inventory_pokemon/caterpie.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;	
+	}
+	
 	
 }
