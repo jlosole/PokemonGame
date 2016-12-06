@@ -69,6 +69,7 @@ public class PokemonGUI extends JFrame {
 	//Loading screen Buttons
 	private JButton yesButton, noButton;
 	private JButton steps, catches;
+	private boolean openedInventory = false;
 	
 	public PokemonGUI(Game game) {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -212,7 +213,6 @@ public class PokemonGUI extends JFrame {
 				
 				if(!theGame.gameOver()){
 					int moved;
-					
 					//User moved up
 					if(keyCode == KeyEvent.VK_UP) {
 						moved = theGame.move(row, col, "Up");
@@ -273,6 +273,16 @@ public class PokemonGUI extends JFrame {
 						}
 					}
 					
+					else if(keyCode == KeyEvent.VK_I) {
+						if(!openedInventory) {
+							openedInventory = true;
+							setView(iView);
+						} else {
+							openedInventory = false;
+							setView(gView);
+						}
+					}
+					
 					if(pokemonFound != null) {
 						MapMusic.stop();
 						BattleMusic.play();
@@ -328,15 +338,11 @@ public class PokemonGUI extends JFrame {
 						}
 						//Pokemon ran, currentView now is map
 						if(outcome.equals(Outcome.Ran)) { 
-							bView.setOutcome(Outcome.Ran);
-							System.out.println("ran");
-	
+							bView.setOutcome(Outcome.Ran);	
 						}
 						 //Pokemon stayed do nothing
 						else {
-							bView.setOutcome(Outcome.Stayed);
-							System.out.println("stay");
-	
+							bView.setOutcome(Outcome.Stayed);	
 						}								 
 					}
 					
@@ -355,12 +361,10 @@ public class PokemonGUI extends JFrame {
 						
 						if (outcome.equals(Outcome.Ran)) {
 							bView.setOutcome(Outcome.Ran);
-							System.out.println("ran");
 						}
 						 //Pokemon stayed do nothing
 						else{
 							bView.setOutcome(Outcome.Stayed);
-							System.out.println("stayed");
 						}								 	
 					}
 					
