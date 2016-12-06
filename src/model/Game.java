@@ -187,7 +187,6 @@ public class Game extends Observable implements Serializable{
 			Item collected = (Item)objBoard[trainerPos.x][trainerPos.y];
 			trainer.collectedItem(collected);
 			SongPlayer.playFile(new DefaultEndListener(), "music/item_obtained.wav");
-			JOptionPane.showMessageDialog(null, "Obtained " + collected.toString() + "!");
 			return true;
 		}
 		return false;

@@ -439,7 +439,10 @@ public class PokemonGUI extends JFrame {
 				} catch (IOException b) {
 					b.printStackTrace();
 				} 
-			} 
+			}
+			else if(selection == JOptionPane.CANCEL_OPTION) {
+				return;
+			}
 		}
 		@Override
 		public void windowClosed(WindowEvent e) {
