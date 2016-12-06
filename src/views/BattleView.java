@@ -106,7 +106,7 @@ public class BattleView extends JPanel implements Observer {
 		
 		trainerFinalX = width/4;
 		trainerY = height - 288;
-		pokemonFinalX = width-300;
+		pokemonFinalX = width-200;
 		pokemonY = height/2-200;
 		
 		this.setSize(this.width, this.height);
@@ -456,8 +456,8 @@ public class BattleView extends JPanel implements Observer {
 			g.drawImage(pokemon.getImage(), pokemonX, pokemonY, null);
 			if(outcome != null && outcome.equals(Outcome.Stayed)){
 				g.drawString(pokemon.getPokemonType().toString() + 
-						" escaped the Safari Ball!", 50, height-155);
-				g.drawString("What will Ash throw?", 50, height-115);
+						" escaped the Safari Ball!", 50, height-165);
+				g.drawString("What will Ash throw?", 50, height-125);
 			}
 			stopItemTimer();
 			pokemonInBall = false;
@@ -478,23 +478,23 @@ public class BattleView extends JPanel implements Observer {
 				g.drawImage(poke, pokemonX, pokemonY, null);
 				moveRunningPokemon();
 			}
-			g.drawString("Oh no!", 50, height-155);
+			g.drawString("Oh no!", 50, height-165);
 			g.drawString(pokemon.getPokemonType().toString()+
-					" ran away!", 50, height-115);
+					" ran away!", 50, height-125);
 			didAlert = true;
 			setGameOverText("Pokemon ran away!");
 		}
 		
 		if(currentItemImage != null && !currentItemImage.equals(ballImage) 
 				&& itemReached && outcome.equals(Outcome.Stayed)){
-			g.drawString("What will Ash throw?", 50, height-155);
+			g.drawString("What will Ash throw?", 50, height-165);
 
 		}
 		
 		//Draw battle instructions
 		if((currentItemImage == null || (currentItemImage != null &&
 				!itemReached)) && !pokemonRunning) {
-			g.drawString("What will Ash throw?", 50, height-155);
+			g.drawString("What will Ash throw?", 50, height-165);
 		}
 		
 		//If outcome is that we caught the pokemon and the pokemon is in the ball
@@ -502,9 +502,9 @@ public class BattleView extends JPanel implements Observer {
 		if(outcome != null && outcome.equals(Outcome.Caught) && pokemonInBall){
 			g.drawImage(currentItemImage, pokemonX+30, pokemonY+45, null);
 			stopItemTimer();
-			g.drawString("Gotcha!", 50, height-155);
+			g.drawString("Gotcha!", 50, height-165);
 			g.drawString(pokemon.getPokemonType().toString() + " "
-					+ "has been caught!", 50, height-115);
+					+ "has been caught!", 50, height-125);
 			setGameOverText("You caught the Pokemon!");
 			pokemonCaught = true;
 		}

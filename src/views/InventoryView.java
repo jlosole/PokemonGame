@@ -16,17 +16,19 @@ import javax.swing.JPanel;
 
 import model.Game;
 import model.Items.ItemType;
+import model.Pokemon.Pokemon;
 import model.Pokemon.PokemonType;
 
 public class InventoryView extends JPanel implements Observer {
 	
 	private Game theGame;
 	private int width, height, spacing = 20;
-	private HashMap<PokemonType, Integer> pokemonList;
+	private HashMap<Pokemon, Integer> pokemonList;
 	private HashMap<ItemType, Integer> itemList;
 	private BufferedImage textBox;
 	private JLabel pokemonLabel;
 	private JLabel itemLabel;
+	private final int IMAGE_SIZE = 50;
 	
 	public InventoryView(Game game, int width, int height){
 		theGame = game;
@@ -79,11 +81,12 @@ public class InventoryView extends JPanel implements Observer {
 		g.setFont(new Font("Courier", Font.BOLD, 16));
 		
 		//Draw pokemon list
-		Set<PokemonType> pokemonSet = pokemonList.keySet();
-		for(PokemonType pokemon : pokemonSet){
+		Set<Pokemon> pokemonSet = pokemonList.keySet();
+		for(Pokemon pokemon : pokemonSet){
 			int numPokemon = pokemonList.get(pokemon);
 			for(int i = 0; i < numPokemon; i++) {
-				g.drawString(pokemon.toString(), width/7, 100+spacing);
+				g.drawImage(pokemon.getImage(), width/7, 100+spacing, null);
+				g.drawString(pokemon.toString(), width/7+IMAGE_SIZE, 100+spacing);
 				spacing += 20;
 			}
 		}
@@ -93,7 +96,7 @@ public class InventoryView extends JPanel implements Observer {
 		
 		//Draw items list
 		Set<ItemType> itemSet = itemList.keySet();
-		for(ItemType item : itemSet){
+		for(ItemType item : itemSet) {
 			int numItem = itemList.get(item);
 			String numItemAsString = Integer.toString(numItem);
 			g.drawString(item.toString() + " x " + numItemAsString, (width/4)*3-100, 100+spacing);

@@ -12,13 +12,13 @@ import model.Pokemon.PokemonType;
 public class Trainer implements Serializable {
 	
 	private int numSteps;
-	private HashMap<PokemonType, Integer> myPokemon;
+	private HashMap<Pokemon, Integer> myPokemon;
 	private HashMap<ItemType, Integer> myItems;
 	private static Point currentPosition;
 	
 	public Trainer() {			
 		numSteps = 500;										// Number of steps
-		myPokemon = new HashMap<PokemonType, Integer>();	// Initializes hash map of pokemon
+		myPokemon = new HashMap<Pokemon, Integer>();	// Initializes hash map of pokemon
 		myItems = new HashMap<ItemType, Integer>();			// Initializes hash map of items
 		myItems.put(ItemType.SafariBall, 30);				// Player starts with 30 Safari balls
 		myItems.put(ItemType.Rock, 15);						// player starts with 15 rocks
@@ -102,10 +102,10 @@ public class Trainer implements Serializable {
 			collectedItem(newPokemon.getItem());
 		}
 		
-		if(myPokemon.containsKey(newPokemonType))
-			myPokemon.put(newPokemonType, myPokemon.get(newPokemonType)+1);
+		if(myPokemon.containsKey(newPokemon))
+			myPokemon.put(newPokemon, myPokemon.get(newPokemonType)+1);
 		else 
-			myPokemon.put(newPokemonType, 1);
+			myPokemon.put(newPokemon, 1);
 	}
 	
 	public void collectedItem(Item newItem) {
@@ -121,7 +121,7 @@ public class Trainer implements Serializable {
 		return myItems;
 	}
 	
-	public HashMap<PokemonType, Integer> getPokemon(){
+	public HashMap<Pokemon, Integer> getPokemon(){
 		return myPokemon;
 	}
 	
