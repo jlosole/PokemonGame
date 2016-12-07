@@ -18,7 +18,7 @@ public class InstructionsView extends JPanel {
 	private Game game;
 	private int width, height;
 	private BufferedImage safariLogo, pikachu, mewtwo; 
-	private JButton playGameButton;
+	private JButton mapOneButton, mapTwoButton;
 	
 	public InstructionsView(Game game, int width, int height) {
 		this.game = game;
@@ -26,10 +26,18 @@ public class InstructionsView extends JPanel {
 		this.height = height;
 		this.setSize(width, height);
 		this.setLayout(null);
-		playGameButton = new JButton("Play Game");
-		playGameButton.setSize(120, 40);
-		playGameButton.setLocation(255, height-160);
-		this.add(playGameButton);
+		
+		mapOneButton = new JButton("Map One");
+		mapOneButton.setSize(120, 40);
+		mapOneButton.setLocation((this.width/4) - 54 , this.height-115);
+		
+		mapTwoButton = new JButton("Map Two");
+		mapTwoButton.setSize(120, 40);
+		mapTwoButton.setLocation(width-200, height-115);
+		
+		this.add(mapOneButton);
+		this.add(mapTwoButton);
+		
 		try {
 			safariLogo = ImageIO.read(new File("safariSheet/safariLogo.png"));
 			pikachu = ImageIO.read(new File("cut_sprites/pikachu.png"));
@@ -39,7 +47,6 @@ public class InstructionsView extends JPanel {
 		}
 		repaint();
 	}
-	
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -61,11 +68,16 @@ public class InstructionsView extends JPanel {
 		g.drawString("2. To view your inventory press 'I' on your keyboard", 20, 340);
 		g.drawString("3. To exit a battle, click the button that appears in", 20, 380);
 		g.drawString("   place of the pokemon", 20, 400);
-		g.drawString("Last rule: HAVE FUN!", 220, 460);
+		g.drawString("Last rule: HAVE FUN!", 20, 420);
+		g.drawString("Choose the map to start on below", 200, 460);
 	}
 	
-	public JButton getButton() {
-		return playGameButton;
+	public JButton getButtonOne() {
+		return mapOneButton;
+	}
+	
+	public JButton getButtonTwo() {
+		return mapTwoButton;
 	}
 
 }
