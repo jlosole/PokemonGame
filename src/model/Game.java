@@ -41,14 +41,24 @@ public class Game extends Observable implements Serializable{
 	private int size;
 	private Battle battle;
 	
-	public Game(){
+	public Game(String str){
 		trainer = new Trainer();
-		currentMap = mapOne;      //Initialize game to start on MapOne
+		if(str.equals("one")){
+			currentMap = mapOne;      //Initialize game to start on MapOne
+			Point pt = new Point(size-1, size/2);
+			trainer.setCurrentPosition(pt);
+			trainerPos = trainer.getCurrentPos();
+			trainerFacing = 0;
+		}
+		else {
+			currentMap = mapTwo;
+			Point pt = new Point(0, 9);
+			trainer.setCurrentPosition(pt);
+			trainerPos = trainer.getCurrentPos();
+			trainerFacing = 1;
+		}
 		size = currentMap.getSize();
-		Point pt = new Point(size-1, size/2);
-		trainer.setCurrentPosition(pt);
-		trainerPos = trainer.getCurrentPos();
-		trainerFacing = 0;
+		
 		objBoard = currentMap.getObjMap();
 		gameOver = false;
 		//start music
@@ -64,20 +74,6 @@ public class Game extends Observable implements Serializable{
 		objBoard = currentMap.getObjMap();
 	}
 	
-	public void setMapString(String str){
-		if(str.equals("one")){
-			setMap(mapOne);
-			Point pt = new Point(size-1, size/2);
-			trainer.setCurrentPosition(pt);
-			trainerPos = trainer.getCurrentPos();
-		}
-		else if(str.equals("two")){
-			setMap(mapTwo);
-			Point pt = new Point(6, 9);
-			trainer.setCurrentPosition(pt);
-			trainerPos = trainer.getCurrentPos();
-		}
-	}
 	
 	public void setWinCondition(String string) {
 		winCondition = string;

@@ -557,11 +557,12 @@ public class PokemonGUI extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			JButton buttonPressed = (JButton)e.getSource();
 			startGUI.setVisible(false);
-			gameGUI = new PokemonGUI(new Game());
 			if(buttonPressed.equals(startMapOneButton)) 
-				theGame.setMapString("one");
+				theGame = new Game("one");
 			else if(buttonPressed.equals(startMapTwoButton))
-				theGame.setMapString("two");
+				theGame = new Game("two");
+			
+			gameGUI = new PokemonGUI(theGame);
 			gameGUI.setVisible(true);
 		}
 	}	
