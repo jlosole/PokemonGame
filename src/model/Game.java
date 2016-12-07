@@ -64,6 +64,21 @@ public class Game extends Observable implements Serializable{
 		objBoard = currentMap.getObjMap();
 	}
 	
+	public void setMapString(String str){
+		if(str.equals("one")){
+			setMap(mapOne);
+			Point pt = new Point(size-1, size/2);
+			trainer.setCurrentPosition(pt);
+			trainerPos = trainer.getCurrentPos();
+		}
+		else if(str.equals("two")){
+			setMap(mapTwo);
+			Point pt = new Point(6, 9);
+			trainer.setCurrentPosition(pt);
+			trainerPos = trainer.getCurrentPos();
+		}
+	}
+	
 	public void setWinCondition(String string) {
 		winCondition = string;
 	}

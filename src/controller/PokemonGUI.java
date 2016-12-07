@@ -89,7 +89,8 @@ public class PokemonGUI extends JFrame {
 	private SuperPotion sPotion = new SuperPotion(false, 25);
 	
 	//Buttons for InstructionView
-	private JButton playGameButton;
+	private JButton startMapOneButton;
+	private JButton startMapTwoButton;
 
 	
 	public PokemonGUI(Game game) {
@@ -143,9 +144,11 @@ public class PokemonGUI extends JFrame {
 	    catches.addActionListener(new LoadingScreenListener());
 	}
 	
-	public void setInstructionButton() {
-		playGameButton = instructionView.getButton();
-		playGameButton.addActionListener(new InstructionScreenListener());
+	public void setInstructionButtons() {
+		startMapOneButton = instructionView.getButtonOne();
+		startMapOneButton.addActionListener(new InstructionScreenListener());
+		startMapTwoButton = instructionView.getButtonTwo();
+		startMapTwoButton.addActionListener(new InstructionScreenListener());
 	}
 	
 	public void setupBattleButtons(){
@@ -340,7 +343,7 @@ public class PokemonGUI extends JFrame {
 			Outcome outcome;
 			
 			if(currentView.equals(bView)){
-				if(buttonPressed.equals(gameOverB)){
+				if(buttonPressed.equals(gameOverB) || buttonPressed.equals(runB)){
 					if (BattleMusic.on()) BattleMusic.stop();
 					if (CaughtMusic.on()) CaughtMusic.stop();
 					MapMusic.play();
@@ -440,16 +443,7 @@ public class PokemonGUI extends JFrame {
 	
 						}
 					}
-					
-					//User clicked run
-					else if(buttonPressed.equals(runB)){
-						battle.trainerRan();
-						BattleMusic.stop();
-						MapMusic.play();
-						
-						theGame.endBattle();
-						setView(oldView);
-					}
+				
 					if (bView.caught()) {
 						BattleMusic.stop();
 						CaughtMusic.play();
@@ -552,7 +546,7 @@ public class PokemonGUI extends JFrame {
 					winCondition = "Catches";
 				}	
 			    instructionView = new InstructionsView(theGame, WIDTH, HEIGHT);
-			    setInstructionButton();
+			    setInstructionButtons();
 				setContentPane(instructionView);
 			}
 		}
@@ -562,13 +556,15 @@ public class PokemonGUI extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			JButton buttonPressed = (JButton)e.getSource();
-			if(buttonPressed.equals(playGameButton)) {
-				startGUI.setVisible(false);
-				gameGUI = new PokemonGUI(new Game());
-				gameGUI.setVisible(true);
-			}
-		}	
-	}
+			startGUI.setVisible(false);
+			gameGUI = new PokemonGUI(new Game());
+			if(buttonPressed.equals(startMapOneButton)) 
+				theGame.setMapString("one");
+			else if(buttonPressed.equals(startMapTwoButton))
+				theGame.setMapString("two");
+			gameGUI.setVisible(true);
+		}
+	}	
 	
 	private class InventoryButtonListener implements ActionListener {
 		
@@ -602,6 +598,4 @@ public class PokemonGUI extends JFrame {
 			}
 		}
 	}
-	
-
 }
