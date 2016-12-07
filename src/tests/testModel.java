@@ -1,7 +1,9 @@
 package tests;
 import static org.junit.Assert.*;
 
+import java.awt.Image;
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.junit.Test;
@@ -9,6 +11,8 @@ import org.junit.Test;
 import model.Map.*;
 
 import java.util.Map;
+
+import javax.swing.JButton;
 
 import model.Game;
 import model.Trainer;
@@ -97,17 +101,47 @@ public class testModel {
 	
 	@Test
 	public void testPokemonList(){
+		ArrayList<Pokemon> pokemon = new ArrayList<Pokemon>();
+		
+		
 		Pokemon pika = new Pikachu();
+		pokemon.add(pika);
 		Pokemon pika2 = new Pikachu();
+		
 		Pokemon charmander = new Charmander();
+		pokemon.add(charmander);
 		Pokemon mag = new Magmar();
+		pokemon.add(mag);
 		Pokemon mew = new MewTwo();
+		pokemon.add(mew);
 		Pokemon dod = new Doduo();
+		pokemon.add(dod);
 		Pokemon cat = new Caterpie();
+		pokemon.add(cat);
 		Pokemon drow = new Drowzee();
+		pokemon.add(drow);
 		Pokemon eev = new Eevee();
+		pokemon.add(eev);
 		Pokemon geo = new Geodude();
+		pokemon.add(geo);
 		Pokemon krab = new Krabby();
+		pokemon.add(krab);
+		for (Pokemon p : pokemon) {
+			Image image = p.getImage();
+			image = p.getInventoryImage();
+			//Cover the consumeItem method
+			p.consumeItem(new SafariBall(false, 0));
+			p.consumeItem(new SuperPotion(false,0));
+			//Cover didCatch
+			Boolean b = p.didCatch();
+			//Bring Pokemon's HP to 0
+			p.tookDamage(p.getHP());
+			b = p.didCatch();
+			p.setPokemonItemButton(new JButton());
+			JButton jb = p.getPokemonItemButton();
+			p.setDrawnHeight(20);
+			int i = p.getDrawnHeight();
+		}
 		drow.hitByRock();
 		drow.didCatch();
 		drow.didRun();
@@ -133,8 +167,8 @@ public class testModel {
 
 		Iterator itr = trainer.getPokemon().iterator();
 		while(itr.hasNext()){
-			Pokemon pokemon = (Pokemon) itr.next();
-			System.out.println(pokemon.getPokemonType().toString());
+			Pokemon pokemon1 = (Pokemon) itr.next();
+			System.out.println(pokemon1.getPokemonType().toString());
 		}
 	}
 	
