@@ -173,6 +173,25 @@ public class MapTwo implements _Map, Serializable {
 	
 	public void setWater() {
 		
+		//north west water
+		for(int j = 3; j < 6; j++) {
+			map[2][j] = ObstacleType.WaterTop;
+			map[6][j] = ObstacleType.WaterBottom;
+		}
+		for(int i = 3; i < 6; i++) {
+			for(int j = 3; j < 6; j++) {
+				map[i][j] = ObstacleType.Water;
+			}
+		}
+		for(int i = 3; i < 6; i++) {
+			map[i][2] = ObstacleType.WaterLeft;
+			map[i][6] = ObstacleType.WaterRight;
+		}
+		map[2][2] = ObstacleType.WaterTopLeft;
+		map[2][6] = ObstacleType.WaterTopRight;
+		map[6][2] = ObstacleType.WaterBottomLeft;
+		map[6][6] = ObstacleType.WaterBottomRight;		
+		
 		//south west water
 		map[14][0] = ObstacleType.WaterTopLeft;
 		map[14][1] = ObstacleType.WaterTop;
@@ -229,7 +248,7 @@ public class MapTwo implements _Map, Serializable {
 			//right column
 			map[i][SIZE-1] = ObstacleType.Tree;
 			//left column
-			if((i < 1) || (i > 6 && i < 9) || (i > 13 && i < SIZE)) {
+			if(i <= 6 || (i > 6 && i < 9) || (i > 13 && i < SIZE)) {
 				map[i][0] = ObstacleType.Tree;
 			} 
 		}
@@ -240,9 +259,10 @@ public class MapTwo implements _Map, Serializable {
 		map[1][21] = new Rock(false, 6);
 		map[1][13] = new Potion(false, 15);
 		map[7][11] = new SafariBall(false, 8);
+		map[1][1] = new Potion(false, 15);
+		map[2][1] = new Potion(false, 15);
+		map[1][2] = new Rock(false, 15);
 	}
-	
-	
 	
 	public Object [][] getObjMap(){
 		return map;
@@ -300,21 +320,21 @@ public class MapTwo implements _Map, Serializable {
 		}
 		
 		//northern west entrance
-		map[1][0] = ObstacleType.woodpegs;
-		map[2][0] = ObstacleType.dirtTop;
-		map[2][1] = ObstacleType.dirtTop;
-		map[2][2] = ObstacleType.dirtTopRight;
-		map[3][2] = ObstacleType.dirtRight;
-		map[4][2] = ObstacleType.dirtRight;
-		map[5][2] = ObstacleType.dirtBotRight;
-		map[5][1] = ObstacleType.dirtBot;
-		map[5][0] = ObstacleType.dirtBot;
-		map[6][0] = ObstacleType.woodpegs;
-		for(int i = 3 ; i < 5; i++) {
-			for(int j = 0; j < 2; j++) {
-				map[i][j] = ObstacleType.Dirt;
-			}
-		}
+//		map[1][0] = ObstacleType.woodpegs;
+//		map[2][0] = ObstacleType.dirtTop;
+//		map[2][1] = ObstacleType.dirtTop;
+//		map[2][2] = ObstacleType.dirtTopRight;
+//		map[3][2] = ObstacleType.dirtRight;
+//		map[4][2] = ObstacleType.dirtRight;
+//		map[5][2] = ObstacleType.dirtBotRight;
+//		map[5][1] = ObstacleType.dirtBot;
+//		map[5][0] = ObstacleType.dirtBot;
+//		map[6][0] = ObstacleType.woodpegs;
+//		for(int i = 3 ; i < 5; i++) {
+//			for(int j = 0; j < 2; j++) {
+//				map[i][j] = ObstacleType.Dirt;
+//			}
+//		}
 		
 		//north entrance
 		map[1][7] = ObstacleType.woodpegs;

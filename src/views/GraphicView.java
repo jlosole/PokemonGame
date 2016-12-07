@@ -185,9 +185,15 @@ public class GraphicView extends JPanel implements Observer {
 				g.fillRect(j*28, i*28, 28, 28);
 			}
 		}
-
-		for(int i = 0; i < 23; i++) {
-			for(int j = 0; j < 23; j++) {
+		
+		Point pt = theGame.getTrainerPos();
+		int c = pt.x;
+		int r = pt.y;
+		
+		for(int i = c-4; i < c+4; i++) {
+			for(int j = r-4; j < r+4; j++) {	
+//		for(int i = 0; i < 23; i++) {
+//			for(int j = 0; j < 23; j++) {
 				if(i >= 0 && i < 23 &&  j >= 0 && j < 23) {
 					
 					shortGrass.paintIcon(this,g, j*28, i *28);

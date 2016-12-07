@@ -28,7 +28,6 @@ public class MapOne implements _Map, Serializable {
 		map = new Object[SIZE][SIZE];
 		random = new Random();
 		initializeGrid();
-		setTrees();
 		setWater();
 		setBushes();
 		setShortGrass();
@@ -36,6 +35,8 @@ public class MapOne implements _Map, Serializable {
 		setItems();
 		setTrees();
 		setEntranceAndExits();
+		setHill();
+		setDirt();
 	}
 	
 	public static MapOne getInstanceOf() {
@@ -65,35 +66,147 @@ public class MapOne implements _Map, Serializable {
 		}
 	}
 	
+	public void setHill() {
+		//right border
+		for(int i = 5; i <= 19; i++) {
+			map[i][18] = ObstacleType.hillRight;
+		}
+		map[20][18] = ObstacleType.hillBotRight;
+		map[4][18] = ObstacleType.hillTopRight;
+		
+		//top border
+		for(int j = 6; j <= 17; j++) {
+			map[4][j] = ObstacleType.hillTop;
+		}
+		map[4][5] = ObstacleType.hillTopLeft;
+		
+		//bottom border
+		map[20][3] = ObstacleType.hillBotLeft;
+		map[20][4] = ObstacleType.hillBot;
+		map[20][5] = ObstacleType.stairsLeft;
+		map[20][6] = ObstacleType.stairsRight;
+		map[20][7] = ObstacleType.hillBot;
+		map[20][8] = ObstacleType.hillBot;
+		map[20][9] = ObstacleType.hillBotRight;
+		map[19][9] = ObstacleType.hillRight;
+		map[19][10] = ObstacleType.stairsLeft;
+		map[19][11] = ObstacleType.stairsRight;
+		map[19][12] = ObstacleType.hillLeft;
+		map[20][12] = ObstacleType.hillBotLeft;
+		map[20][13] = ObstacleType.hillBot;
+		map[20][14] = ObstacleType.hillBot;
+		map[20][15] = ObstacleType.hillBot;
+		map[20][16] = ObstacleType.stairsLeft;
+		map[20][17] = ObstacleType.stairsRight;
+
+		//east inner border
+		for(int i = 7; i <= 14; i++) {
+			map[i][15] = ObstacleType.hillLeft;
+		}
+		map[6][15] = ObstacleType.inHillTopRight;
+		
+		//south top border
+		for(int j = 8; j <= 15; j++) {
+			map[15][j] = ObstacleType.hillTop;
+		}
+		map[15][7] = ObstacleType.hillTopLeft;
+		map[16][7] = ObstacleType.hillLeft;
+		
+		//southwest top border
+		for(int j = 4; j <= 7; j++) {
+			map[17][j] = ObstacleType.hillTop;
+		}
+		map[17][3] = ObstacleType.hillTopLeft;
+		map[18][3] = ObstacleType.hillLeft;
+		map[19][3] = ObstacleType.hillLeft;
+		
+		//north bottom border
+		map[5][5] = ObstacleType.hillLeft;
+		map[6][5] = ObstacleType.hillBotLeft;
+		map[6][6] = ObstacleType.hillBot;
+		map[6][7] = ObstacleType.hillBot;
+		map[6][8] = ObstacleType.stairsLeft;
+		map[6][9] = ObstacleType.stairsRight;
+		for(int j = 10; j <= 14; j++) {
+			map[6][j] = ObstacleType.hillBot;
+		}
+		
+		//fill dirt
+		for(int i = 5; i <= 19; i++) {
+			for(int j = 16; j <= 17; j++) {
+				map[i][j] = ObstacleType.hillDirt;
+			}
+		}
+		for(int j = 4; j <= 8; j++) {
+			map[19][j] = ObstacleType.hillDirt;
+		}
+		for(int j = 13; j <= 15; j++) {
+			map[19][j] = ObstacleType.hillDirt;
+		}
+		for(int j = 4; j <= 15; j++) {
+			map[18][j] = ObstacleType.hillDirt;
+		}
+		for(int i = 16; i <= 17; i++) {
+			for(int j = 8; j <= 15; j++) {
+				map[i][j] = ObstacleType.hillDirt;
+			}
+		}
+		for(int j = 6; j <= 15; j++) {
+			map[5][j] = ObstacleType.hillDirt;
+		}
+	}
+	
+	public void setDirt() {
+		map[7][2] = ObstacleType.dirtTopLeft;
+		map[7][3] = ObstacleType.dirtTopRight;
+		for(int i = 8; i <= 11; i++) {
+			map[i][2] = ObstacleType.dirtLeft;
+			map[i][3] = ObstacleType.dirtRight;
+		}
+		map[12][2] = ObstacleType.dirtBotLeft;
+		map[12][3] = ObstacleType.dirtBotRight;
+	}
+	
 	public void setDeepGrass() {
-		//west patch
-		for(int i = 12; i < 16; i++) {
-			for(int j = 1; j < 5; j++) {
-				map[i][j] = ObstacleType.DeepGrass;
-			}
-		}
 		//southwest patch
-		for(int i = 17; i < SIZE-2; i++) {
-			for(int j = 1; j < 5; j++) {
+		for(int i = 17; i <= 21; i++) {
+			for(int j = 1; j <= 2; j++) {
 				map[i][j] = ObstacleType.DeepGrass;
 			}
 		}
+		for(int j = 3; j <= 8; j++) {
+			map[21][j] = ObstacleType.DeepGrass;
+		}
+		
 		//southeast patch
-		for(int i = 18; i < SIZE-2; i++) {
-			for(int j = 16; j < SIZE-2; j++) {
+		for(int j = 14; j <= 21; j++) {
+			map[21][j] = ObstacleType.DeepGrass;
+		}
+		map[20][19] = ObstacleType.DeepGrass;
+		map[20][20] = ObstacleType.DeepGrass;
+		map[20][21] = ObstacleType.DeepGrass;
+		map[19][20] = ObstacleType.DeepGrass;
+		map[19][21] = ObstacleType.DeepGrass;
+		map[18][21] = ObstacleType.DeepGrass;
+		
+		//west patch
+		for(int i = 14; i <= 15; i++) {
+			for(int j = 1; j <= 5; j++) {
 				map[i][j] = ObstacleType.DeepGrass;
 			}
 		}
 		
-		//northeast patch
-		for(int i = 1; i < 8; i++) {
-			for(int j = 16; j < SIZE-2; j++) {
+		//north east patch
+		for(int i = 4; i <= 7; i++) {
+			for(int j = 20; j <= 21; j++) {
 				map[i][j] = ObstacleType.DeepGrass;
 			}
 		}
+		
 	}
 	
 	public void setWater() {
+		
 		//inner water
 		for(int i = 9; i < 13; i++) {
 			for(int j = 5; j < 15; j++) {
@@ -121,6 +234,7 @@ public class MapOne implements _Map, Serializable {
 		map[8][14] = ObstacleType.WaterTopRight;
 		map[13][5] = ObstacleType.WaterBottomLeft;
 		map[13][14] = ObstacleType.WaterBottomRight;
+			
 	}
 	
 	public void setBushes() {
@@ -148,18 +262,16 @@ public class MapOne implements _Map, Serializable {
 		map[0][13] = ObstacleType.woodpegs;
 		
 		//bottom entrance
-		map[19][9] = ObstacleType.woodsign;
 		map[SIZE-1][9] = ObstacleType.woodpegs;
+		map[SIZE-2][9] = ObstacleType.woodpegs;
 		map[SIZE-1][10] = ObstacleType.dirtLeft;
-		map[SIZE-2][10] = ObstacleType.dirtLeft;
-		map[SIZE-3][10] = ObstacleType.dirtTopLeft;
-		map[SIZE-3][11] = ObstacleType.dirtTop;
-		map[SIZE-3][12] = ObstacleType.dirtTopRight;
+		map[SIZE-2][10] = ObstacleType.dirtTopLeft;
+		map[21][11] = ObstacleType.dirtTop;
+		map[21][12] = ObstacleType.dirtTopRight;
 		map[SIZE-1][11] = ObstacleType.Dirt;
-		map[SIZE-2][11] = ObstacleType.Dirt;
 		map[SIZE-1][12] = ObstacleType.dirtRight;
-		map[SIZE-2][12] = ObstacleType.dirtRight;
 		map[SIZE-1][13] = ObstacleType.woodpegs;
+		map[SIZE-2][13] = ObstacleType.woodpegs;
 		
 		//RIGHT EXIT
 		map[8][20] = ObstacleType.woodpegs;
@@ -214,12 +326,11 @@ public class MapOne implements _Map, Serializable {
 	}
 	
 	public void setItems() {
-		map[2][2] = new Bait(false, 2);
-		map[17][5] = new Rock(false, 6);
-		map[9][18] = new Potion(false, 15);
-		map[3][7] = new SafariBall(false, 3);
-		map[17][14] = new SafariBall(false, 3);
-		map[15][5] = new SuperPotion(false, 25);
+
+//		map[17][5] = new Rock(false, 6);
+//		map[9][18] = new Potion(false, 15);
+//		map[17][14] = new SafariBall(false, 3);
+//		map[15][5] = new SuperPotion(false, 25);
 	}
 	
 	public Object [][] getObjMap(){
