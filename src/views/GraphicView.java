@@ -192,8 +192,6 @@ public class GraphicView extends JPanel implements Observer {
 		
 		for(int i = c-4; i < c+4; i++) {
 			for(int j = r-4; j < r+4; j++) {	
-//		for(int i = 0; i < 23; i++) {
-//			for(int j = 0; j < 23; j++) {
 				if(i >= 0 && i < 23 &&  j >= 0 && j < 23) {
 					
 					shortGrass.paintIcon(this,g, j*28, i *28);
@@ -393,7 +391,6 @@ public class GraphicView extends JPanel implements Observer {
 					else if(objBoard[i][j].equals(ObstacleType.stairsRight)) {
 						stairsRight.paintIcon(this, g, j*28, i*28);
 					}
-					
 					//Switches trainer image 
 					g.drawImage(getTrainerImage(), trainerY, trainerX, null);
 					///////////////////////////////////////////////////////
@@ -490,7 +487,6 @@ public class GraphicView extends JPanel implements Observer {
 		
 		trainerX = point.x * 28;
 		trainerY = point.y * 28;
-		System.out.println(point.x + " " + point.y);
 		
 		if(dir.equals("Up")) {
 			trainerFinalX = trainerX - 28;
@@ -504,13 +500,12 @@ public class GraphicView extends JPanel implements Observer {
 		else if(dir.equals("Right")) {
 			trainerFinalY = trainerY + 28;
 		}
-//		System.out.println(trainerX + ": " + trainerFinalX);
 	}
 	
 	public void moveTrainer() {
 		
 		int dir = theGame.getDirection();
-//		System.out.println(dir + " -- direction in movetrainer()");
+		
 		if(dir == 0) { //moving up
 			if(trainerX > trainerFinalX) {
 				trainerX -= movementPixels;

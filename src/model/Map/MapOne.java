@@ -279,26 +279,21 @@ public class MapOne implements _Map, Serializable {
 
 		map[9][22] = ObstacleType.dirtTop;
 		map[9][21] = ObstacleType.dirtTop;
-		map[9][20] = ObstacleType.dirtTop;
-		map[9][19] = ObstacleType.dirtTopLeft;
+		map[9][20] = ObstacleType.dirtTopLeft;
 		
 		map[10][22] = ObstacleType.Dirt;
 		map[10][21] = ObstacleType.Dirt;
-		map[10][20] = ObstacleType.Dirt;
-		map[10][19] = ObstacleType.dirtLeft;
+		map[10][20] = ObstacleType.dirtLeft;
 		
 		map[11][22] = ObstacleType.Dirt;
 		map[11][21] = ObstacleType.Dirt;
-		map[11][20] = ObstacleType.Dirt;
-		map[11][19] = ObstacleType.dirtLeft;
+		map[11][20] = ObstacleType.dirtLeft;
 		
-		map[12][19] = ObstacleType.dirtLeft;
-		map[12][20] = ObstacleType.Dirt;
+		map[12][20] = ObstacleType.dirtLeft;
 		map[12][21] = ObstacleType.Dirt;
 		map[12][22] = ObstacleType.Dirt;
 		
-		map[13][19] = ObstacleType.dirtBotLeft;
-		map[13][20] = ObstacleType.dirtBot;
+		map[13][20] = ObstacleType.dirtBotLeft;
 		map[13][21] = ObstacleType.dirtBot;
 		map[13][22] = ObstacleType.dirtBot;
 		map[14][20] = ObstacleType.woodpegs;
@@ -326,11 +321,10 @@ public class MapOne implements _Map, Serializable {
 	}
 	
 	public void setItems() {
-
-//		map[17][5] = new Rock(false, 6);
-//		map[9][18] = new Potion(false, 15);
-//		map[17][14] = new SafariBall(false, 3);
-//		map[15][5] = new SuperPotion(false, 25);
+		map[3][19] = new Potion(false, 15);
+		map[2][2] = new SafariBall(false, 3);
+		map[13][2] = new SuperPotion(false, 25);
+		map[2][2] = new SuperPotion(false, 25);
 	}
 	
 	public Object [][] getObjMap(){
