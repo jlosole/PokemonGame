@@ -27,6 +27,7 @@ public class Game extends Observable implements Serializable{
 	private _Map mapTwo = MapTwo.getInstanceOf();
 	private Object [][] objBoard;
 	private Point trainerPos;
+	private String winCondition = "";
 	/*
 	 * @Lanre: added this variable so that GraphicView knows which
 	 * direction-facing trainer to draw. 
@@ -39,7 +40,6 @@ public class Game extends Observable implements Serializable{
 	private boolean gameOver;
 	private int size;
 	private Battle battle;
-	private String direction = "";
 	
 	public Game(){
 		trainer = new Trainer();
@@ -65,7 +65,7 @@ public class Game extends Observable implements Serializable{
 	}
 	
 	public void setWinCondition(String string) {
-		
+		winCondition = string;
 	}
 		
 	public _Map getMap(){
@@ -80,27 +80,22 @@ public class Game extends Observable implements Serializable{
 		int r = row, c = col;
 
 		Pokemon pokemon = null;
-		this.direction = direction;
 		//Moves in new direction
 		if(direction.equals("Up")) {
 			r -= 1;
 			trainerFacing = 0;
-			System.out.println(trainerFacing);
 		}
 		else if(direction.equals("Down")) {
 			r += 1;
 			trainerFacing = 1;
-			System.out.println(trainerFacing);
 		}
 		else if(direction.equals("Left")) {
 			c -= 1;
 			trainerFacing = 2;
-			System.out.println(trainerFacing);
 		}
 		else if(direction.equals("Right")) {
 			c += 1;
 			trainerFacing = 3;
-			System.out.println(trainerFacing);
 		}
 		
 		Point newPoint = new Point(r, c);
@@ -122,8 +117,9 @@ public class Game extends Observable implements Serializable{
 		//if trainer walks to north exit on MapOne
 		if(currentMap.equals(mapOne) && (c >= 10 && c <= 13) && (r == -1)) {
 			setMap(mapTwo);
-			Point point = new Point(3, 0);
+			Point point = new Point(0, 9);
 			if(trainer.stepMade(point)) {
+				trainerFacing = 1;
 				trainer.setCurrentPosition(point);
 				trainerPos = trainer.getCurrentPos();
 				setChanged();
@@ -143,11 +139,12 @@ public class Game extends Observable implements Serializable{
 			}
 			return 1;
 		}
-		//if trainer walks to northwest exit on MapTwo
-		if(currentMap.equals(mapTwo) && (r >= 2 && r <= 5) && (c == -1)) {
+		//if trainer walks to north exit on MapTwo
+		if(currentMap.equals(mapTwo) && (r == -1) && (c >= 8 && c <= 11)) {
 			setMap(mapOne);
 			Point point = new Point(0, 11);
 			if(trainer.stepMade(point)) {
+				trainerFacing = 1;
 				trainer.setCurrentPosition(point);
 				trainerPos = trainer.getCurrentPos();
 				setChanged();
@@ -168,6 +165,7 @@ public class Game extends Observable implements Serializable{
 				return 2;
 			}
 			else {
+				//ran out of steps
 				gameOver = true;
 			}
 		} else {
@@ -276,9 +274,16 @@ public class Game extends Observable implements Serializable{
 				return false;
 			}
 		}
-		//special case if trainer is trying to walk down onto hillTop
+		//special case if trainer is trying to walk down onto hillTop on MapTwo
 		//hill top at row 11, 11-18  \\\ row 3, 14-21
-		if((pt.x == 10 || pt.x == 2) && objBoard[row][col] == ObstacleType.hillTop) {
+		if((pt.x == 10 || pt.x == 2) && objBoard[row][col] == ObstacleType.hillTop
+				&& currentMap.equals(mapTwo)) {
+			return false;
+		}
+		//special case if trainer is trying to walk down onto hillTop on MapTwo
+		//hill top at row 11, 11-18  \\\ row 3, 14-21
+		if((pt.x == 3) && objBoard[row][col] == ObstacleType.hillTop
+				&& currentMap.equals(mapOne)) {
 			return false;
 		}
 		
