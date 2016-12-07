@@ -25,6 +25,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import views.BattleView;
+import views.GameOverView;
 import views.GraphicView;
 import views.InstructionsView;
 import views.InventoryView;
@@ -71,14 +72,14 @@ public class PokemonGUI extends JFrame {
 	private InventoryView iView;
 	private JPanel currentView, oldView = null;
 	
-	private String winCondition;
+	private String winCondition = null;
 	
 	//Battle Buttons
 	private JButton rockB, baitB, ballB, runB, gameOverB;
 	
 	//Buttons for LoadingScreen
 	private JButton yesButton, noButton;
-	private JButton steps, catches;
+	private JButton steps, catches, noBalls;
 	
 	//Components for InventoryView
 	private boolean openedInventory = false;
@@ -102,7 +103,7 @@ public class PokemonGUI extends JFrame {
 	    
 	    theGame = game;
 	    battle = theGame.getBattle();
-	    theGame.setWinCondition(winCondition);
+	    trainer = theGame.getTrainer();
 
 	    gView = new GraphicView(theGame, WIDTH, HEIGHT);
 	    tView = new TextView(theGame, WIDTH, HEIGHT); 
@@ -127,8 +128,10 @@ public class PokemonGUI extends JFrame {
 	    this.setLocation(100, 40);
 	    this.setTitle("Pokemon");
 	    this.setLayout(null);
-	    lView = new LoadingView(theGame, WIDTH, HEIGHT);
+	    lView = new LoadingView(WIDTH, HEIGHT);
+	    instructionView = new InstructionsView(WIDTH, HEIGHT);
 	    setUpLoadingButtons();
+	    setInstructionButtons();
 	    this.setContentPane(lView);
 	}
 	
@@ -142,6 +145,8 @@ public class PokemonGUI extends JFrame {
 	    steps.addActionListener(new LoadingScreenListener());
 	    catches = lView.getCatchesButton();
 	    catches.addActionListener(new LoadingScreenListener());
+	    noBalls = lView.getNoBallsButton();
+	    noBalls.addActionListener(new LoadingScreenListener());
 	}
 	
 	public void setInstructionButtons() {
@@ -240,7 +245,6 @@ public class PokemonGUI extends JFrame {
 				
 				
 				if(!theGame.gameOver()){
-					System.out.println("hit1");
 					int moved;
 					//User moved up
 					if(keyCode == KeyEvent.VK_UP) {
@@ -303,7 +307,6 @@ public class PokemonGUI extends JFrame {
 					}
 					//opening and closing inventory view
 					else if(keyCode == KeyEvent.VK_I) {
-						System.out.println("hit2");
 						if(!openedInventory) {
 							openedInventory = true;
 							setView(iView);
@@ -314,17 +317,26 @@ public class PokemonGUI extends JFrame {
 					}
 					
 					if(pokemonFound != null) {
-						MapMusic.stop();
-						BattleMusic.play();
-						theGame.startBattle(pokemonFound);
-						battle = theGame.getBattle();
-						bView.setPokemon(pokemonFound);
-						setView(bView);
-						bView.startTimer();
+						if(trainer.getPokemon().size() != 10){
+							MapMusic.stop();
+							BattleMusic.play();
+							theGame.startBattle(pokemonFound);
+							battle = theGame.getBattle();
+							bView.setPokemon(pokemonFound);
+							setView(bView);
+							bView.startTimer();
+						}
+						else {
+							JOptionPane.showMessageDialog(null, "A Pokemon appeared, but "+
+															"you're inventory is full!");
+						}
 					}
 				}
 				else if(theGame.gameOver()){
-					JOptionPane.showMessageDialog(null, "Game Over! You're out of steps!");
+					winCondition = theGame.getWinCondition();
+					GameOverView gameOverView = new GameOverView(winCondition, WIDTH, HEIGHT);
+					setView(gameOverView);
+					gameOverView.update();
 				}
 			}
 		}
@@ -406,6 +418,9 @@ public class PokemonGUI extends JFrame {
 						
 						//No balls to throw
 						if(outcome.equals(Outcome.NoBalls)){
+							if(winCondition.equals("noBalls")){
+								theGame.setGameOver();
+							}
 							JOptionPane.showMessageDialog(null, "You have no Safari Balls!");
 						}
 						else {
@@ -423,24 +438,22 @@ public class PokemonGUI extends JFrame {
 							Pokemon pokemon = bView.getPokemon();
 							pokemon.setPokemonItemButton(jbutton);
 							
-							System.out.println("caught");
-							bView.setOutcome(Outcome.Caught);
+							bView.setOutcome(Outcome.Caught); 
 							BattleMusic.stop();
 							CaughtMusic.play();
+							if(trainer.getPokemon().size() == 1)
+								theGame.setGameOver();
 						}
 						
 						//We threw a ball and the pokemon escaped the ball and ran
 						else if(outcome.equals(Outcome.Ran)){
 							bView.setOutcome(Outcome.Ran);
-							System.out.println("ran");
 							//BattleMusic.stop();
 						}
 						
 						//Threw a ball and the pokemon escaped and stayed
 						else {
-							bView.setOutcome(Outcome.Stayed);
-							System.out.println("stay");
-	
+							bView.setOutcome(Outcome.Stayed);	
 						}
 					}
 				
@@ -544,10 +557,12 @@ public class PokemonGUI extends JFrame {
 				}
 				else if(buttonPressed.equals(catches)){
 					winCondition = "Catches";
-				}	
-			    instructionView = new InstructionsView(theGame, WIDTH, HEIGHT);
-			    setInstructionButtons();
-				setContentPane(instructionView);
+				}
+				else if(buttonPressed.equals(noBalls)){
+					winCondition = "noBalls";
+				}
+				startGUI.setContentPane(instructionView);
+				instructionView.update();
 			}
 		}
 	}
@@ -558,9 +573,9 @@ public class PokemonGUI extends JFrame {
 			JButton buttonPressed = (JButton)e.getSource();
 			startGUI.setVisible(false);
 			if(buttonPressed.equals(startMapOneButton)) 
-				theGame = new Game("one");
+				theGame = new Game(1, winCondition);
 			else if(buttonPressed.equals(startMapTwoButton))
-				theGame = new Game("two");
+				theGame = new Game(2, winCondition);
 			
 			gameGUI = new PokemonGUI(theGame);
 			gameGUI.setVisible(true);
@@ -586,7 +601,6 @@ public class PokemonGUI extends JFrame {
 					for(Pokemon pokemon : pokemonList){
 						int drawnHeight = pokemon.getDrawnHeight();
 						if(drawnHeight == y){
-							System.out.println("balls");
 							if(inventoryItemSelected.equals("Potion") && trainer.usePotion()) 
 								pokemon.consumeItem(potion);
 							else if(inventoryItemSelected.equals("SuperPotion") && trainer.useSuperPotion()) 

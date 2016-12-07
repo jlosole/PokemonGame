@@ -17,17 +17,14 @@ import model.Game;
 
 public class LoadingView extends JPanel{
 
-	private Game theGame;
 	private int width, height;
 	private Image image;
 	private JButton yes;
 	private JButton no;
-	private JButton winBySteps;
-	private JButton winByCaptures;
+	private JButton winBySteps, winByNoBalls, winByCaptures;
 	private Boolean firstWindowDone = false;
 	
-	public LoadingView(Game game, int width, int height){
-		theGame = game;
+	public LoadingView(int width, int height){
 		this.width = width;
 		this.height = height;
 		this.setSize(width, height);
@@ -58,10 +55,14 @@ public class LoadingView extends JPanel{
 		winBySteps = new JButton("Run out of steps");
 		winBySteps.setSize(200, 20);
 		winBySteps.setLocation(width/4-100, height-115);
-		winByCaptures = new JButton("Capture 10 Pokemon");
+		
+		winByCaptures = new JButton("Capture 8 Pokemon");
 		winByCaptures.setSize(200, 20);
 		winByCaptures.setLocation(width-250, height-115);
 		
+		winByNoBalls = new JButton("Run out of balls");
+		winByNoBalls.setSize(200, 20);
+		winByNoBalls.setLocation(width/2-70, height-65);
 	}
 	
 	public void setFirstWindowDone(){
@@ -90,6 +91,7 @@ public class LoadingView extends JPanel{
 		else{
 			this.add(winByCaptures);
 			this.add(winBySteps);
+			this.add(winByNoBalls);
 			g.drawString("Select your win condition below!", width/4, height-155);
 		}
 	}
@@ -105,6 +107,9 @@ public class LoadingView extends JPanel{
 	}
 	public JButton getCatchesButton(){
 		return winByCaptures;
+	}
+	public JButton getNoBallsButton(){
+		return winByNoBalls;
 	}
 
 }

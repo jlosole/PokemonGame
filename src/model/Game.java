@@ -27,7 +27,7 @@ public class Game extends Observable implements Serializable{
 	private _Map mapTwo = MapTwo.getInstanceOf();
 	private Object [][] objBoard;
 	private Point trainerPos;
-	private String winCondition = "";
+	private String winCondition;
 	/*
 	 * @Lanre: added this variable so that GraphicView knows which
 	 * direction-facing trainer to draw. 
@@ -41,9 +41,11 @@ public class Game extends Observable implements Serializable{
 	private int size;
 	private Battle battle;
 	
-	public Game(String str){
+	public Game(int mapNum, String winCondition){
+		this.winCondition = winCondition;
 		trainer = new Trainer();
-		if(str.equals("one")){
+		size = 23;
+		if(mapNum == 1){
 			currentMap = mapOne;      //Initialize game to start on MapOne
 			Point pt = new Point(size-1, size/2);
 			trainer.setCurrentPosition(pt);
@@ -57,7 +59,6 @@ public class Game extends Observable implements Serializable{
 			trainerPos = trainer.getCurrentPos();
 			trainerFacing = 1;
 		}
-		size = currentMap.getSize();
 		
 		objBoard = currentMap.getObjMap();
 		gameOver = false;
@@ -73,14 +74,17 @@ public class Game extends Observable implements Serializable{
 		currentMap = newMap;
 		objBoard = currentMap.getObjMap();
 	}
-	
+		
+	public _Map getMap(){
+		return currentMap;
+	}
 	
 	public void setWinCondition(String string) {
 		winCondition = string;
 	}
-		
-	public _Map getMap(){
-		return currentMap;
+	
+	public String getWinCondition(){
+		return winCondition;
 	}
 	
 	public int getDirection() {
@@ -267,6 +271,10 @@ public class Game extends Observable implements Serializable{
 	
 	public Boolean gameOver(){
 		return gameOver;
+	}
+	
+	public void setGameOver(){
+		gameOver = true;
 	}
 	
 	public void removeItem(int x, int y){

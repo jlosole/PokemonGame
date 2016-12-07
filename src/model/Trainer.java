@@ -20,7 +20,6 @@ public class Trainer implements Serializable {
 	public Trainer() {			
 		numSteps = 500;										// Number of steps
 		myPokemon = new ArrayList<Pokemon>();	// Initializes hash map of pokemon
-
 		myItems = new HashMap<ItemType, Integer>();			// Initializes hash map of items
 		myItems.put(ItemType.SafariBall, 30);				// Player starts with 30 Safari balls
 		myItems.put(ItemType.Rock, 15);						// player starts with 15 rocks

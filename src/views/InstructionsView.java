@@ -6,6 +6,8 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
@@ -15,13 +17,11 @@ import model.Game;
 
 public class InstructionsView extends JPanel {
 	
-	private Game game;
 	private int width, height;
 	private BufferedImage safariLogo, pikachu, mewtwo; 
 	private JButton mapOneButton, mapTwoButton;
 	
-	public InstructionsView(Game game, int width, int height) {
-		this.game = game;
+	public InstructionsView(int width, int height) {
 		this.width = width;
 		this.height = height;
 		this.setSize(width, height);
@@ -82,5 +82,8 @@ public class InstructionsView extends JPanel {
 	public JButton getButtonTwo() {
 		return mapTwoButton;
 	}
-
+	
+	public void update(){
+		repaint();
+	}
 }

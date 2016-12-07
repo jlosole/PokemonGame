@@ -48,7 +48,7 @@ public class testModel {
 	
 	@Test
 	public void testGame() {
-		Game game = new Game("one");
+		Game game = new Game(1, "Steps");
 		assertEquals(null, game.move(21, 11, "Up"));
 		assertFalse(game.didStepOnItem());
 		assertFalse(game.isInDeepGrass());
