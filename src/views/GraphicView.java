@@ -54,7 +54,7 @@ public class GraphicView extends JPanel implements Observer {
 	private Timer timer;
 	private boolean trainerSet = true;
 	private int trainerX, trainerY, trainerFinalX, trainerFinalY;
-	private int movementPixels = 7;
+	private int movementPixels = 6;
 	private int times = 0;
 	
 	public GraphicView(Game theGame, int width, int height){
@@ -426,19 +426,10 @@ public class GraphicView extends JPanel implements Observer {
 		}
 	}
 	
-//	public void updateTimes(){
-////		times++;
-////		if(times == 2){
-////			times = 0;
-////		}
-//	}
-	
 	// USES BOOLEAN FLAG (initialized to true) TO SWITCH BETWEEN THE WALKING IMAGES
 	public BufferedImage getTrainerImage() {
 		
 		int dir = theGame.getDirection();
-//		System.out.println(times + "****************");
-//		System.out.println(dir + " -- direction in switchTrainerImage()");
 
 		if(dir == 0) { //walking up
 			if(flag) {
