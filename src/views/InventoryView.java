@@ -2,10 +2,14 @@ package views;
 
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
@@ -16,23 +20,37 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import model.Game;
+import model.Trainer;
 import model.Items.ItemType;
+import model.Items.Potion;
+import model.Items.SuperPotion;
 import model.Pokemon.Pokemon;
 import model.Pokemon.PokemonType;
 
 public class InventoryView extends JPanel implements Observer {
 	
+	//Instance Variables needed from the game
 	private Game theGame;
+	private Trainer trainer;
 	private int width, height, spacing = 20;
-	private HashMap<Pokemon, Integer> pokemonList;
+	private ArrayList<Pokemon> pokemonList;
 	private HashMap<ItemType, Integer> itemList;
+	
+	//Components needed for drawing
 	private BufferedImage textBox;
 	private JLabel pokemonLabel;
 	private JLabel itemLabel;
 	private final int IMAGE_SIZE = 50;
 	
+	//Components needed for healing pokemon
+	private JButton potionButton = null, superPotionButton = null;
+	private final Potion potion = new Potion(false, 15);
+	private final SuperPotion sPotion = new SuperPotion(false, 25);
+	private String itemSelected = null;
+		
 	public InventoryView(Game game, int width, int height){
 		theGame = game;
+		trainer = theGame.getTrainer();
 		this.width = width;
 		this.height = height;
 		this.setSize(width, height);
@@ -43,6 +61,7 @@ public class InventoryView extends JPanel implements Observer {
 			e.printStackTrace();
 		}
 		setupLabels();
+		setupButtons();
 	}
 	
 	public void setupLabels(){
@@ -55,7 +74,15 @@ public class InventoryView extends JPanel implements Observer {
 		itemLabel.setFont(new Font("Courier", Font.BOLD, 24));
 		itemLabel.setText("Items");
 		itemLabel.setSize(100, 20);
-		itemLabel.setLocation((width/4)*3-100, 100);
+		itemLabel.setLocation(width-200, 100);
+	}
+	
+	public void setupButtons(){
+		potionButton = new JButton("Use Potion");
+		potionButton.setSize(90, 20);
+		
+		superPotionButton = new JButton("Use SuperPotion");
+		superPotionButton.setSize(110, 20);
 	}
 
 	@Override
@@ -81,18 +108,26 @@ public class InventoryView extends JPanel implements Observer {
 		g.setFont(new Font("Courier", Font.BOLD, 16));
 		
 		//Draw pokemon list
-		Set<Pokemon> pokemonSet = pokemonList.keySet();
-		for(Pokemon pokemon : pokemonSet){
-			int numPokemon = pokemonList.get(pokemon);
-			for(int i = 0; i < numPokemon; i++) {
-				g.drawImage(pokemon.getInventoryImage(), width/7-10, 100+spacing, null);
-				g.drawString(pokemon.getPokemonType().toString(), width/7+IMAGE_SIZE, 125+spacing);
-				spacing += IMAGE_SIZE;
-				JButton itemButton = new JButton("Use Item");
-			}
+		for(Pokemon pokemon : pokemonList){
+			//Create use item button for each pokemon
+			JButton itemButton = pokemon.getPokemonItemButton();
+			itemButton.setSize(80, 20);
+			itemButton.setLocation(width/7-10, 115+spacing);
+			this.add(itemButton);
+			pokemon.setDrawnHeight(115+spacing);
+			
+			//Get pokemon's hp as string
+			int hp = pokemon.getHP();
+			String hpAsString = Integer.toString(hp);
+			
+			//Draw pokemon, pokemon name, and hp
+			g.drawImage(pokemon.getInventoryImage(), width/7+85, 100+spacing, null);
+			g.drawString(pokemon.getPokemonType().toString() + "'s HP = " + 
+						hpAsString, width/7+85+IMAGE_SIZE, 125+spacing);
+			spacing += IMAGE_SIZE;		
 		}
 		
-		//Reset spacing for y-axis 
+		//Reset height spacing for items list 
 		spacing = 40;
 		
 		//Draw items list
@@ -100,8 +135,28 @@ public class InventoryView extends JPanel implements Observer {
 		for(ItemType item : itemSet) {
 			int numItem = itemList.get(item);
 			String numItemAsString = Integer.toString(numItem);
-			g.drawString(item.toString() + " x " + numItemAsString, (width/4)*3-100, 100+spacing);
-			spacing += 20;
+			g.drawString(item.toString() + " x " + numItemAsString, width-200, 125+spacing);
+			if(item.equals(ItemType.Potion)){
+				potionButton.setLocation(width-200, 135+spacing);
+				this.add(potionButton);
+				spacing += IMAGE_SIZE;
+			}
+			else if(item.equals(ItemType.SuperPotion)){
+				superPotionButton.setLocation(width-200, 135+spacing);
+				this.add(superPotionButton);
+				spacing += IMAGE_SIZE;
+			}
+			else {
+				spacing += IMAGE_SIZE;
+			}
 		}
+	}
+	
+	public JButton getPotionButton(){
+		return potionButton;
+	}
+	
+	public JButton getSuperPotionButton(){
+		return superPotionButton;
 	}
 }

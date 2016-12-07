@@ -11,7 +11,7 @@ import model.Items.*;
 public class Geodude extends Pokemon {
 	
 	private static final int HP = 100;
-	private static final int MAXHP = 94;
+	private static final int MAXHP = 100;
 	private static final int RUNCHANCE = 7;
 	private static final int CATCHCHANCE = 5;
 	private static final Item ITEM = getRandomItem();

@@ -11,9 +11,9 @@ import model.Items.Potion;
 public class Charmander extends Pokemon {
 
 	private static final int HP = 125;
-	private static final int MAXHP = 117;
+	private static final int MAXHP = 125;
 	private static final int RUNCHANCE = 4;
-	private static final int CATCHCHANCE = 6;
+	private static final int CATCHCHANCE = 5;
 	private static final Item POTION = new Potion(false, 15);
 	
 	public Charmander() {

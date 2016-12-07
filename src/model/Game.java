@@ -27,6 +27,7 @@ public class Game extends Observable implements Serializable{
 	private _Map mapTwo = MapTwo.getInstanceOf();
 	private Object [][] objBoard;
 	private Point trainerPos;
+	private String winCondition = "";
 	/*
 	 * @Lanre: added this variable so that GraphicView knows which
 	 * direction-facing trainer to draw. 
@@ -64,7 +65,7 @@ public class Game extends Observable implements Serializable{
 	}
 	
 	public void setWinCondition(String string) {
-		
+		winCondition = string;
 	}
 		
 	public _Map getMap(){
@@ -164,6 +165,7 @@ public class Game extends Observable implements Serializable{
 				return 2;
 			}
 			else {
+				//ran out of steps
 				gameOver = true;
 			}
 		} else {
@@ -272,9 +274,16 @@ public class Game extends Observable implements Serializable{
 				return false;
 			}
 		}
-		//special case if trainer is trying to walk down onto hillTop
+		//special case if trainer is trying to walk down onto hillTop on MapTwo
 		//hill top at row 11, 11-18  \\\ row 3, 14-21
-		if((pt.x == 10 || pt.x == 2) && objBoard[row][col] == ObstacleType.hillTop) {
+		if((pt.x == 10 || pt.x == 2) && objBoard[row][col] == ObstacleType.hillTop
+				&& currentMap.equals(mapTwo)) {
+			return false;
+		}
+		//special case if trainer is trying to walk down onto hillTop on MapTwo
+		//hill top at row 11, 11-18  \\\ row 3, 14-21
+		if((pt.x == 3) && objBoard[row][col] == ObstacleType.hillTop
+				&& currentMap.equals(mapOne)) {
 			return false;
 		}
 		

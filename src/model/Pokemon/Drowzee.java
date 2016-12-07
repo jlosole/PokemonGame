@@ -11,7 +11,7 @@ import model.Items.*;
 public class Drowzee extends Pokemon {
 
 	private static final int HP = 62;
-	private static final int MAXHP = 57;
+	private static final int MAXHP = 62;
 	private static final int RUNCHANCE = 6;
 	private static final int CATCHCHANCE = 3;
 	private static final Item ITEM = getRandomItem();

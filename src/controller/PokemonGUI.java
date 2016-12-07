@@ -12,6 +12,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.JButton;
 import javax.swing.Timer;
@@ -29,15 +31,19 @@ import views.InventoryView;
 import views.LoadingView;
 import views.TextView;
 import model.Game;
+import model.Trainer;
 import model.Battle.Battle;
 import model.Battle.Outcome;
+import model.Items.Potion;
+import model.Items.SuperPotion;
 import model.Music.BattleMusic;
 import model.Music.CaughtMusic;
 import model.Music.MapMusic;
 import model.Pokemon.*;
 
 public class PokemonGUI extends JFrame {
-		
+	
+	//Instance variables for persistence
 	private static FileInputStream fis;
 	private static ObjectInputStream oIStream;
 	private static int DELAY_IN_MILLS = 1000;
@@ -50,9 +56,13 @@ public class PokemonGUI extends JFrame {
 		startGUI.setVisible(true);
 	}
 	
+	//Game instance variables
 	private final int WIDTH = 644, HEIGHT = 688;
 	private Game theGame;
 	private Battle battle;
+	private Trainer trainer;
+	
+	//Instance variables of all the different views
 	private GraphicView gView;
 	private TextView tView;
 	private BattleView bView;
@@ -60,17 +70,27 @@ public class PokemonGUI extends JFrame {
 	private InstructionsView instructionView;
 	private InventoryView iView;
 	private JPanel currentView, oldView = null;
+	
 	private String winCondition;
 	
 	//Battle Buttons
 	private JButton rockB, baitB, ballB, runB, gameOverB;
 	
-	//instruction screen button
-	private JButton playGameButton;
-	//Loading screen Buttons
+	//Buttons for LoadingScreen
 	private JButton yesButton, noButton;
 	private JButton steps, catches;
+	
+	//Components for InventoryView
 	private boolean openedInventory = false;
+	private JButton potionB, superPotionB;
+	private String inventoryItemSelected;
+	private ArrayList<Pokemon> pokemonList;
+	private Potion potion = new Potion(false, 15);
+	private SuperPotion sPotion = new SuperPotion(false, 25);
+	
+	//Buttons for InstructionView
+	private JButton playGameButton;
+
 	
 	public PokemonGUI(Game game) {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -92,7 +112,8 @@ public class PokemonGUI extends JFrame {
 	    this.addWindowListener(new MyWindowListener());
 		this.setFocusable(true);
 		this.requestFocus();
-		addListeners();
+		setupBattleButtons();
+		setupInventoryButtons();
 		addObservers();
 		addMenus();
 		setView(gView);
@@ -127,7 +148,7 @@ public class PokemonGUI extends JFrame {
 		playGameButton.addActionListener(new InstructionScreenListener());
 	}
 	
-	public void addListeners(){
+	public void setupBattleButtons(){
 		rockB = bView.getRockButton();
 		runB = bView.getRunButton();
 		baitB = bView.getBaitButton();
@@ -140,15 +161,21 @@ public class PokemonGUI extends JFrame {
 		gameOverB.addActionListener(new MyBattleActionListener());
 	}
 	
+	public void setupInventoryButtons(){
+		potionB = iView.getPotionButton();
+		potionB.addActionListener(new InventoryButtonListener());
+		superPotionB = iView.getSuperPotionButton();
+		superPotionB.addActionListener(new InventoryButtonListener());
+
+	}
+	
 	//Adds the menus to the frame so you can switch between views
 	public void addMenus(){
 		JMenuItem menu = new JMenu("Menu");
 		JMenuItem views = new JMenu("Views");
 		JMenuItem graphic = new JMenuItem("Graphic View");
 		JMenuItem text = new JMenuItem("Text View");
-		JMenuItem inventory = new JMenuItem("Inventory");
 		menu.add(views);
-		menu.add(inventory);
 		views.add(graphic);
 		views.add(text);
 		
@@ -158,7 +185,6 @@ public class PokemonGUI extends JFrame {
 		
 		graphic.addActionListener(new MenuListener());
 		text.addActionListener(new MenuListener());
-		inventory.addActionListener(new MenuListener());
 	}
 	
 	public void addObservers(){
@@ -189,8 +215,6 @@ public class PokemonGUI extends JFrame {
 				setView(gView);
 			else if(entered.equals("Text View"))
 				setView(tView);
-			else if(entered.equals("Inventory"))
-				setView(iView);
 		}
 	}
 	
@@ -213,6 +237,7 @@ public class PokemonGUI extends JFrame {
 				
 				
 				if(!theGame.gameOver()){
+					System.out.println("hit1");
 					int moved;
 					//User moved up
 					if(keyCode == KeyEvent.VK_UP) {
@@ -275,6 +300,7 @@ public class PokemonGUI extends JFrame {
 					}
 					//opening and closing inventory view
 					else if(keyCode == KeyEvent.VK_I) {
+						System.out.println("hit2");
 						if(!openedInventory) {
 							openedInventory = true;
 							setView(iView);
@@ -386,6 +412,14 @@ public class PokemonGUI extends JFrame {
 						
 						//We threw a ball and caught the pokemon
 						if(outcome.equals(Outcome.Caught)) {
+							//Create a button for this pokemon to use in the inventory
+							JButton jbutton = new JButton("Use Item");
+							jbutton.addActionListener(new InventoryButtonListener());
+							
+							//Get the current Pokemon that was caught
+							Pokemon pokemon = bView.getPokemon();
+							pokemon.setPokemonItemButton(jbutton);
+							
 							System.out.println("caught");
 							bView.setOutcome(Outcome.Caught);
 							BattleMusic.stop();
@@ -457,9 +491,7 @@ public class PokemonGUI extends JFrame {
 					b.printStackTrace();
 				} 
 			}
-//			else if(selection == JOptionPane.CANCEL_OPTION) {
-//				return;
-//			}
+
 		}
 		@Override
 		public void windowClosed(WindowEvent e) {
@@ -537,4 +569,41 @@ public class PokemonGUI extends JFrame {
 			}
 		}	
 	}
+	
+	private class InventoryButtonListener implements ActionListener {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if(currentView.equals(iView)){
+				trainer = theGame.getTrainer();
+				pokemonList = trainer.getPokemon();
+				JButton buttonPressed = (JButton) e.getSource();
+				if(buttonPressed.equals(potionB)){
+					System.out.println("penis");
+					inventoryItemSelected = "Potion";
+				}
+				else if(buttonPressed.equals(superPotionB)){
+					System.out.println("vag");
+					inventoryItemSelected = "SuperPotion";
+				}
+				else if(inventoryItemSelected != null){
+					int y = buttonPressed.getY();
+					for(Pokemon pokemon : pokemonList){
+						int drawnHeight = pokemon.getDrawnHeight();
+						if(drawnHeight == y){
+							System.out.println("balls");
+							if(inventoryItemSelected.equals("Potion") && trainer.usePotion()) 
+								pokemon.consumeItem(potion);
+							else if(inventoryItemSelected.equals("SuperPotion") && trainer.useSuperPotion()) 
+								pokemon.consumeItem(sPotion);
+							inventoryItemSelected = null;
+						}
+					}
+					theGame.doNotify();
+				}
+			}
+		}
+	}
+	
+
 }

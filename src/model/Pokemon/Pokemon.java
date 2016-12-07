@@ -3,6 +3,9 @@ package model.Pokemon;
 import java.awt.Image;
 import java.io.Serializable;
 import java.util.Random;
+
+import javax.swing.JButton;
+
 import model.Items.Bait;
 import model.Items.Item;
 import model.Items.ItemType;
@@ -17,6 +20,8 @@ public abstract class Pokemon implements Serializable {
 	private static int runChance;		// 1 out of runChance is the probability the pokemon runs
 	private static int catchChance;     // 1 out of catchChance is the probability the pokemon is caught
 	private static int numBallsThrown;  // Counts the number of balls thrown at this pokemon during this battle
+	private static int drawnHeight;
+	private JButton pokemonButton;
 	private static model.Items.Item item;
 	
 	public Pokemon(int hp, int maxHP, int run, int capture, Item item){
@@ -56,7 +61,13 @@ public abstract class Pokemon implements Serializable {
 	//When a player chooses to use a potion on this pokemon
 	public void consumeItem(Item item){
 		if(item.getItemType() == ItemType.Potion || item.getItemType() == ItemType.SuperPotion) {
-			hp += item.getHP();
+			int tempHP = hp;
+			int hpAdded = item.getHP();
+			if((tempHP + hpAdded) <= maxHP)
+				hp += hpAdded;
+			else 
+				hp = maxHP;
+				
 		}
 	}
 	
@@ -90,7 +101,23 @@ public abstract class Pokemon implements Serializable {
 	public void tookDamage(int damage){
 		hp -= damage;
 		if (hp < 0) hp = 0;
+	}
+	
+	public void setPokemonItemButton(JButton button){
+		pokemonButton = button;
+	}
+	
+	public JButton getPokemonItemButton(){
+		return pokemonButton;
+	}
 
+	
+	public void setDrawnHeight(int height){
+		drawnHeight = height;
+	}
+	
+	public int getDrawnHeight(){
+		return drawnHeight;
 	}
 
 	

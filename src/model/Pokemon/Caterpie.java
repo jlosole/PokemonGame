@@ -16,7 +16,7 @@ import model.Items.Rock;
 public class Caterpie extends Pokemon {
 	
 	private static final int HP = 60;
-	private static final int MAXHP = 55;
+	private static final int MAXHP = 60;
 	private static final int RUNCHANCE = 8;
 	private static final int CATCHCHANCE = 3;
 	private static final Item ITEM = getRandomItem();
