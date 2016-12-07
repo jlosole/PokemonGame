@@ -491,7 +491,7 @@ public class BattleView extends JPanel implements Observer {
 			g.drawString(pokemon.getPokemonType().toString()+
 					" ran away!", 50, height-125);
 			didAlert = true;
-			setGameOverText("Pokemon ran away!");
+			setGameOverText(pokemon.getPokemonType().toString() + " ran away!");
 		}
 		
 		if(currentItemImage != null && !currentItemImage.equals(ballImage) 
@@ -514,7 +514,7 @@ public class BattleView extends JPanel implements Observer {
 			g.drawString("Gotcha!", 50, height-165);
 			g.drawString(pokemon.getPokemonType().toString() + " "
 					+ "has been caught!", 50, height-125);
-			setGameOverText("You caught the Pokemon!");
+			setGameOverText("You caught " + pokemon.getPokemonType().toString() + "!");
 			pokemonCaught = true;
 		}
 		

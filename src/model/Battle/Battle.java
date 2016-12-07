@@ -96,6 +96,7 @@ public class Battle implements Serializable {
 		} else return Outcome.NoBait;
 	}
 	
+	
 	public void trainerRan(){
 		over = true;
 	}
