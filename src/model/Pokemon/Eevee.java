@@ -11,7 +11,7 @@ import model.Items.*;
 public class Eevee extends Pokemon {
 
 	private static final int HP = 65;
-	private static final int MAXHP = 60;
+	private static final int MAXHP = 65;
 	private static final int RUNCHANCE = 8;
 	private static final int CATCHCHANCE = 4;
 	private static final Item ITEM = getRandomItem();

@@ -131,10 +131,10 @@ public class testModel {
 		trainer.caughtPokemon(geo);
 		trainer.caughtPokemon(krab);
 
-		Iterator itr = trainer.getPokemon().entrySet().iterator();
+		Iterator itr = trainer.getPokemon().iterator();
 		while(itr.hasNext()){
-			Map.Entry pair = (Map.Entry) itr.next();
-			System.out.println(pair.getKey() + " " + pair.getValue());
+			Pokemon pokemon = (Pokemon) itr.next();
+			System.out.println(pokemon.getPokemonType().toString());
 		}
 	}
 	

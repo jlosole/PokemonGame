@@ -2,6 +2,7 @@ package model;
 
 import java.awt.Point;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import model.Items.Item;
@@ -12,18 +13,20 @@ import model.Pokemon.PokemonType;
 public class Trainer implements Serializable {
 	
 	private int numSteps;
-	private HashMap<Pokemon, Integer> myPokemon;
+	private ArrayList<Pokemon> myPokemon;
 	private HashMap<ItemType, Integer> myItems;
 	private static Point currentPosition;
 	
 	public Trainer() {			
 		numSteps = 500;										// Number of steps
-		myPokemon = new HashMap<Pokemon, Integer>();	// Initializes hash map of pokemon
+		myPokemon = new ArrayList<Pokemon>();	// Initializes hash map of pokemon
 		myItems = new HashMap<ItemType, Integer>();			// Initializes hash map of items
 		myItems.put(ItemType.SafariBall, 30);				// Player starts with 30 Safari balls
 		myItems.put(ItemType.Rock, 15);						// player starts with 15 rocks
 		myItems.put(ItemType.Bait, 10);						// player starts with 10 bait
 		currentPosition = null;								// Players current position
+		myItems.put(ItemType.SuperPotion, 2);
+		myItems.put(ItemType.Potion, 2);
 	}
 	
 	public void setCurrentPosition(Point point){
@@ -95,17 +98,12 @@ public class Trainer implements Serializable {
 	}
 
 	public void caughtPokemon(Pokemon newPokemon) {
-		PokemonType newPokemonType = newPokemon.getPokemonType();
 		
 		//If the captured Pokemon has an item add it to our items
 		if(newPokemon.getItem() != null) {
 			collectedItem(newPokemon.getItem());
 		}
-		
-		if(myPokemon.containsKey(newPokemon))
-			myPokemon.put(newPokemon, myPokemon.get(newPokemonType)+1);
-		else 
-			myPokemon.put(newPokemon, 1);
+		myPokemon.add(newPokemon);
 	}
 	
 	public void collectedItem(Item newItem) {
@@ -121,7 +119,7 @@ public class Trainer implements Serializable {
 		return myItems;
 	}
 	
-	public HashMap<Pokemon, Integer> getPokemon(){
+	public ArrayList<Pokemon> getPokemon(){
 		return myPokemon;
 	}
 	

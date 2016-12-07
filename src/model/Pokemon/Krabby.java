@@ -14,7 +14,7 @@ import model.Items.Rock;
 public class Krabby extends Pokemon {
 	
 	private static final int HP = 60;
-	private static final int MAXHP = 56;
+	private static final int MAXHP = 60;
 	private static final int RUNCHANCE = 8;
 	private static final int CATCHCHANCE = 3;
 	private static final Item ITEM = getRandomItem();

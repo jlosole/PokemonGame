@@ -11,9 +11,9 @@ import model.Items.*;
 public class Doduo extends Pokemon {
 
 	private static final int HP = 70;
-	private static final int MAXHP = 65;
+	private static final int MAXHP = 70;
 	private static final int RUNCHANCE = 7;
-	private static final int CATCHCHANCE = 4;
+	private static final int CATCHCHANCE = 3;
 	private static final Item ITEM = getRandomItem();
 	
 	public Doduo(){

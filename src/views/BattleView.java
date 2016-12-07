@@ -220,6 +220,10 @@ public class BattleView extends JPanel implements Observer {
 		this.pokemon = pokemon;
 	}
 	
+	public Pokemon getPokemon(){
+		return pokemon;
+	}
+	
 	public void setCurrentItem(String str){
 		if(str.equals("Rock"))
 			currentItemImage = rockImage;
