@@ -34,21 +34,6 @@ public class Battle implements Serializable {
 		//BattleMusic.play();
 	}
 	
-	private void playCaughtMusic() {
-		try {
-			FileInputStream is = new FileInputStream("music/battle.wav");
-			caughtStream = new AudioStream(is);
-			AudioPlayer.player.start(caughtStream);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	private void stopCaughtMusic() {
-		if (caughtStream != null) {
-			AudioPlayer.player.stop(caughtStream);
-		}
-	}
 	
 	public Outcome throwBall() {
 		//Either does or doesn't have pokeballs
