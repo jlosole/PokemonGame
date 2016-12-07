@@ -130,4 +130,9 @@ public class Trainer implements Serializable {
 	public String getBallsRemainingSTR(){
 		return myItems.get(ItemType.SafariBall).toString();
 	}
+	
+	public int getBallsRemaining(){
+		return myItems.get(ItemType.SafariBall);
+	}
+	
 }

@@ -443,13 +443,13 @@ public class BattleView extends JPanel implements Observer {
 			moveTrainer_Pokemon();	
 		
 		//Draw item if it hasn't reached pokemon's position
-		if(currentItemImage != null && !itemReached) {
+		if(currentItemImage != null && !itemReached && !outcome.equals(Outcome.None)) {
 			g.drawImage(currentItemImage, itemX, itemY, null);
 		}
 		
 		//if the item is a ball and it has reached the pokemon, draw the ball w/o the pokemon
 		if(currentItemImage != null && currentItemImage.equals(ballImage) && 
-				itemReached && pokemonInBall == false){
+				itemReached && pokemonInBall == false && !outcome.equals(Outcome.None)){
 			g.drawImage(currentItemImage, pokemonX+30, pokemonY+45, null);
 			pokemonInBall = true;
 		}

@@ -69,7 +69,7 @@ public class Battle implements Serializable {
 				else return Outcome.Stayed;
 			}
 		} 
-		else return Outcome.NoBalls;
+		else return Outcome.None;
 	}
 	
 	public Outcome throwRock() {
@@ -81,7 +81,7 @@ public class Battle implements Serializable {
 				over = true;
 				return Outcome.Ran;
 			} else return Outcome.Stayed;
-		} else return Outcome.NoRocks;
+		} else return Outcome.None;
 	}
 	
 	public Outcome throwBait() {
@@ -93,7 +93,7 @@ public class Battle implements Serializable {
 				over = true;
 				return Outcome.Ran;
 			} else return Outcome.Stayed;
-		} else return Outcome.NoBait;
+		} else return Outcome.None;
 	}
 	
 	
