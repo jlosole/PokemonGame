@@ -579,11 +579,9 @@ public class PokemonGUI extends JFrame {
 				pokemonList = trainer.getPokemon();
 				JButton buttonPressed = (JButton) e.getSource();
 				if(buttonPressed.equals(potionB)){
-					System.out.println("penis");
 					inventoryItemSelected = "Potion";
 				}
 				else if(buttonPressed.equals(superPotionB)){
-					System.out.println("vag");
 					inventoryItemSelected = "SuperPotion";
 				}
 				else if(inventoryItemSelected != null){
