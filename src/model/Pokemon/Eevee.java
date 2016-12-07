@@ -28,7 +28,7 @@ public class Eevee extends Pokemon {
 		Random rand = new Random();
 		int num = rand.nextInt(3);
 		if(num == 0) return null;
-		else if(num == 1) return new Bait(false, 2);
+		else if(num == 1) return new Bait(false, 3);
 		else return new Potion(false, 15);	
 	}	
 	

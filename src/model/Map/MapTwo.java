@@ -238,7 +238,7 @@ public class MapTwo implements _Map, Serializable {
 	public void setItems() {
 		map[7][3] = new Bait(false, 2);
 		map[1][21] = new Rock(false, 6);
-		map[1][13] = new Potion(false, 10);
+		map[1][13] = new Potion(false, 15);
 		map[7][11] = new SafariBall(false, 8);
 	}
 	

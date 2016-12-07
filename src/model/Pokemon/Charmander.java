@@ -14,7 +14,7 @@ public class Charmander extends Pokemon {
 	private static final int MAXHP = 117;
 	private static final int RUNCHANCE = 4;
 	private static final int CATCHCHANCE = 6;
-	private static final Item POTION = new Potion(false, 25);
+	private static final Item POTION = new Potion(false, 15);
 	
 	public Charmander() {
 		super(HP, MAXHP, RUNCHANCE, CATCHCHANCE, POTION);

@@ -216,10 +216,10 @@ public class MapOne implements _Map, Serializable {
 	public void setItems() {
 		map[2][2] = new Bait(false, 2);
 		map[17][5] = new Rock(false, 6);
-		map[9][18] = new Potion(false, 10);
+		map[9][18] = new Potion(false, 15);
 		map[3][7] = new SafariBall(false, 3);
 		map[17][14] = new SafariBall(false, 3);
-		map[15][5] = new SuperPotion(false, 5);
+		map[15][5] = new SuperPotion(false, 25);
 	}
 	
 	public Object [][] getObjMap(){

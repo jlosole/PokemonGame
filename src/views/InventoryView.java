@@ -11,6 +11,7 @@ import java.util.Observer;
 import java.util.Set;
 
 import javax.imageio.ImageIO;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -87,6 +88,7 @@ public class InventoryView extends JPanel implements Observer {
 				g.drawImage(pokemon.getInventoryImage(), width/7-10, 100+spacing, null);
 				g.drawString(pokemon.getPokemonType().toString(), width/7+IMAGE_SIZE, 125+spacing);
 				spacing += IMAGE_SIZE;
+				JButton itemButton = new JButton("Use Item");
 			}
 		}
 		
