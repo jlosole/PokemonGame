@@ -37,12 +37,9 @@ public class PokedexView extends JPanel implements Observer {
 	public void setupButtons(){
 		next = new JButton("Next");
 		next.setSize(80, 20);
-		next.setLocation(width-270, height-200);
 		
 		back = new JButton("Back");
-		back.setSize(80, 20);
-		back.setLocation(200, height-200);
-		
+		back.setSize(80, 20);		
 	}
 	
 	public void addToPokedexList(Pokemon newPokemon){
@@ -91,7 +88,9 @@ public class PokedexView extends JPanel implements Observer {
 			g.setFont(new Font("Courier", Font.BOLD, 18));	
 			g.drawString("Fact: "+pokemon.getFact(), 75, 350);
 			
+			next.setLocation(width-270, height-200);
 			this.add(next);
+			back.setLocation(200, height-200);
 			this.add(back);
 		}
 		
