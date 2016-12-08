@@ -13,19 +13,14 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
-
 import javax.swing.JButton;
-import javax.swing.Timer;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-
 import views.BattleView;
-import views.GameOverView;
 import views.GraphicView;
 import views.InstructionsView;
 import views.InventoryView;
@@ -343,9 +338,10 @@ public class PokemonGUI extends JFrame {
 				}
 				else if(theGame.gameOver()){
 					winCondition = theGame.getWinCondition();
-					GameOverView gameOverView = new GameOverView(winCondition, WIDTH, HEIGHT);
-					setView(gameOverView);
-					gameOverView.update();
+//					GameOverView gameOverView = new GameOverView(winCondition, WIDTH, HEIGHT);
+					setView(iView);
+					theGame.doNotify();
+//					gameOverView.update();
 				}
 			}
 		}
@@ -425,7 +421,8 @@ public class PokemonGUI extends JFrame {
 							bView.setOutcome(Outcome.Caught); 
 							BattleMusic.stop();
 							CaughtMusic.play();
-							if(trainer.getPokemon().size() == 1)
+							if(trainer.getPokemon().size() == 8 
+									&& theGame.getWinCondition().equals("Catches"))
 								theGame.setGameOver();
 						}
 					}

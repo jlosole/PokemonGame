@@ -37,7 +37,7 @@ public class InventoryView extends JPanel implements Observer {
 	private HashMap<ItemType, Integer> itemList;
 	
 	//Components needed for drawing
-	private BufferedImage textBox;
+	private BufferedImage textBox, ashImage;
 	private JLabel pokemonLabel;
 	private JLabel itemLabel;
 	private final int IMAGE_SIZE = 50;
@@ -57,6 +57,7 @@ public class InventoryView extends JPanel implements Observer {
 		this.setLayout(null);
 		try {
 			textBox = ImageIO.read(new File("safariSheet/inventory.png"));
+			ashImage = ImageIO.read(new File("safariSheet/ashGameOver.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -99,8 +100,29 @@ public class InventoryView extends JPanel implements Observer {
 		
 		//Draw the pokemon text box
 		g.drawImage(textBox, 0, 0, null);
+		g.drawImage(ashImage, 450, 430, null);
 		
 		//Add the labels
+		if(theGame.gameOver()) {
+			pokemonLabel.setLocation(width/7, 120);
+			itemLabel.setLocation(width-200, 120);
+			
+			g.setFont(new Font("Courier", Font.BOLD, 24));
+			g.drawString("GAME OVER!", 248, 100);
+			
+			g.setFont(new Font("Courier", Font.BOLD, 14));
+			String winCondition = theGame.getWinCondition();
+			
+			if(winCondition.equals("Catches")) {
+				g.drawString("You caught 8 Pokemon!", 231, 115);
+			}
+			else if(winCondition.equals("noBalls")) {
+				g.drawString("You used all of your Safari Balls!", 190, 115);
+			}
+			else if(winCondition.equals("Steps")) {
+				g.drawString("You used all of your steps!", 205, 115);
+			}
+		}
 		this.add(pokemonLabel);
 		this.add(itemLabel);
 		
