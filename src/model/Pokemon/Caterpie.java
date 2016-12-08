@@ -1,6 +1,7 @@
 package model.Pokemon;
 
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Random;
@@ -80,7 +81,6 @@ public class Caterpie extends Pokemon {
 
 	@Override
 	public String getFact() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	

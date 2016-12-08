@@ -48,32 +48,33 @@ public class Magmar extends Pokemon {
 
 	@Override
 	public Image getPokedexImage() {
-		// TODO Auto-generated method stub
+		try {
+			return ImageIO.read(new File("pokedex_images/magmar.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return null;
 	}
 
 	@Override
 	public String getHeight() {
-		// TODO Auto-generated method stub
-		return null;
+		return "4'3''";
 	}
 
 	@Override
 	public String getWeight() {
-		// TODO Auto-generated method stub
-		return null;
+		return "98.1 lbs";
 	}
 
 	@Override
 	public String typeOfPokemon() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Fire";
 	}
 
 	@Override
 	public String getFact() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Its body always burns with an orange glow that enables it to hide perfectly among flames.";
 	}
 	
 }
