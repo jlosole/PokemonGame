@@ -74,7 +74,7 @@ public class Magmar extends Pokemon {
 
 	@Override
 	public String getFact() {
-		return "Its body always burns with an orange glow that enables it to hide perfectly among flames.";
+		return "Its body burns with an orange glow.";
 	}
 	
 }

@@ -119,6 +119,7 @@ public class PokemonGUI extends JFrame {
 		this.requestFocus();
 		setupBattleButtons();
 		setupInventoryButtons();
+	    setupPokedexButtons();
 		addObservers();
 		addMenus();
 		setView(gView);
@@ -180,7 +181,10 @@ public class PokemonGUI extends JFrame {
 	}
 	
 	public void setupPokedexButtons(){
-		
+		next = dView.getNextButton();
+		back = dView.getBackButton();
+		next.addActionListener(new PokedexButtonListener());
+		back.addActionListener(new PokedexButtonListener());
 	}
 	
 	//Adds the menus to the frame so you can switch between views
@@ -253,7 +257,7 @@ public class PokemonGUI extends JFrame {
 				theGame.setGameOver();
 			}
 				
-			if(currentView.equals(gView)){
+			if(!currentView.equals(bView)){
 				Point trainerPos = theGame.getTrainerPos();
 				int row = (int) trainerPos.getX();
 				int col = (int) trainerPos.getY();
@@ -263,7 +267,7 @@ public class PokemonGUI extends JFrame {
 				if(!theGame.gameOver()){
 					int moved;
 					//User moved up
-					if(keyCode == KeyEvent.VK_UP) {
+					if(keyCode == KeyEvent.VK_UP && currentView.equals(gView)) {
 						moved = theGame.move(row, col, "Up");
 						if(moved == 1) 
 							gView.updateTrainerPos();
@@ -278,7 +282,7 @@ public class PokemonGUI extends JFrame {
 					}
 					
 					//User moved down
-					else if(keyCode == KeyEvent.VK_DOWN){
+					else if(keyCode == KeyEvent.VK_DOWN && currentView.equals(gView)){
 						moved = theGame.move(row, col, "Down");
 						if(moved == 1) 
 							gView.updateTrainerPos();
@@ -293,7 +297,7 @@ public class PokemonGUI extends JFrame {
 					}
 					
 					//User moved left
-					else if(keyCode == KeyEvent.VK_LEFT){
+					else if(keyCode == KeyEvent.VK_LEFT && currentView.equals(gView)){
 						moved = theGame.move(row, col, "Left");
 						if(moved == 1) 
 							gView.updateTrainerPos();
@@ -308,7 +312,7 @@ public class PokemonGUI extends JFrame {
 					}
 					
 					//User moved right
-					else if(keyCode == KeyEvent.VK_RIGHT){
+					else if(keyCode == KeyEvent.VK_RIGHT && currentView.equals(gView)){
 						moved = theGame.move(row, col, "Right");
 						if(moved == 1)
 							gView.updateTrainerPos();
@@ -604,5 +608,19 @@ public class PokemonGUI extends JFrame {
 				}
 			}
 		}
+	}
+	
+	private class PokedexButtonListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JButton buttonPressed = (JButton) e.getSource();
+			if(buttonPressed.equals(next)) 
+				dView.incrementIndex();
+			else if(buttonPressed.equals(back))
+				dView.decrementIndex();
+			theGame.doNotify();
+		}
+		
 	}
 }

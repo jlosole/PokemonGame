@@ -82,7 +82,6 @@ public class Drowzee extends Pokemon {
 
 	@Override
 	public String getFact() {
-		return "Drowzee is able to put people to sleep, "
-				+ "and can then sense the person's dreams.";
+		return "Drowzee is able to put people to sleep.";	
 	}
 }

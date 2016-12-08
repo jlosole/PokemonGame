@@ -81,7 +81,6 @@ public class Doduo extends Pokemon {
 
 	@Override
 	public String getFact() {
-		return "Even when asleep, one head is always awake "
-				+ "and alert and keeps a keen eye out for enemies.";
+		return "One head is always awake and alert.";
 	}
 }

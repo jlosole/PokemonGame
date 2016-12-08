@@ -70,6 +70,6 @@ public class Pikachu extends Pokemon {
 
 	@Override
 	public String getFact() {
-		return "It stores electricity in the pouches on its cheeks.";
+		return "It stores electricity in its cheeks.";
 	}
 }
