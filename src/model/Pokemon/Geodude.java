@@ -86,6 +86,6 @@ public class Geodude extends Pokemon {
 	@Override
 	public String getFact() {
 		// TODO Auto-generated method stub
-		return "Often found in fields and mountains";
+		return "Often found in fields and mountains.";
 	}
 }

@@ -75,6 +75,6 @@ public class MewTwo extends Pokemon {
 
 	@Override
 	public String getFact() {
-		return "It was accidentally created\nby a scientist.";
+		return "It was created by a scientist.";
 	}
 }
