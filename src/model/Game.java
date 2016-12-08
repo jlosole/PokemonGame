@@ -62,6 +62,7 @@ public class Game extends Observable implements Serializable{
 		
 		objBoard = currentMap.getObjMap();
 		gameOver = false;
+	
 		//start music
 		MapMusic.play();
 	}
@@ -106,6 +107,7 @@ public class Game extends Observable implements Serializable{
 		}
 		else if(direction.equals("Left")) {
 			c -= 1;
+			
 			trainerFacing = 2;
 		}
 		else if(direction.equals("Right")) {
@@ -152,6 +154,7 @@ public class Game extends Observable implements Serializable{
 				setChanged();
 				notifyObservers();
 			}
+			
 			return 1;
 		}
 		//if trainer walks to north exit on MapTwo
