@@ -18,7 +18,7 @@ public class Trainer implements Serializable {
 	private static Point currentPosition;
 	
 	public Trainer() {			
-		numSteps = 2;										// Number of steps
+		numSteps = 500;										// Number of steps
 		myPokemon = new ArrayList<Pokemon>();	// Initializes hash map of pokemon
 		myItems = new HashMap<ItemType, Integer>();			// Initializes hash map of items
 		myItems.put(ItemType.SafariBall, 30);				// Player starts with 30 Safari balls
@@ -67,6 +67,7 @@ public class Trainer implements Serializable {
 	//Checks to make sure we have rocks to throw and if we do we sub one from our number of rocks
 	public Boolean throwRock(){
 		if(myItems.containsKey(ItemType.Rock)){
+			
 			if(myItems.get(ItemType.Rock) > 0) {
 				myItems.put(ItemType.Rock, myItems.get(ItemType.Rock)-1);
 				return true;
