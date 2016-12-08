@@ -119,8 +119,32 @@ public class testModel {
 		game.setMap(MapOne.getInstanceOf());
 		game.move(21, 2, "Right");
 		game.isInDeepGrass();
+		
 		game.doNotify();
+		Pokemon w = game.getRandomPokemon();
 		game.setGameOver();
+		
+		int c = 0;
+		Game g = new Game(1, "Steps");
+		for (int i = 0; i < 23; i++) {
+			for (int j = 0; j < 23; j++) {
+				System.out.println(c++);
+				game.canMoveHere(i, j);
+			}
+		}
+		
+		g.setMap(MapTwo.getInstanceOf());
+		
+		
+		for (int i = 0; i < 22; i++) {
+			for (int j = 0; j < 22; j++) {
+				game.getTrainer().setCurrentPosition(new Point(i, j));
+				game.didStepOnItem();
+				game.move(i+1, j+1, "Up");
+				game.canMoveHere(i, j);
+			}
+		}
+		g.move(-1, 8, "up");
 	}
 	
 	@Test
