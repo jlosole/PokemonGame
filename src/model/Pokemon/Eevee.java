@@ -55,31 +55,31 @@ public class Eevee extends Pokemon {
 
 	@Override
 	public Image getPokedexImage() {
-		// TODO Auto-generated method stub
+		try {
+			return ImageIO.read(new File("pokedex_images/eevee.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
 	@Override
 	public String getHeight() {
-		// TODO Auto-generated method stub
-		return null;
+		return "1'00''";
 	}
 
 	@Override
 	public String getWeight() {
-		// TODO Auto-generated method stub
-		return null;
+		return "14.3 lbs";
 	}
 
 	@Override
 	public String typeOfPokemon() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Normal";
 	}
 
 	@Override
 	public String getFact() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Eevee has a naive personality.";
 	}
 }
