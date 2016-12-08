@@ -67,6 +67,7 @@ public class Trainer implements Serializable {
 	//Checks to make sure we have rocks to throw and if we do we sub one from our number of rocks
 	public Boolean throwRock(){
 		if(myItems.containsKey(ItemType.Rock)){
+			
 			if(myItems.get(ItemType.Rock) > 0) {
 				myItems.put(ItemType.Rock, myItems.get(ItemType.Rock)-1);
 				return true;

@@ -64,6 +64,7 @@ public class Battle implements Serializable {
 			//Then check the Pokemon's reaction
 			if (pokemon.didRun()) {
 				over = true;
+				
 				return Outcome.Ran;
 			} else return Outcome.Stayed;
 		} else return Outcome.NoRocks;

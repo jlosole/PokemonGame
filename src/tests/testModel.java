@@ -17,6 +17,7 @@ import javax.swing.JButton;
 import model.Game;
 import model.Trainer;
 import model.Battle.Battle;
+import model.Battle.Outcome;
 import model.Items.*;
 import model.Pokemon.*;
 import model.Items.Item;
@@ -32,28 +33,69 @@ public class testModel {
 	
 	@Test
 	public void testItems() {
+		ArrayList<Item> items = new ArrayList<Item>();
 		Item sBall = new SafariBall(false, 0);
+		items.add(sBall);
 		Item potion = new Potion(false, 10);
+		items.add(potion);
 		Item superPotion = new SuperPotion(false, 20);
+		items.add(superPotion);
+		Item bait = new Bait(false, 0);
+		items.add(bait);
+		Item rock = new Rock(false, 0);
+		items.add(rock);
+		
+		for (Item i : items) 
+			i.toString();
+		
 		assertFalse(sBall.isUsed());
 		assertEquals(superPotion.getHP(), 20);
 	}
 	
 	@Test
 	public void testBattle() {
-		Battle battle = new Battle(new Trainer(), new MewTwo());
+		Trainer t = new Trainer();
+		Battle battle = new Battle(t, new MewTwo());
+		Pokemon p = battle.getPokemon();
+		assertTrue(p instanceof Pokemon);
 		assertFalse(battle.isOver());
+		
 		battle.throwBait();
 		battle.throwRock();
 		battle.throwBall();
+		
+		while(t.throwBait())
+			t.throwBait();
+		while(t.throwRock())
+			t.throwRock();
+		while(t.throwBall())
+			t.throwBall();
+		
+		battle.throwBait();
+		battle.throwRock();
+		battle.throwBall();
+		
+		
 		battle.trainerRan();
+		
 		assertTrue(battle.isOver());
+		
 	}
 	
 	@Test
 	public void testGame() {
 		Game game = new Game(1, "Steps");
-		assertEquals(null, game.move(21, 11, "Up"));
+		Game game2 = new Game(2, "Balls");
+		game.getBattle();
+		assertTrue(game.getWinCondition() instanceof String);
+		game.setWinCondition("Steps");
+		assertTrue(game.getTrainer() instanceof Trainer);
+		assertTrue(game.randomCommonPokemon() instanceof Pokemon);
+		assertTrue(game.randomUncommonPokemon() instanceof Pokemon);
+		assertFalse(game.getSize() < 0);
+		assertTrue(game.getObjBoard() instanceof Object[][]);
+		assertTrue(game.gameOver() instanceof Boolean);
+		game.removeItem(1, 1);
 		assertFalse(game.didStepOnItem());
 		assertFalse(game.isInDeepGrass());
 		game.startBattle(new MewTwo());
@@ -61,6 +103,8 @@ public class testModel {
 		assertTrue(game.getTrainerPos().x > 0);
 		assertTrue(game.getTrainerPos().y > 0);
 		game.setMap(MapTwo.getInstanceOf());
+		
+		
 		assertEquals(MapTwo.getInstanceOf(), game.getMap());
 		game.getDirection();
 		game.move(18, 13, "Down");
@@ -75,6 +119,8 @@ public class testModel {
 		game.setMap(MapOne.getInstanceOf());
 		game.move(21, 2, "Right");
 		game.isInDeepGrass();
+		game.doNotify();
+		game.setGameOver();
 	}
 	
 	@Test
@@ -208,6 +254,21 @@ public class testModel {
 		newTrainer.stepMade(pt);
 		newTrainer.usePotion();
 		newTrainer.useSuperPotion();
+		
+		while (newTrainer.stepMade(pt))
+			newTrainer.stepMade(pt);
+		while (newTrainer.throwBall())
+			newTrainer.throwBall();
+		while (newTrainer.throwBait());
+			newTrainer.throwBait();
+		while (newTrainer.throwRock())
+			newTrainer.throwRock();
+		while (newTrainer.usePotion())
+			newTrainer.usePotion();
+		while (newTrainer.useSuperPotion())
+			newTrainer.useSuperPotion();
+		newTrainer.collectedItem(new SuperPotion(false, 0));
+		newTrainer.caughtPokemon(new Pikachu());
 	}
 	
 }
