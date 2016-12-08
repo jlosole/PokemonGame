@@ -602,6 +602,7 @@ public class PokemonGUI extends JFrame {
 							else if(inventoryItemSelected.equals("SuperPotion") && trainer.useSuperPotion()) 
 								pokemon.consumeItem(sPotion);
 							inventoryItemSelected = null;
+							break;
 						}
 					}
 					theGame.doNotify();

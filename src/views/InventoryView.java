@@ -112,8 +112,10 @@ public class InventoryView extends JPanel implements Observer {
 			
 			g.setFont(new Font("Courier", Font.BOLD, 14));
 			String winCondition = theGame.getWinCondition();
-			
-			if(winCondition.equals("Catches")) {
+			if(theGame.getTrainer().getStepsRemaining()== 0 && !winCondition.equals("Stpes")){
+				g.drawString("Game ended because you're out of steps!", 175, 115);
+			}
+			else if(winCondition.equals("Catches")) {
 				g.drawString("You caught 8 Pokemon!", 231, 115);
 			}
 			else if(winCondition.equals("noBalls")) {
