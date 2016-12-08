@@ -136,4 +136,8 @@ public class Trainer implements Serializable {
 		return myItems.get(ItemType.SafariBall);
 	}
 	
+	public int getStepsRemaining(){
+		return numSteps;
+	}
+	
 }
