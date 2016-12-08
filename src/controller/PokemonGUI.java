@@ -176,9 +176,11 @@ public class PokemonGUI extends JFrame {
 	public void addMenus(){
 		JMenuItem menu = new JMenu("Menu");
 		JMenuItem views = new JMenu("Views");
+		JMenuItem forfeit = new JMenuItem("Forfeit Game");
 		JMenuItem graphic = new JMenuItem("Graphic View");
 		JMenuItem text = new JMenuItem("Text View");
 		menu.add(views);
+		menu.add(forfeit);
 		views.add(graphic);
 		views.add(text);
 		
@@ -188,6 +190,7 @@ public class PokemonGUI extends JFrame {
 		
 		graphic.addActionListener(new MenuListener());
 		text.addActionListener(new MenuListener());
+		forfeit.addActionListener(new MenuListener());
 	}
 	
 	public void addObservers(){
@@ -218,6 +221,9 @@ public class PokemonGUI extends JFrame {
 				setView(gView);
 			else if(entered.equals("Text View"))
 				setView(tView);
+			else if(entered.equals("Forfeit Game"))
+				theGame.setGameOver();
+				setView(iView);
 		}
 	}
 	
