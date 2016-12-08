@@ -13,19 +13,14 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
-
 import javax.swing.JButton;
-import javax.swing.Timer;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-
 import views.BattleView;
-import views.GameOverView;
 import views.GraphicView;
 import views.InstructionsView;
 import views.InventoryView;
