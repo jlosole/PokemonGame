@@ -63,7 +63,7 @@ public class LoadingView extends JPanel{
 		
 		winByNoBalls = new JButton("Run out of balls");
 		winByNoBalls.setSize(200, 20);
-		winByNoBalls.setLocation(width/2-70, height-65);
+		winByNoBalls.setLocation(width/2-92, height-65);
 	}
 	
 	public void setFirstWindowDone(){

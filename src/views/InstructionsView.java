@@ -53,25 +53,25 @@ public class InstructionsView extends JPanel {
 		
 		g.setColor(Color.white);
 		g.fillRect(0, 0, width, height);
-		g.drawImage(safariLogo, 230, 60, null);
-		g.drawImage(pikachu, 40, height-120, null);
-		g.drawImage(mewtwo, 500, height-120, null);
+		g.drawImage(safariLogo, 230, 30, null);
+		g.drawImage(pikachu, 40, height-150, null);
+		g.drawImage(mewtwo, 500, height-150, null);
 		
-		// "instructions"
+		// "instructions title"
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("Courier", Font.BOLD, 34));
-		g.drawString("Instructions", 200, 240);
+		g.drawString("Instructions", 200, 210);
 
-		// "1,2,3 instructions"
+		// "Numbered instructions"
 		g.setFont(new Font("Courier", Font.BOLD, 16));
-		g.drawString("1. To move your trainer use the arrow keys", 20, 300);
-		g.drawString("2. To view your inventory press 'I' on your keyboard", 20, 340);
-		g.drawString("3. To use a potion on a pokemon first click the item", 20, 380);
-		g.drawString("   button you want to use then click the pokemon you", 20, 400);
-		g.drawString("   want to use it on.", 20, 420);
-		g.drawString("4. To exit a battle, click the button that appears in", 20, 460);
-		g.drawString("   place of the pokemon", 20, 480);
-		g.drawString("5. Last rule: HAVE FUN!", 20, 520);
+		g.drawString("1. To move your trainer use the arrow keys", 20, 250);
+		g.drawString("2. To open and close the inventory press 'I' on your keyboard", 20, 290);
+		g.drawString("3. To use a potion on a pokemon first click the item", 20, 320);
+		g.drawString("   button you want to use then click the pokemon you", 20, 340);
+		g.drawString("   want to use it on", 20, 360);
+		g.drawString("4. To exit a battle, click the button that appears in", 20, 400);
+		g.drawString("   place of the pokemon, or click the 'Run Away' button", 20, 420);
+		g.drawString("5. To open and close the Pokedex press 'P' on your keyboard", 20, 460);
 		g.drawString("Choose the map to start on below:", 150, 560);
 	}
 	
