@@ -29,6 +29,7 @@ public class LoadingView extends JPanel{
 		this.height = height;
 		this.setSize(width, height);
 		this.setLayout(null);
+		
 		try {
 			image = ImageIO.read(new File("safariSheet/biggerSafariLogo.png"));
 		} catch (IOException e) {

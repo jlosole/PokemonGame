@@ -337,9 +337,10 @@ public class PokemonGUI extends JFrame {
 				}
 				else if(theGame.gameOver()){
 					winCondition = theGame.getWinCondition();
-					GameOverView gameOverView = new GameOverView(winCondition, WIDTH, HEIGHT);
-					setView(gameOverView);
-					gameOverView.update();
+//					GameOverView gameOverView = new GameOverView(winCondition, WIDTH, HEIGHT);
+					setView(iView);
+					theGame.doNotify();
+//					gameOverView.update();
 				}
 			}
 		}
@@ -419,7 +420,8 @@ public class PokemonGUI extends JFrame {
 							bView.setOutcome(Outcome.Caught); 
 							BattleMusic.stop();
 							CaughtMusic.play();
-							if(trainer.getPokemon().size() == 1)
+							if(trainer.getPokemon().size() == 8 
+									&& theGame.getWinCondition().equals("Catches"))
 								theGame.setGameOver();
 						}
 					}
