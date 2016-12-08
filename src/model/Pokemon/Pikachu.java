@@ -1,12 +1,11 @@
 package model.Pokemon;
-
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import model.Items.Bait;
 import model.Items.Item;
-//UNCOMMON 
+ 
 public class Pikachu extends Pokemon {
 	private static final int HP = 115;
 	private static final int MAXHP = 115;
@@ -46,31 +45,31 @@ public class Pikachu extends Pokemon {
 
 	@Override
 	public Image getPokedexImage() {
-		// TODO Auto-generated method stub
+		try {
+			return ImageIO.read(new File("pokedex_images/pikachu.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
 	@Override
 	public String getHeight() {
-		// TODO Auto-generated method stub
-		return null;
+		return "1'4''";
 	}
 
 	@Override
 	public String getWeight() {
-		// TODO Auto-generated method stub
-		return null;
+		return "13.2 lbs";
 	}
 
 	@Override
 	public String typeOfPokemon() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Electric";
 	}
 
 	@Override
 	public String getFact() {
-		// TODO Auto-generated method stub
-		return null;
+		return "It stores electricity in the pouches on its cheeks.";
 	}
 }

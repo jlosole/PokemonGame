@@ -57,31 +57,32 @@ public class Drowzee extends Pokemon {
 
 	@Override
 	public Image getPokedexImage() {
-		// TODO Auto-generated method stub
+		try {
+			return ImageIO.read(new File("pokedex_images/drowzee.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
 	@Override
 	public String getHeight() {
-		// TODO Auto-generated method stub
-		return null;
+		return "3'03''";
 	}
 
 	@Override
 	public String getWeight() {
-		// TODO Auto-generated method stub
-		return null;
+		return "71.4 lbs";
 	}
 
 	@Override
 	public String typeOfPokemon() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Psychic";
 	}
 
 	@Override
 	public String getFact() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Drowzee is able to put people to sleep, "
+				+ "and can then sense the person's dreams.";
 	}
 }
