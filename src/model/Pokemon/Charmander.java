@@ -45,4 +45,34 @@ public class Charmander extends Pokemon {
 		}
 		return null;	
 	}
+
+	@Override
+	public Image getPokedexImage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getHeight() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getWeight() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String typeOfPokemon() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getFact() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

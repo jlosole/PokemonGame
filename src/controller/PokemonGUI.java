@@ -25,6 +25,7 @@ import views.GraphicView;
 import views.InstructionsView;
 import views.InventoryView;
 import views.LoadingView;
+import views.PokedexView;
 import views.TextView;
 import model.Game;
 import model.Trainer;
@@ -57,6 +58,7 @@ public class PokemonGUI extends JFrame {
 	private Game theGame;
 	private Battle battle;
 	private Trainer trainer;
+	private String winCondition = null;
 	
 	//Instance variables of all the different views
 	private GraphicView gView;
@@ -65,9 +67,9 @@ public class PokemonGUI extends JFrame {
 	private LoadingView lView;
 	private InstructionsView instructionView;
 	private InventoryView iView;
+	private PokedexView dView;
 	private JPanel currentView, oldView = null;
 	
-	private String winCondition = null;
 	
 	//Battle Buttons
 	private JButton rockB, baitB, ballB, runB, gameOverB;
@@ -87,6 +89,11 @@ public class PokemonGUI extends JFrame {
 	//Buttons for InstructionView
 	private JButton startMapOneButton;
 	private JButton startMapTwoButton;
+	
+	//Components for PokedexView
+	private Boolean openedPokedex = false;
+	private JButton next;
+	private JButton back;
 
 	
 	public PokemonGUI(Game game) {
@@ -104,6 +111,7 @@ public class PokemonGUI extends JFrame {
 	    tView = new TextView(theGame, WIDTH, HEIGHT); 
 	    bView = new BattleView(theGame, WIDTH, HEIGHT);
 	    iView = new InventoryView(theGame, WIDTH, HEIGHT);
+	    dView = new PokedexView(WIDTH, HEIGHT);
 	    
 	    this.addKeyListener(new MyArrowKeyListener(theGame));
 	    this.addWindowListener(new MyWindowListener());
@@ -169,7 +177,10 @@ public class PokemonGUI extends JFrame {
 		potionB.addActionListener(new InventoryButtonListener());
 		superPotionB = iView.getSuperPotionButton();
 		superPotionB.addActionListener(new InventoryButtonListener());
-
+	}
+	
+	public void setupPokedexButtons(){
+		
 	}
 	
 	//Adds the menus to the frame so you can switch between views
@@ -198,6 +209,7 @@ public class PokemonGUI extends JFrame {
 		theGame.addObserver(tView);
 		theGame.addObserver(bView);
 		theGame.addObserver(iView);
+		theGame.addObserver(dView);
 	}
 	
 	public void setView(JPanel newView) {
@@ -241,7 +253,7 @@ public class PokemonGUI extends JFrame {
 				theGame.setGameOver();
 			}
 				
-			if(!currentView.equals(bView)){
+			if(currentView.equals(gView)){
 				Point trainerPos = theGame.getTrainerPos();
 				int row = (int) trainerPos.getX();
 				int col = (int) trainerPos.getY();
@@ -314,16 +326,29 @@ public class PokemonGUI extends JFrame {
 						if(!openedInventory) {
 							openedInventory = true;
 							setView(iView);
-						} else {
+						} else if(openedInventory && !theGame.gameOver()){
 							openedInventory = false;
 							setView(gView);
 						}
+					}
+					
+					else if(keyCode == KeyEvent.VK_P){
+						if(!openedPokedex){
+							openedPokedex = true;
+							setView(dView);
+						}
+						else {
+							openedPokedex = false;
+							setView(gView);
+						}
+							
 					}
 					
 					if(pokemonFound != null) {
 						if(trainer.getPokemon().size() != 10){
 							MapMusic.stop();
 							BattleMusic.play();
+							dView.addToPokedexList(pokemonFound);
 							theGame.startBattle(pokemonFound);
 							battle = theGame.getBattle();
 							bView.setPokemon(pokemonFound);
@@ -337,11 +362,8 @@ public class PokemonGUI extends JFrame {
 					}
 				}
 				else if(theGame.gameOver()){
-					winCondition = theGame.getWinCondition();
-//					GameOverView gameOverView = new GameOverView(winCondition, WIDTH, HEIGHT);
 					setView(iView);
 					theGame.doNotify();
-//					gameOverView.update();
 				}
 			}
 		}

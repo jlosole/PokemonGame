@@ -127,4 +127,9 @@ public abstract class Pokemon implements Serializable {
 	//Abstract methof to get the path to the Pokemon's image
 	public abstract Image getImage();
 	public abstract Image getInventoryImage();
+	public abstract Image getPokedexImage();
+	public abstract String getHeight();
+	public abstract String getWeight();
+	public abstract String typeOfPokemon();
+	public abstract String getFact();
 }

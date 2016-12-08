@@ -57,6 +57,32 @@ public class Caterpie extends Pokemon {
 		}
 		return null;	
 	}
+
+	@Override
+	public Image getPokedexImage() {
+		return null;
+	}
+
+	@Override
+	public String getHeight() {
+		return null;
+	}
+
+	@Override
+	public String getWeight() {
+		return null;
+	}
+
+	@Override
+	public String typeOfPokemon() {
+		return null;
+	}
+
+	@Override
+	public String getFact() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 }
