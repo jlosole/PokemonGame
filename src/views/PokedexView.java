@@ -43,7 +43,9 @@ public class PokedexView extends JPanel implements Observer {
 	}
 	
 	public void addToPokedexList(Pokemon newPokemon){
-		pokedexList.add(newPokemon);
+		if(!pokedexList.contains(newPokemon)) {
+			pokedexList.add(newPokemon);
+		}
 	}
 	
 	public JButton getNextButton(){
