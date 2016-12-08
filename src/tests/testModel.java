@@ -3,6 +3,7 @@ import static org.junit.Assert.*;
 
 import java.awt.Image;
 import java.awt.Point;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -197,8 +198,8 @@ public class testModel {
 		Pokemon krab = new Krabby();
 		pokemon.add(krab);
 		for (Pokemon p : pokemon) {
-			Image image = p.getImage();
-			image = p.getInventoryImage();
+			p.getImage();
+			p.getInventoryImage();
 			//Cover the consumeItem method
 			p.consumeItem(new SafariBall(false, 0));
 			p.consumeItem(new SuperPotion(false,0));

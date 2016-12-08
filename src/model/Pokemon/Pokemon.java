@@ -1,6 +1,7 @@
 package model.Pokemon;
 
 import java.awt.Image;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Random;
 
