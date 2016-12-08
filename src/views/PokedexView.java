@@ -35,13 +35,13 @@ public class PokedexView extends JPanel implements Observer {
 	}
 	
 	public void setupButtons(){
-		next = new JButton("--->");
+		next = new JButton("Next");
 		next.setSize(80, 20);
-		next.setLocation(width-100, height/2);
+		next.setLocation(width-270, height-200);
 		
-		back = new JButton("<---");
+		back = new JButton("Back");
 		back.setSize(80, 20);
-		back.setLocation(width+100, height/2);
+		back.setLocation(200, height-200);
 		
 	}
 	
@@ -78,15 +78,18 @@ public class PokedexView extends JPanel implements Observer {
 		g.drawImage(background, 0, 0, null);
 		if(pokedexList.size() >= 1){
 			Pokemon pokemon = pokedexList.get(pokemonIndex);
-			g.drawImage(pokemon.getPokedexImage(), 75, 75, null);
+			g.drawImage(pokemon.getPokedexImage(), 125, 150, null);
 			g.setFont(new Font("Courier", Font.BOLD, 36));
-			g.drawString("My Pokedex", width/2-200, 100);
+			g.drawString("My Pokedex", width/2-100, 100);
+			
 			g.setFont(new Font("Courier", Font.BOLD, 24));	
 			g.drawString(pokemon.getPokemonType().toString(), width/2-10, 150);
 			g.drawString("Type: "+pokemon.typeOfPokemon(), width/2-10, 185);
 			g.drawString("Height: "+pokemon.getHeight(), width/2-10, 220);
 			g.drawString("Weight: "+pokemon.getWeight(), width/2-10, 255);
-			g.drawString(pokemon.getFact(), 45, 350);
+			
+			g.setFont(new Font("Courier", Font.BOLD, 18));	
+			g.drawString("Fact: "+pokemon.getFact(), 75, 350);
 			
 			this.add(next);
 			this.add(back);

@@ -73,6 +73,6 @@ public class Charmander extends Pokemon {
 
 	@Override
 	public String getFact() {
-		return "Charmander exhibits pack behavior, calling others of its species if it finds food.";
+		return "Charmander exhibits pack behavior.";
 	}
 }

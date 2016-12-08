@@ -86,7 +86,8 @@ public class Krabby extends Pokemon {
 
 	@Override
 	public String getFact() {
-		return "It's pincers are used for balance when walking sideways.";
+		return "It's pincers are used for balance"+
+				"\n" + "when walking sideways.";
 	}
 	
 }

@@ -86,7 +86,6 @@ public class Caterpie extends Pokemon {
 
 	@Override
 	public String getFact() {
-		return "Caterpie will shed its skin many times before "
-				+ "finally cocooning itself in thick silk.";
+		return "Caterpie will shed its skin many times.";
 	}	
 }

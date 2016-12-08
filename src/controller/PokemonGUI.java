@@ -257,7 +257,7 @@ public class PokemonGUI extends JFrame {
 				theGame.setGameOver();
 			}
 				
-			if(currentView.equals(gView)){
+			if(!currentView.equals(bView)){
 				Point trainerPos = theGame.getTrainerPos();
 				int row = (int) trainerPos.getX();
 				int col = (int) trainerPos.getY();
@@ -267,7 +267,7 @@ public class PokemonGUI extends JFrame {
 				if(!theGame.gameOver()){
 					int moved;
 					//User moved up
-					if(keyCode == KeyEvent.VK_UP) {
+					if(keyCode == KeyEvent.VK_UP && currentView.equals(gView)) {
 						moved = theGame.move(row, col, "Up");
 						if(moved == 1) 
 							gView.updateTrainerPos();
@@ -282,7 +282,7 @@ public class PokemonGUI extends JFrame {
 					}
 					
 					//User moved down
-					else if(keyCode == KeyEvent.VK_DOWN){
+					else if(keyCode == KeyEvent.VK_DOWN && currentView.equals(gView)){
 						moved = theGame.move(row, col, "Down");
 						if(moved == 1) 
 							gView.updateTrainerPos();
@@ -297,7 +297,7 @@ public class PokemonGUI extends JFrame {
 					}
 					
 					//User moved left
-					else if(keyCode == KeyEvent.VK_LEFT){
+					else if(keyCode == KeyEvent.VK_LEFT && currentView.equals(gView)){
 						moved = theGame.move(row, col, "Left");
 						if(moved == 1) 
 							gView.updateTrainerPos();
@@ -312,7 +312,7 @@ public class PokemonGUI extends JFrame {
 					}
 					
 					//User moved right
-					else if(keyCode == KeyEvent.VK_RIGHT){
+					else if(keyCode == KeyEvent.VK_RIGHT && currentView.equals(gView)){
 						moved = theGame.move(row, col, "Right");
 						if(moved == 1)
 							gView.updateTrainerPos();
