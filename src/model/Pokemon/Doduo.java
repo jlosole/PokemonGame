@@ -56,32 +56,32 @@ public class Doduo extends Pokemon {
 
 	@Override
 	public Image getPokedexImage() {
-		// TODO Auto-generated method stub
+		try {
+			return ImageIO.read(new File("pokedex_images/doduo.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
 	@Override
 	public String getHeight() {
-		// TODO Auto-generated method stub
-		return null;
+		return "4'07''";
 	}
 
 	@Override
 	public String getWeight() {
-		// TODO Auto-generated method stub
-		return null;
+		return "86.4 lbs";
 	}
 
 	@Override
 	public String typeOfPokemon() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Flying";
 	}
 
 	@Override
 	public String getFact() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Even when asleep, one head is always awake "
+				+ "and alert and keeps a keen eye out for enemies.";
 	}
-	
 }

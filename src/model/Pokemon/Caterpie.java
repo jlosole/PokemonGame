@@ -60,29 +60,32 @@ public class Caterpie extends Pokemon {
 
 	@Override
 	public Image getPokedexImage() {
+		try {
+			return ImageIO.read(new File("pokedex_images/caterpie.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
 	@Override
 	public String getHeight() {
-		return null;
+		return "1'00''";
 	}
 
 	@Override
 	public String getWeight() {
-		return null;
+		return "6.4 lbs";
 	}
 
 	@Override
 	public String typeOfPokemon() {
-		return null;
+		return "Bug";
 	}
 
 	@Override
 	public String getFact() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	
+		return "Caterpie will shed its skin many times before "
+				+ "finally cocooning itself in thick silk.";
+	}	
 }
