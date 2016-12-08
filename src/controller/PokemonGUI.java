@@ -111,7 +111,7 @@ public class PokemonGUI extends JFrame {
 	    tView = new TextView(theGame, WIDTH, HEIGHT); 
 	    bView = new BattleView(theGame, WIDTH, HEIGHT);
 	    iView = new InventoryView(theGame, WIDTH, HEIGHT);
-	    dView = new PokedexView(WIDTH, HEIGHT);
+	    dView = new PokedexView(theGame, WIDTH, HEIGHT);
 	    
 	    this.addKeyListener(new MyArrowKeyListener(theGame));
 	    this.addWindowListener(new MyWindowListener());
@@ -190,21 +190,13 @@ public class PokemonGUI extends JFrame {
 	//Adds the menus to the frame so you can switch between views
 	public void addMenus(){
 		JMenuItem menu = new JMenu("Menu");
-		JMenuItem views = new JMenu("Views");
 		JMenuItem forfeit = new JMenuItem("Forfeit Game");
-		JMenuItem graphic = new JMenuItem("Graphic View");
-		JMenuItem text = new JMenuItem("Text View");
-		menu.add(views);
 		menu.add(forfeit);
-		views.add(graphic);
-		views.add(text);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		menuBar.add(menu);
-		
-		graphic.addActionListener(new MenuListener());
-		text.addActionListener(new MenuListener());
+
 		forfeit.addActionListener(new MenuListener());
 	}
 	
@@ -233,12 +225,9 @@ public class PokemonGUI extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			String entered = ((JMenuItem) e.getSource()).getText();
-			if(entered.equals("Graphic View"))
-				setView(gView);
-			else if(entered.equals("Text View"))
-				setView(tView);
-			else if(entered.equals("Forfeit Game"))
+			if(entered.equals("Forfeit Game"))
 				theGame.setGameOver();
+				theGame.setWinCondition("Forfeit");
 				setView(iView);
 		}
 	}
@@ -352,7 +341,7 @@ public class PokemonGUI extends JFrame {
 						if(trainer.getPokemon().size() != 10){
 							MapMusic.stop();
 							BattleMusic.play();
-							dView.addToPokedexList(pokemonFound);
+							theGame.addToPokedexList(pokemonFound);
 							theGame.startBattle(pokemonFound);
 							battle = theGame.getBattle();
 							bView.setPokemon(pokemonFound);
@@ -617,9 +606,9 @@ public class PokemonGUI extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			JButton buttonPressed = (JButton) e.getSource();
 			if(buttonPressed.equals(next)) 
-				dView.incrementIndex();
+				theGame.incrementIndex();
 			else if(buttonPressed.equals(back))
-				dView.decrementIndex();
+				theGame.decrementIndex();
 			theGame.doNotify();
 		}
 		

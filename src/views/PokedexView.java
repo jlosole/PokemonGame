@@ -13,19 +13,23 @@ import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import model.Game;
 import model.Pokemon.Pokemon;
 
 public class PokedexView extends JPanel implements Observer {
 
-	private int width, height, pokemonIndex = 0; 
-	private ArrayList<Pokemon> pokedexList;
+	private int width, height, pokemonIndex; 
 	private JButton next, back;
 	private BufferedImage background;
+	private Game theGame;
+	private ArrayList<Pokemon> pokedexList;
 	
-	public PokedexView(int width, int height){
+	public PokedexView(Game theGame, int width, int height){
+		this.theGame = theGame;
+		pokedexList = theGame.getPokedexList();
+		pokemonIndex = theGame.getPokedexIndex();
 		this.width = width;
 		this.height = height;
-		pokedexList = new ArrayList<Pokemon>();		
 		try {
 			background = ImageIO.read(new File("safariSheet/inventory.png"));
 		} catch (IOException e) {
@@ -33,19 +37,13 @@ public class PokedexView extends JPanel implements Observer {
 		}
 		setupButtons();
 	}
-	
+		
 	public void setupButtons(){
 		next = new JButton("Next");
 		next.setSize(80, 20);
 		
 		back = new JButton("Back");
 		back.setSize(80, 20);		
-	}
-	
-	public void addToPokedexList(Pokemon newPokemon){
-		if(!pokedexList.contains(newPokemon)) {
-			pokedexList.add(newPokemon);
-		}
 	}
 	
 	public JButton getNextButton(){
@@ -56,24 +54,13 @@ public class PokedexView extends JPanel implements Observer {
 		return back;
 	}
 	
-	public void incrementIndex(){
-		pokemonIndex++;
-		if(pokemonIndex == pokedexList.size())
-			pokemonIndex = 0;
-	}
-	
-	public void decrementIndex(){
-		pokemonIndex--;
-		if(pokemonIndex < 0) 
-			pokemonIndex = pokedexList.size()-1;
-	}
-	
 	@Override
 	public void update(Observable o, Object arg) {
 		repaint();
 	}
 	
 	public void paintComponent(Graphics g){
+		pokemonIndex = theGame.getPokedexIndex();
 		g.drawImage(background, 0, 0, null);
 		if(pokedexList.size() >= 1){
 			Pokemon pokemon = pokedexList.get(pokemonIndex);

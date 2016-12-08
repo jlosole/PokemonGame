@@ -16,12 +16,12 @@ import model.Items.SafariBall;
 
 public abstract class Pokemon implements Serializable {
 	
-	private static int hp;				// Current hp
-	private static int maxHP;			// Max hp
-	private static int runChance;		// 1 out of runChance is the probability the pokemon runs
-	private static int catchChance;     // 1 out of catchChance is the probability the pokemon is caught
-	private static int numBallsThrown;  // Counts the number of balls thrown at this pokemon during this battle
-	private static int drawnHeight;
+	private int hp;				// Current hp
+	private int maxHP;			// Max hp
+	private int runChance;		// 1 out of runChance is the probability the pokemon runs
+	private int catchChance;     // 1 out of catchChance is the probability the pokemon is caught
+	private int numBallsThrown;  // Counts the number of balls thrown at this pokemon during this battle
+	private int drawnHeight;
 	private JButton pokemonButton;
 	private static model.Items.Item item;
 	

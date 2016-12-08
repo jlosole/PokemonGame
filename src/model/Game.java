@@ -2,6 +2,7 @@ package model;
 
 import java.awt.Point;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Random;
 
@@ -28,6 +29,8 @@ public class Game extends Observable implements Serializable{
 	private Object [][] objBoard;
 	private Point trainerPos;
 	private String winCondition;
+	private ArrayList<Pokemon> pokedexList;
+	private int pokemonIndex;
 	/*
 	 * @Lanre: added this variable so that GraphicView knows which
 	 * direction-facing trainer to draw. 
@@ -44,6 +47,8 @@ public class Game extends Observable implements Serializable{
 	public Game(int mapNum, String winCondition){
 		this.winCondition = winCondition;
 		trainer = new Trainer();
+		pokedexList = new ArrayList<Pokemon>();
+		pokemonIndex = 0;
 		size = 23;
 		if(mapNum == 1){
 			currentMap = mapOne;      //Initialize game to start on MapOne
@@ -82,6 +87,39 @@ public class Game extends Observable implements Serializable{
 	
 	public void setWinCondition(String string) {
 		winCondition = string;
+	}
+	
+	public void addToPokedexList(Pokemon newPokemon){
+		Boolean flag = false;
+		PokemonType type = newPokemon.getPokemonType();
+		for(int i = 0; i < pokedexList.size(); i++) {
+			if(pokedexList.get(i).getPokemonType().equals(type)) {
+				flag = true;
+			}
+		}
+		if(flag == false) {
+			pokedexList.add(newPokemon);
+		}
+	}
+	
+	public void incrementIndex(){
+		pokemonIndex++;
+		if(pokemonIndex == pokedexList.size())
+			pokemonIndex = 0;
+	}
+	
+	public void decrementIndex(){
+		pokemonIndex--;
+		if(pokemonIndex < 0)
+			pokemonIndex = pokedexList.size()-1;
+	}
+	
+	public ArrayList<Pokemon> getPokedexList(){
+		return pokedexList;
+	}
+	
+	public int getPokedexIndex(){
+		return pokemonIndex;
 	}
 	
 	public String getWinCondition(){

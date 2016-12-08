@@ -124,6 +124,8 @@ public class InventoryView extends JPanel implements Observer {
 			else if(winCondition.equals("Steps")) {
 				g.drawString("You used all of your steps!", 205, 115);
 			}
+			else if(winCondition.equals("Forfeit"))
+				g.drawString("You forfeited the game!", 231, 115);
 		}
 		this.add(pokemonLabel);
 		this.add(itemLabel);
@@ -142,7 +144,7 @@ public class InventoryView extends JPanel implements Observer {
 			
 			//Get pokemon's hp as string
 			int hp = pokemon.getHP();
-			String hpAsString = Integer.toString(hp);
+			String hpAsString = Integer.toString(hp);			
 			
 			//Draw pokemon, pokemon name, and hp
 			g.drawImage(pokemon.getInventoryImage(), width/7+85, 100+spacing, null);
