@@ -56,31 +56,36 @@ public class Geodude extends Pokemon {
 
 	@Override
 	public Image getPokedexImage() {
-		// TODO Auto-generated method stub
+		try {
+			return ImageIO.read(new File("pokedex_images/geodude.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return null;
 	}
 
 	@Override
 	public String getHeight() {
 		// TODO Auto-generated method stub
-		return null;
+		return "1'04''";
 	}
 
 	@Override
 	public String getWeight() {
 		// TODO Auto-generated method stub
-		return null;
+		return "44.1 lbs";
 	}
 
 	@Override
 	public String typeOfPokemon() {
 		// TODO Auto-generated method stub
-		return null;
+		return "Rock";
 	}
 
 	@Override
 	public String getFact() {
 		// TODO Auto-generated method stub
-		return null;
+		return "Often found in fields and mountains";
 	}
 }
