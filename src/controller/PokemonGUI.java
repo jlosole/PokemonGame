@@ -119,6 +119,7 @@ public class PokemonGUI extends JFrame {
 		this.requestFocus();
 		setupBattleButtons();
 		setupInventoryButtons();
+	    setupPokedexButtons();
 		addObservers();
 		addMenus();
 		setView(gView);
@@ -180,7 +181,10 @@ public class PokemonGUI extends JFrame {
 	}
 	
 	public void setupPokedexButtons(){
-		
+		next = dView.getNextButton();
+		back = dView.getBackButton();
+		next.addActionListener(new PokedexButtonListener());
+		back.addActionListener(new PokedexButtonListener());
 	}
 	
 	//Adds the menus to the frame so you can switch between views
@@ -604,5 +608,19 @@ public class PokemonGUI extends JFrame {
 				}
 			}
 		}
+	}
+	
+	private class PokedexButtonListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JButton buttonPressed = (JButton) e.getSource();
+			if(buttonPressed.equals(next)) 
+				dView.incrementIndex();
+			else if(buttonPressed.equals(back))
+				dView.decrementIndex();
+			theGame.doNotify();
+		}
+		
 	}
 }
